@@ -1,12 +1,51 @@
+.form{
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  width:70%;
+  margin:auto;
+  display:block;
+  background-color: rgba(0, 0, 255, 0.3);
+  overflow: hidden;
+}
+input{
+  display: inline-block;
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:5px;
+  margin:10px;
+  padding-bottom:5px;
+}
+table{
+  width:100%;
+  height: 100%;
+  color: #282c34;
+  border: 0px;
+  border-collapse: collapse;
+}
+
+.content{
+  width:100%;
+  height:100%;
+  display: block;
+}
+
 .App {
   text-align: left;
 }
-
-.myP{
-  float:right;
-  width:50%;
-  margin-right: 70px;
-  margin-top: 90px;
+.logo-area{
+  width:30%;
+}
+.wrapper-area{
+  text-align: center;
+}
+.title{
+  font-size: 60px;
+  display: inline-block;
+  font-size: calc(20px + 9vmin);
+  font-family: 'Harlow Solid Italic';
+  color: white;
 }
 
 .App-logo {
@@ -25,9 +64,20 @@
   /*justify-content: center;  */
   font-size: calc(20px + 9vmin);
   font-family: 'Harlow Solid Italic';
-  color: white;
+  color: #282c34;
 }
 
 .App-link {
-  color: #09d3ac;
+  color: #282c34;
+}
+.info{
+  display: block;
+  width: 100px;
+  height: 100px;
+  background-color: #282c34;
+}
+
+.button-login{
+  display:block;
+  margin: 0 auto;
 }
