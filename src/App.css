@@ -1,18 +1,28 @@
 .App {
-  text-align: center;
+  text-align: left;
+}
+
+.myP{
+  float:right;
+  width:50%;
+  margin-right: 70px;
+  margin-top: 90px;
 }
 
 .App-logo {
   height: 50vmin;
+  display:inline;
+  margin-left: 120px;
+  margin-top: 157px;
 }
 
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /*justify-content: center;  */
   font-size: calc(20px + 9vmin);
   font-family: 'Harlow Solid Italic';
   color: white;

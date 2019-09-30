@@ -8,14 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p
-        id="myP"> Kalendar Seminar
-        <script>
-          document.getElementById("myP").style.fontFamily = "Courier New";
-        </script>
-        </p>
-        
-        
+        <p class="myP">Seminar Calendar</p>        
       </header>
     </div>
   );
