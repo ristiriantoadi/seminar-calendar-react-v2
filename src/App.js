@@ -12,7 +12,7 @@ function App() {
             <tr>
               <td class="logo-area"><img src={logo} className="App-logo" alt="logo" /></td>
               <td class="wrapper-area">
-                <h1 class="title">Seminar Calendar</h1>
+                <h1 class="title">Kalendar Seminar</h1>
                 <div class="form">
                   <form action="">
                     <input placeholder="form nama"/>
