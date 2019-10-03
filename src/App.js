@@ -1,5 +1,6 @@
 import React from 'react';
-import logo from './bkg.png';
+//import logo from './bg1.png';
+import logo from './gambar1.png';
 import './App.css';
 
 
@@ -12,7 +13,8 @@ function App() {
             <tr>
               <td class="logo-area"><img src={logo} className="App-logo" alt="logo" /></td>
               <td class="wrapper-area">
-                <h1 class="title">Kalendar Seminar</h1>
+                <h1 class="title">Seminar Calendar</h1>
+                <h4 class="title2">Welcome, please login to your account</h4>
                 <div class="form">
                   <form action="">
                     <input placeholder="form nama"/>

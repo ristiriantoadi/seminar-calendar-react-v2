@@ -45,7 +45,14 @@ table{
   display: inline-block;
   font-size: calc(20px + 9vmin);
   font-family: 'Harlow Solid Italic';
-  color: white;
+  color: #282c34;
+}
+
+.title2{
+  font-size: 24px;
+  display: inline-block;
+  font-family: 'Segoe UI';
+  color: #282c34;
 }
 
 .App-logo {
@@ -56,7 +63,7 @@ table{
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: white;
   min-height: 100vh;
   /* display: flex; */
   flex-direction: column;
