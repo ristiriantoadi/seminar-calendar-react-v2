@@ -1,3 +1,4 @@
+
 import React from 'react';
 //import logo from './bg1.png';
 import logo from './gambar1.png';
@@ -29,8 +30,4 @@ function App() {
       </header>
     </div>
   );
-}
-
-
-
 export default App;
