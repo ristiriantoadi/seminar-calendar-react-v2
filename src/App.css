@@ -1,63 +1,70 @@
-.form{
+#content-wrapper {
+  background-image: url("./static/bg3.png");
+  min-width: 100%;
+  height: 720px;
+  min-height: 100%;
+}
+
+.form {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  width:70%;
-  margin:auto;
-  display:block;
+  width: 70%;
+  margin: auto;
+  display: block;
   background-color: rgba(0, 0, 255, 0.3);
   overflow: hidden;
 }
-input{
+input {
   display: inline-block;
-  padding-left:10px;
-  padding-right:10px;
-  padding-top:5px;
-  margin:10px;
-  padding-bottom:5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  margin: 10px;
+  padding-bottom: 5px;
 }
-table{
-  width:100%;
+table {
+  width: 100%;
   height: 100%;
   color: #282c34;
   border: 0px;
   border-collapse: collapse;
 }
 
-.content{
-  width:100%;
-  height:100%;
+.content {
+  width: 100%;
+  height: 100%;
   display: block;
 }
 
 .App {
   text-align: left;
 }
-.logo-area{
-  width:30%;
+.logo-area {
+  width: 30%;
 }
-.wrapper-area{
+.wrapper-area {
   text-align: center;
 }
-.title{
+.title {
   font-size: 60px;
   display: inline-block;
   font-size: calc(20px + 9vmin);
-  font-family: 'Harlow Solid Italic';
+  font-family: "Harlow Solid Italic";
   color: #282c34;
 }
 
-.title2{
+.title2 {
   font-size: 24px;
   display: inline-block;
-  font-family: 'Segoe UI';
+  font-family: "Segoe UI";
   color: #282c34;
 }
 
 .App-logo {
   height: 50vmin;
-  display:inline;
+  display: inline;
   margin-left: 120px;
   margin-top: 157px;
 }
@@ -70,21 +77,21 @@ table{
   /* align-items: center; */
   /*justify-content: center;  */
   font-size: calc(20px + 9vmin);
-  font-family: 'Harlow Solid Italic';
+  font-family: "Harlow Solid Italic";
   color: #282c34;
 }
 
 .App-link {
   color: #282c34;
 }
-.info{
+.info {
   display: block;
   width: 100px;
   height: 100px;
   background-color: #282c34;
 }
 
-.button-login{
-  display:block;
+.button-login {
+  display: block;
   margin: 0 auto;
 }
