@@ -177,14 +177,15 @@ class Header extends React.Component {
               >
                 <DropdownToggle caret nav>
                   <i className="nc-icon nc-bell-55" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Some Actions</span>
-                  </p>
+                  <span style={{ marginLeft: "5px" }}>Admin</span>
+                  {/* <p>
+                    <span className="d-lg-none d-md-block">Admin</span>
+                  </p> */}
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem tag="a">Action</DropdownItem>
-                  <DropdownItem tag="a">Another Action</DropdownItem>
-                  <DropdownItem tag="a">Something else here</DropdownItem>
+                  <DropdownItem tag="a">Pengaturan Akun</DropdownItem>
+                  <DropdownItem tag="a">Log out</DropdownItem>
+                  {/* <DropdownItem tag="a">Something else here</DropdownItem> */}
                 </DropdownMenu>
               </Dropdown>
               <NavItem>

@@ -16,43 +16,37 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Dashboard from "views/Dashboard.jsx";
-import Notifications from "views/Notifications.jsx";
+// import Dashboard from "views/Dashboard.jsx";
+// import Notifications from "views/Notifications.jsx";
 import Seminar from "views/Seminar.jsx";
 import Icons from "views/Icons.jsx";
-import Typography from "views/Typography.jsx";
-import TableList from "views/Tables.jsx";
-import Maps from "views/Map.jsx";
-import UserPage from "views/User.jsx";
-import UpgradeToPro from "views/Upgrade.jsx";
-
+// import Typography from "views/Typography.jsx";
+// import TableList from "views/Tables.jsx";
+// import Maps from "views/Map.jsx";
+// import UserPage from "views/User.jsx";
+// import UpgradeToPro from "views/Upgrade.jsx";
+import Mahasiswa from "views/Mahasiswa.jsx";
+import TambahSeminar from "views/TambahSeminar.jsx";
 var routes = [
-  {
-    path: "/dashboard",
-    name: "Beranda",
-    icon: "nc-icon nc-bank",
-    component: Dashboard,
-    layout: "/admin"
-  },
-  {
-    path: "/icons",
-    name: "Gambar",
-    icon: "nc-icon nc-diamond",
-    component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/maps",
-    name: "Peta",
-    icon: "nc-icon nc-pin-3",
-    component: Maps,
-    layout: "/admin"
-  },
   {
     path: "/seminar",
     name: "Jadwal Seminar",
     icon: "nc-icon nc-bell-55",
     component: Seminar,
+    layout: "/admin"
+  },
+  {
+    path: "/mahasiswa",
+    name: "Mahasiswa",
+    icon: "nc-icon nc-bank",
+    component: Mahasiswa,
+    layout: "/admin"
+  },
+  {
+    path: "/tambah-seminar",
+    name: "Tambah Seminar",
+    icon: "nc-icon nc-diamond",
+    component: TambahSeminar,
     layout: "/admin"
   }
   // {
