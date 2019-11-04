@@ -1,6 +1,8 @@
 import React from "react";
+import axios from 'axios';
 // import logo from "./gambar1.png";
 import "./App.css";
+
 import {
   // BrowserRouter as Router,
   // Switch,
@@ -10,6 +12,30 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
+
+function api(){
+  axios.get("https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=F1D016038",
+  {
+    params: {
+      authorization: 'Basic RjFEMDE2MDM4OnRlcnNlcmFoMTM='
+    }
+  }
+  )
+            .then(response => {
+                this.setState({
+                    company: response.data.company,
+                    blog: response.data.blog,
+                    avatar: response.data.avatar_url,
+                    loading: false
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+  
+
+}
+api();
 
 function Login(props) {
   let history = useHistory();
