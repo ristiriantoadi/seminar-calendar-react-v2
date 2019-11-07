@@ -65,14 +65,17 @@ export default function App() {
         {/* <PrivateRoute>
           <Route path="/admin" render={props => <AdminLayout {...props} />} />
         </PrivateRoute> */}
-        <Route path="/admin" render={props => <AdminLayout {...props} />} />
-        {/* <PrivateRoute>
-          <Route
-            path="/user"
-            render={props => <UserLayout {...props} />}
-          ></Route>
-        </PrivateRoute> */}
-        <Route path="/user" render={props => <UserLayout {...props} />}></Route>
+        {/* <Route path="/admin" render={props => <AdminLayout {...props} />} /> */}
+        <PrivateRoute>
+          <Switch>
+            <Route
+              path="/user"
+              render={props => <UserLayout {...props} />}
+            ></Route>
+            <Route path="/admin" render={props => <AdminLayout {...props} />} />
+          </Switch>
+        </PrivateRoute>
+        {/* <Route path="/user" render={props => <UserLayout {...props} />}></Route> */}
         {/* <PrivateRoute path="/dashboard">
           <Dashboard />
         </PrivateRoute> */}

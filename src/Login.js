@@ -16,10 +16,20 @@ function Login(props) {
   let location = useLocation();
 
   let { from } = location.state || { from: { pathname: "/" } };
-  let login = () => {
-    props.fakeAuth.authenticate(() => {
-      history.replace("/user/seminar");
-    });
+  let login = event => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    var email = data.get("email");
+    var password = data.get("password");
+    if (email === "user@gmail.com") {
+      props.fakeAuth.authenticate(() => {
+        history.replace("/user/seminar");
+      });
+    } else if (email === "admin@gmail.com") {
+      props.fakeAuth.authenticate(() => {
+        history.replace("/admin/seminar");
+      });
+    }
   };
   return (
     <div className="App">
@@ -98,38 +108,40 @@ function Login(props) {
                       Sign in
                     </button>
                   </form> */}
-                  <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder="Enter email"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="exampleInputPassword1"
-                      placeholder="Password"
-                    />
-                  </div>
-                  <div class="form-group form-check">
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="exampleCheck1"
-                    />
-                    <label class="form-check-label" for="exampleCheck1">
-                      Remember me
-                    </label>
-                  </div>
-                  <button onClick={login} class="btn btn-primary">
-                    Sign in
-                  </button>
+                  <form onSubmit={login}>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Email address</label>
+                      <input
+                        name="email"
+                        type="email"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="Enter email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Password</label>
+                      <input
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        id="exampleInputPassword1"
+                        placeholder="Password"
+                      />
+                    </div>
+                    <div class="form-group form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label class="form-check-label" for="exampleCheck1">
+                        Remember me
+                      </label>
+                    </div>
+                    <button class="btn btn-primary">Sign in</button>
+                  </form>
                 </div>
               </div>
             </div>
