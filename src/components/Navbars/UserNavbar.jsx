@@ -36,7 +36,7 @@ import {
   Input
 } from "reactstrap";
 
-import routes from "routes.js";
+import routes from "userRoutes.js";
 
 class Header extends React.Component {
   constructor(props) {
@@ -170,6 +170,15 @@ class Header extends React.Component {
                   </p>
                 </Link>
               </NavItem> */}
+              {/* <NavItem>
+                <Link to="#pablo" className="nav-link btn-magnify">
+                  {/* <i className="nc-icon nc-layout-11" /> */}
+              {/* <span>Ristirianto Adi</span> */}
+              {/* <p>
+                    <span className="d-lg-none d-md-block">Stats</span>
+                  </p> */}
+              {/* </Link> */}
+              {/* </NavItem> */}
               <Dropdown
                 nav
                 isOpen={this.state.dropdownOpen}
@@ -177,14 +186,14 @@ class Header extends React.Component {
               >
                 <DropdownToggle caret nav>
                   {/* <i className="nc-icon nc-bell-55" /> */}
-                  <span style={{ marginLeft: "5px" }}>Admin</span>
+                  <span>Ristirianto Adi (F1D016078)</span>
                   {/* <p>
-                    <span className="d-lg-none d-md-block">Admin</span>
+                    <span className="d-lg-none d-md-block">Some Actions</span>
                   </p> */}
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem tag="a">Pengaturan Akun</DropdownItem>
-                  <DropdownItem tag="a">Log out</DropdownItem>
+                  <DropdownItem tag="a">Logout</DropdownItem>
                   {/* <DropdownItem tag="a">Something else here</DropdownItem> */}
                 </DropdownMenu>
               </Dropdown>

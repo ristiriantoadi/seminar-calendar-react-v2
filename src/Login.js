@@ -18,7 +18,7 @@ function Login(props) {
   let { from } = location.state || { from: { pathname: "/" } };
   let login = () => {
     props.fakeAuth.authenticate(() => {
-      history.replace("/admin/seminar");
+      history.replace("/user/seminar");
     });
   };
   return (
