@@ -43,8 +43,8 @@ var routes = [
     layout: "/admin"
   },
   {
-    path: "/tambah-seminar",
-    name: "Tambah Seminar",
+    path: "/pengajuan-seminar",
+    name: "Pengajuan Seminar",
     icon: "nc-icon nc-diamond",
     component: TambahSeminar,
     layout: "/admin"

@@ -34,6 +34,8 @@ import {
   Col
 } from "reactstrap";
 
+import {Form} from 'react-bootstrap'
+
 class TambahSeminar extends React.Component {
   state = {
     visible: true
@@ -81,37 +83,44 @@ class TambahSeminar extends React.Component {
   render() {
     return (
       <>
-        <div className="content">
+      
+<div className="content">
           <NotificationAlert ref={this.notificationAlert} />
           <Row>
             <Col md="12">
               <Card>
                 <CardHeader>
                   <CardTitle tag="h3">Tambah Seminar</CardTitle>
-                  <CardBody>
-                    <p>Di sini formulir tambah event seminar</p>
-                  </CardBody>
-                  {/* <p className="card-category">
-                    Handcrafted by our colleague{" "}
-                    <a
-                      target="_blank"
-                      href="https://www.instagram.com/manu.nazare/"
-                    >
-                      Nazare Emanuel-Ioan (Manu)
-                    </a>
-                    . Please checkout the{" "}
-                    <a
-                      href="https://github.com/creativetimofficial/react-notification-alert"
-                      target="_blank"
-                    >
-                      full documentation.
-                    </a>
-                  </p> */}
+                  <Card body>
+                  <Form.Group controlId="Form.ControlNama">
+                    <Form.Label>Nama</Form.Label>
+                      <Form.Control type="email" placeholder="masukkan nama lengkap" />
+                    </Form.Group>
+                    <Form.Group controlId="Form.ControlNama">
+                    <Form.Label>NIM</Form.Label>
+                      <Form.Control type="NIM" placeholder="masukkan NIM" />
+                    </Form.Group>
+                    <Form.Group controlId="Form.ControlJudul">
+                    <Form.Label>Judul Tugas Akhir</Form.Label>
+                      <Form.Control type="judul" placeholder="masukkan judul tugas akhir" />
+                    </Form.Group>
+                    <Form.Group controlId="Form.ControlDospem1">
+                      <Form.Label>Pembimbing 1</Form.Label>
+                      <Form.Control as="select">
+                        <option>Ir.Sri Endang Anjarwani, M.Kom</option>
+                        <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </Card>
                 </CardHeader>
               </Card>
             </Col>
           </Row>
         </div>
+        
       </>
     );
   }
