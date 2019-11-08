@@ -13,11 +13,43 @@ import {
   useLocation
 } from "react-router-dom";
 
+// function componentWillMount() {
+//   axios.get("https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=F1D016038")
+//       .then(response => {
+//           this.setState({
+//               company: response.data.company,
+//               blog: response.data.blog,
+//               avatar: response.data.avatar_url,
+//               loading: false
+//           });
+//       })
+//       .catch(error => {
+//           console.log(error);
+//       });
+// }
+//componentWillMount();
+
+// function componentDidMount(){
+//   const urlFetch = fetch('https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=f1d016086')
+//   urlFetch.then( res => {
+//      if(res.status === 200)
+//         return res.json()   
+//   }).then( resJson => {
+//      this.setState({
+//          data: resJson
+//      })
+//   })
+// }
+// componentDidMount();
+
+//uthorization: Basic RjFEMDE2MDg2OjEyMzQ1Njc4
+
 function api(){
-  axios.get("https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=F1D016038",
+  axios.get("https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=f1d016086",
   {
     params: {
-      authorization: 'Basic RjFEMDE2MDM4OnRlcnNlcmFoMTM='
+      //authorization: "Basic RjFEMDE2MDg2OjEyMzQ1Njc4"
+      authorization: "Basic RjFEMDE2MDg2OjEyMzQ1Njc4"
     }
   }
   )
@@ -28,14 +60,14 @@ function api(){
                     avatar: response.data.avatar_url,
                     loading: false
                 });
-            })
+            }) 
             .catch(error => {
                 console.log(error);
             });
-  
-
 }
 api();
+
+
 
 function Login(props) {
   let history = useHistory();
