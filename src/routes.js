@@ -35,18 +35,25 @@ var routes = [
     component: Seminar,
     layout: "/admin"
   },
-  {
-    path: "/mahasiswa",
-    name: "Mahasiswa",
-    icon: "nc-icon nc-bank",
-    component: Mahasiswa,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/mahasiswa",
+  //   name: "Mahasiswa",
+  //   icon: "nc-icon nc-bank",
+  //   component: Mahasiswa,
+  //   layout: "/admin"
+  // },
   {
     path: "/tambah-seminar",
     name: "Tambah Seminar",
     icon: "nc-icon nc-diamond",
     component: TambahSeminar,
+    layout: "/admin"
+  },
+  {
+    path: "/daftar-pengajuan-seminar",
+    name: "Konfirmasi Seminar",
+    icon: "nc-icon nc-diamond",
+    component: Mahasiswa,
     layout: "/admin"
   }
   // {
