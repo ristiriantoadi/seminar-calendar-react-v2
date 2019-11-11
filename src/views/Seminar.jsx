@@ -22,6 +22,7 @@ import React from "react";
 import NotificationAlert from "react-notification-alert";
 import Calendar from "Calendar";
 // reactstrap components
+import firebase from "firebase";
 import {
   UncontrolledAlert,
   Alert,
@@ -33,11 +34,43 @@ import {
   Row,
   Col
 } from "reactstrap";
+import config from "config";
 
 class Seminar extends React.Component {
-  state = {
-    visible: true
-  };
+  constructor() {
+    super();
+    if (!firebase.apps.length) {
+      // firebase.initializeApp({});
+      this.app = firebase.initializeApp(config);
+    } else {
+      this.app = firebase.apps[0];
+    }
+    this.database = this.app
+      .database()
+      .ref()
+      .child("seminar");
+    this.state = {
+      events: [],
+      visible: true
+    };
+  }
+  componentDidMount() {
+    const previousEvents = this.state.events;
+    this.database.on("child_added", snap => {
+      previousEvents.push({
+        title: snap.val().title,
+        start: snap.val().startDate,
+        end: snap.val().startDate
+      });
+      this.setState({
+        events: previousEvents
+      });
+      console.log(this.state.events);
+    });
+  }
+  // state = {
+  //   visible: true
+  // };
   notificationAlert = React.createRef();
   notify(place) {
     var color = Math.floor(Math.random() * 5 + 1);
@@ -209,7 +242,7 @@ class Seminar extends React.Component {
                           <Button onClick={this.handleButtonClick}>
                             Something
                           </Button>
-                          <Calendar></Calendar>
+                          <Calendar events={this.state.events}></Calendar>
                         </CardBody>
                         {/* <CardBody>
                           <Alert color="info">

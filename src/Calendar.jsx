@@ -9,26 +9,22 @@ import "./main.css"; // webpack must be configured to do this
 class Calendar extends React.Component {
   calendarRef = React.createRef();
   render() {
+    const someEvents = this.props.events.map(event => ({
+      title: event.title,
+      start: event.start
+    }));
     return (
       <FullCalendar
         ref={this.calendarRef}
         defaultView="dayGridMonth"
         header={{
-          left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+          right: "prev,next today",
+          left: ""
         }}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         dateClick={this.handleClick}
-        events={[
-          {
-            title: "Ristirianto Adi (F1D016078)", // a property!
-            start: "2019-10-21", // a property!
-            end: "2019-10-23", // a property! ** see important note below about 'end' **'
-            backgroundColor: "green",
-            color: "white"
-          }
-        ]}
+        events={someEvents}
         eventClick={this.clickEvent}
         // aspectRatio={2.5}
       />

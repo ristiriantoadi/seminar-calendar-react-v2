@@ -3,6 +3,7 @@
     "baseUrl": "src",
     "paths": {
       "*": ["src/*"]
-    }
+    },
+    "target":"es6"
   }
 }
