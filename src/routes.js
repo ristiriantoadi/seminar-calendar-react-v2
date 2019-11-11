@@ -35,13 +35,7 @@ var routes = [
     component: Seminar,
     layout: "/admin"
   },
-  // {
-  //   path: "/mahasiswa",
-  //   name: "Mahasiswa",
-  //   icon: "nc-icon nc-bank",
-  //   component: Mahasiswa,
-  //   layout: "/admin"
-  // },
+
   {
     path: "/pengajuan-seminar",
     name: "Pengajuan Seminar",

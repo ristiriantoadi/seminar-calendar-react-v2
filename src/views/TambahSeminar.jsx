@@ -36,6 +36,7 @@ import {
 
 import {Form} from 'react-bootstrap'
 
+
 class TambahSeminar extends React.Component {
   state = {
     visible: true
@@ -92,28 +93,128 @@ class TambahSeminar extends React.Component {
                 <CardHeader>
                   <CardTitle tag="h3">Tambah Seminar</CardTitle>
                   <Card body>
-                  <Form.Group controlId="Form.ControlNama">
-                    <Form.Label>Nama</Form.Label>
-                      <Form.Control type="email" placeholder="masukkan nama lengkap" />
+                    <Form>
+                      <Form.Group  controlId="Form.ControlNama">
+                      <Form.Label>Nama</Form.Label>
+                      <Form.Control type="email" placeholder="Masukkan nama lengkap" />
                     </Form.Group>
                     <Form.Group controlId="Form.ControlNama">
                     <Form.Label>NIM</Form.Label>
-                      <Form.Control type="NIM" placeholder="masukkan NIM" />
+                      <Form.Control type="NIM" placeholder="Masukkan NIM" />
                     </Form.Group>
                     <Form.Group controlId="Form.ControlJudul">
                     <Form.Label>Judul Tugas Akhir</Form.Label>
-                      <Form.Control type="judul" placeholder="masukkan judul tugas akhir" />
+                      <Form.Control type="judul" placeholder="Masukkan judul tugas akhir" />
                     </Form.Group>
                     <Form.Group controlId="Form.ControlDospem1">
                       <Form.Label>Pembimbing 1</Form.Label>
                       <Form.Control as="select">
+                        <option>---Pilih---</option>
                         <option>Ir.Sri Endang Anjarwani, M.Kom</option>
                         <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        <option>Dr. Eng. Budi Irmawati, S.Kom.,M.T.</option>
+                        <option>Ario Yudo Husoda.,S.T.,M.Kom</option>
+                        <option>Andy Hidayat Jatmika,S.T.,M.Kom</option>
+                        <option>Royana Afwani, S.T.,M.T.</option>
+                        <option>Nadiyasari Agitha, S.Kom.,M.Kom</option>
+                        <option>Ariyan Zubaidi,S.Kom.,M.T.</option>
+                        <option>Fitri Bimantoro S.T.,M.Kom</option>
+                        <option>Moh. Ali Akbar, S.T.,M.Eng</option>
+                        <option>Ahmad Zafrullah M.,S.T.,M.Eng</option>
+                        <option>Dr.Eng. I Gede Putu Wirarama WW., S.T.,M.T.</option>
+                        <option>Gibran Satya Nugraha, S.Kom.,M.Eng</option>
+                        <option>Ramaditia Dwiyansaputra,S.T.,M.Eng</option>
+                        <option>Arik Aranta, S.Kom.,M.Kom</option>
                       </Form.Control>
                     </Form.Group>
+                    <Form.Group controlId="Form.ControlDospem2">
+                      <Form.Label>Pembimbing 2</Form.Label>
+                      <Form.Control as="select">
+                        <option>---Pilih---</option>
+                        <option>Ir.Sri Endang Anjarwani, M.Kom</option>
+                        <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
+                        <option>Dr. Eng. Budi Irmawati, S.Kom.,M.T.</option>
+                        <option>Ario Yudo Husoda.,S.T.,M.Kom</option>
+                        <option>Andy Hidayat Jatmika,S.T.,M.Kom</option>
+                        <option>Royana Afwani, S.T.,M.T.</option>
+                        <option>Nadiyasari Agitha, S.Kom.,M.Kom</option>
+                        <option>Ariyan Zubaidi,S.Kom.,M.T.</option>
+                        <option>Fitri Bimantoro S.T.,M.Kom</option>
+                        <option>Moh. Ali Akbar, S.T.,M.Eng</option>
+                        <option>Ahmad Zafrullah M.,S.T.,M.Eng</option>
+                        <option>Dr.Eng. I Gede Putu Wirarama WW., S.T.,M.T.</option>
+                        <option>Gibran Satya Nugraha, S.Kom.,M.Eng</option>
+                        <option>Ramaditia Dwiyansaputra,S.T.,M.Eng</option>
+                        <option>Arik Aranta, S.Kom.,M.Kom</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group controlId="Form.ControlPenguji1">
+                      <Form.Label>Penguji 1</Form.Label>
+                      <Form.Control as="select">
+                        <option>---Pilih---</option>
+                        <option>Ir.Sri Endang Anjarwani, M.Kom</option>
+                        <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
+                        <option>Dr. Eng. Budi Irmawati, S.Kom.,M.T.</option>
+                        <option>Ario Yudo Husoda.,S.T.,M.Kom</option>
+                        <option>Andy Hidayat Jatmika,S.T.,M.Kom</option>
+                        <option>Royana Afwani, S.T.,M.T.</option>
+                        <option>Nadiyasari Agitha, S.Kom.,M.Kom</option>
+                        <option>Ariyan Zubaidi,S.Kom.,M.T.</option>
+                        <option>Fitri Bimantoro S.T.,M.Kom</option>
+                        <option>Moh. Ali Akbar, S.T.,M.Eng</option>
+                        <option>Ahmad Zafrullah M.,S.T.,M.Eng</option>
+                        <option>Dr.Eng. I Gede Putu Wirarama WW., S.T.,M.T.</option>
+                        <option>Gibran Satya Nugraha, S.Kom.,M.Eng</option>
+                        <option>Ramaditia Dwiyansaputra,S.T.,M.Eng</option>
+                        <option>Arik Aranta, S.Kom.,M.Kom</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group controlId="Form.ControlPenguji2">
+                      <Form.Label>Penguji 2</Form.Label>
+                      <Form.Control as="select">
+                        <option>---Pilih---</option>
+                        <option>Ir.Sri Endang Anjarwani, M.Kom</option>
+                        <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
+                        <option>Dr. Eng. Budi Irmawati, S.Kom.,M.T.</option>
+                        <option>Ario Yudo Husoda.,S.T.,M.Kom</option>
+                        <option>Andy Hidayat Jatmika,S.T.,M.Kom</option>
+                        <option>Royana Afwani, S.T.,M.T.</option>
+                        <option>Nadiyasari Agitha, S.Kom.,M.Kom</option>
+                        <option>Ariyan Zubaidi,S.Kom.,M.T.</option>
+                        <option>Fitri Bimantoro S.T.,M.Kom</option>
+                        <option>Moh. Ali Akbar, S.T.,M.Eng</option>
+                        <option>Ahmad Zafrullah M.,S.T.,M.Eng</option>
+                        <option>Dr.Eng. I Gede Putu Wirarama WW., S.T.,M.T.</option>
+                        <option>Gibran Satya Nugraha, S.Kom.,M.Eng</option>
+                        <option>Ramaditia Dwiyansaputra,S.T.,M.Eng</option>
+                        <option>Arik Aranta, S.Kom.,M.Kom</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <Form.Group controlId="Form.ControlPenguji3">
+                      <Form.Label>Penguji 3</Form.Label>
+                      <Form.Control as="select">
+                        <option>---Pilih---</option>
+                        <option>Ir.Sri Endang Anjarwani, M.Kom</option>
+                        <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
+                        <option>Dr. Eng. Budi Irmawati, S.Kom.,M.T.</option>
+                        <option>Ario Yudo Husoda.,S.T.,M.Kom</option>
+                        <option>Andy Hidayat Jatmika,S.T.,M.Kom</option>
+                        <option>Royana Afwani, S.T.,M.T.</option>
+                        <option>Nadiyasari Agitha, S.Kom.,M.Kom</option>
+                        <option>Ariyan Zubaidi,S.Kom.,M.T.</option>
+                        <option>Fitri Bimantoro S.T.,M.Kom</option>
+                        <option>Moh. Ali Akbar, S.T.,M.Eng</option>
+                        <option>Ahmad Zafrullah M.,S.T.,M.Eng</option>
+                        <option>Dr.Eng. I Gede Putu Wirarama WW., S.T.,M.T.</option>
+                        <option>Gibran Satya Nugraha, S.Kom.,M.Eng</option>
+                        <option>Ramaditia Dwiyansaputra,S.T.,M.Eng</option>
+                        <option>Arik Aranta, S.Kom.,M.Kom</option>
+                      </Form.Control>
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                      Submit
+                    </Button>
+                    </Form>
                   </Card>
                 </CardHeader>
               </Card>
