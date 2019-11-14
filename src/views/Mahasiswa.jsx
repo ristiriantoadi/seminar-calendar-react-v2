@@ -25,18 +25,17 @@ import Calendar from "Calendar";
 import {
   UncontrolledAlert,
   Alert,
-  Button,
   Card,
   CardHeader,
   CardBody,
   CardTitle,
   Row,
-  Col,
-  variant
+  Col
 } from "reactstrap";
 
 import {Form} from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/button';
 
 class Mahasiswa extends React.Component {
   state = {
@@ -92,36 +91,15 @@ class Mahasiswa extends React.Component {
               <Card>
                 <CardHeader>
                   <CardTitle tag="h3">Form Seminar Tugas Akhir</CardTitle>
-                  <Card body>
+                  <Card>
+                    <Row>
+                    <Col md="6">
                     <Form>
                       <Form.Row>
                       <Form.Group as={Col} controlId="Form.ControlNama">
                       <Form.Label>Nama</Form.Label>
                       <Form.Control type="email" placeholder="Masukkan nama lengkap" />
                     </Form.Group>
-
-                    <Form.Group as={Col} controlId="Form.ControlNama">
-                    <Table striped bordered hover size = "sm">
-                      <thead>
-                        <tr>
-                          <th>No</th>
-                          <th>Jenis Dokumen</th>
-                          <th>Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Mark</td>
-                          <td>
-                          <Button variant="primary" size="sm">Upload</Button>
-                          <Button variant="secondary" size="sm">Delete</Button>                 
-                          </td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                    </Form.Group>
-
                     </Form.Row>
                     <Form.Group controlId="Form.ControlNama">
                     <Form.Label>NIM</Form.Label>
@@ -181,6 +159,56 @@ class Mahasiswa extends React.Component {
                       Submit
                     </Button>
                     </Form>
+                    </Col>
+                    <Col md="6">
+                    <Form.Group as={Col} controlId="Form.ControlNama">
+                    <Table striped bordered hover size = "sm">
+                      <thead>
+                        <tr>
+                          <th>No</th>
+                          <th>Jenis Dokumen</th>
+                          <th>Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>Kelengkapan Laporan 
+                            (Cover, Lembar Pengesahan,Abstrak, Lembar Konsultasi)</td>
+                          <td>
+                          <Button variant="primary" size="sm">Upload</Button>
+                          <Button variant="secondary" size="sm">Delete</Button>                 
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td>Kartu kontrol seminar proposal TA</td>
+                          <td>
+                          <Button variant="primary" size="sm">Upload</Button>
+                          <Button variant="secondary" size="sm">Delete</Button>                 
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>3</td>
+                          <td>Surat Puas PKL</td>
+                          <td>
+                          <Button variant="primary" size="sm">Upload</Button>
+                          <Button variant="secondary" size="sm">Delete</Button>                
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>4</td>
+                          <td>Fotocopy KRS yang menunjukkan MK Tugas Akhir I</td>
+                          <td>
+                          <Button variant="primary" size="sm">Upload</Button>
+                          <Button variant="secondary" size="sm">Delete</Button>                 
+                          </td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                    </Form.Group>
+                    </Col>
+                    </Row>
                     </Card>
                 </CardHeader>
               </Card>
