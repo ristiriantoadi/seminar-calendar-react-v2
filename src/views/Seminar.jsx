@@ -34,40 +34,40 @@ import {
   Row,
   Col
 } from "reactstrap";
-import config from "config";
+// import config from "config";
 
 class Seminar extends React.Component {
   constructor() {
     super();
-    if (!firebase.apps.length) {
-      // firebase.initializeApp({});
-      this.app = firebase.initializeApp(config);
-    } else {
-      this.app = firebase.apps[0];
-    }
-    this.database = this.app
-      .database()
-      .ref()
-      .child("seminar");
+    // if (!firebase.apps.length) {
+    //   // firebase.initializeApp({});
+    //   this.app = firebase.initializeApp(config);
+    // } else {
+    //   this.app = firebase.apps[0];
+    // }
+    // this.database = this.app
+    //   .database()
+    //   .ref()
+    //   .child("seminar");
     this.state = {
-      events: [],
+      // events: [],
       visible: true
     };
   }
-  componentDidMount() {
-    const previousEvents = this.state.events;
-    this.database.on("child_added", snap => {
-      previousEvents.push({
-        title: snap.val().title,
-        start: snap.val().startDate,
-        end: snap.val().startDate
-      });
-      this.setState({
-        events: previousEvents
-      });
-      console.log(this.state.events);
-    });
-  }
+  // componentDidMount() {
+  //   const previousEvents = this.state.events;
+  //   this.database.on("child_added", snap => {
+  //     previousEvents.push({
+  //       title: snap.val().title,
+  //       start: snap.val().startDate,
+  //       end: snap.val().startDate
+  //     });
+  //     this.setState({
+  //       events: previousEvents
+  //     });
+  //     console.log(this.state.events);
+  //   });
+  // }
   // state = {
   //   visible: true
   // };
@@ -242,7 +242,7 @@ class Seminar extends React.Component {
                           <Button onClick={this.handleButtonClick}>
                             Something
                           </Button>
-                          <Calendar events={this.state.events}></Calendar>
+                          <Calendar events={this.props.events}></Calendar>
                         </CardBody>
                         {/* <CardBody>
                           <Alert color="info">

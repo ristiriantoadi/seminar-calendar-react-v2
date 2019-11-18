@@ -33,14 +33,18 @@ import {
   Col
 } from "reactstrap";
 
-import {Form} from 'react-bootstrap';
-import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/button';
+import { Form } from "react-bootstrap";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/button";
 
 class Mahasiswa extends React.Component {
-  state = {
-    visible: true
-  };
+  constructor() {
+    super();
+    this.state = {
+      visible: true
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
   notificationAlert = React.createRef();
   notify(place) {
     var color = Math.floor(Math.random() * 5 + 1);
@@ -81,7 +85,67 @@ class Mahasiswa extends React.Component {
     };
     this.notificationAlert.current.notificationAlert(options);
   }
+  // handleSubmit(event) {
+  //   // console.log("do something");
+  //   event.preventDefault();
+  //   const data = new FormData(event.target);
+  //   // console.log(data);
+  //   // this.database.push().set({ text: data });
+  //   // event.target
+  //   const sendToFirebase = {
+  //     text: data.get("text")
+  //   };
+  //   this.database.push().set(sendToFirebase);
+  //   // this.state.inputText = "";
+  //   this.setState({
+  //     inputText: ""
+  //   });
+  //   this.setState({
+  //     speed: 10
+  //   });
+  // }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log("something");
+    const data = new FormData(event.target);
+    console.log(data.get("nama-lengkap"));
+    console.log(data.get("nim"));
+    console.log(data.get("judul"));
+    console.log(data.get("dosen-pembimbing-1"));
+    console.log(data.get("dosen-pembimbing-2"));
+    console.log(data.get("no-hp"));
+    console.log(data.get("file-laporan"));
+
+    this.props.app
+      .database()
+      .ref("proposal-seminar/" + data.get("nim"))
+      .set({
+        namaLengkap: data.get("nama-lengkap"),
+        nim: data.get("nim"),
+        judul: data.get("judul"),
+        pembimbingSatu: data.get("dosen-pembimbing-1"),
+        pembimbingDua: data.get("dosen-pembimbing-2"),
+        noHp: data.get("no-hp")
+      });
+    const storage = this.props.app.storage();
+    storage
+      .ref("proposal-seminar/" + data.get("nim") + "/fileLaporan.pdf")
+      .put(data.get("file-laporan"));
+    storage
+      .ref("proposal-seminar/" + data.get("nim") + "/fileKartuKontrol.pdf")
+      .put(data.get("file-kartu-kontrol"));
+    storage
+      .ref("proposal-seminar/" + data.get("nim") + "/fileSuratPuas.pdf")
+      .put(data.get("file-surat-puas"));
+    storage
+      .ref("proposal-seminar/" + data.get("nim") + "/fileKRS.pdf")
+      .put(data.get("file-krs"));
+    // console.log(this.props.events);
+  }
+
   render() {
+    console.log(this.props.app);
     return (
       <>
         <div className="content">
@@ -92,124 +156,181 @@ class Mahasiswa extends React.Component {
                 <CardHeader>
                   <CardTitle tag="h3">Form Seminar Tugas Akhir</CardTitle>
                   <Card>
-                    <Row>
-                    <Col md="6">
-                    <Form>
-                      <Form.Row>
-                      <Form.Group as={Col} controlId="Form.ControlNama">
-                      <Form.Label>Nama</Form.Label>
-                      <Form.Control type="email" placeholder="Masukkan nama lengkap" />
-                    </Form.Group>
-                    </Form.Row>
-                    <Form.Group controlId="Form.ControlNama">
-                    <Form.Label>NIM</Form.Label>
-                      <Form.Control type="NIM" placeholder="Masukkan NIM" />
-                    </Form.Group>
-                    <Form.Group controlId="Form.ControlJudul">
-                    <Form.Label>Judul Tugas Akhir</Form.Label>
-                      <Form.Control type="judul" placeholder="Masukkan judul tugas akhir" />
-                    </Form.Group>
-                    <Form.Group controlId="Form.ControlDospem1">
-                      <Form.Label>Pembimbing 1</Form.Label>
-                      <Form.Control as="select">
-                        <option>---Pilih---</option>
-                        <option>Ir.Sri Endang Anjarwani, M.Kom</option>
-                        <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
-                        <option>Dr. Eng. Budi Irmawati, S.Kom.,M.T.</option>
-                        <option>Ario Yudo Husoda.,S.T.,M.Kom</option>
-                        <option>Andy Hidayat Jatmika,S.T.,M.Kom</option>
-                        <option>Royana Afwani, S.T.,M.T.</option>
-                        <option>Nadiyasari Agitha, S.Kom.,M.Kom</option>
-                        <option>Ariyan Zubaidi,S.Kom.,M.T.</option>
-                        <option>Fitri Bimantoro S.T.,M.Kom</option>
-                        <option>Moh. Ali Akbar, S.T.,M.Eng</option>
-                        <option>Ahmad Zafrullah M.,S.T.,M.Eng</option>
-                        <option>Dr.Eng. I Gede Putu Wirarama WW., S.T.,M.T.</option>
-                        <option>Gibran Satya Nugraha, S.Kom.,M.Eng</option>
-                        <option>Ramaditia Dwiyansaputra,S.T.,M.Eng</option>
-                        <option>Arik Aranta, S.Kom.,M.Kom</option>
-                      </Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId="Form.ControlDospem2">
-                      <Form.Label>Pembimbing 2</Form.Label>
-                      <Form.Control as="select">
-                        <option>---Pilih---</option>
-                        <option>Ir.Sri Endang Anjarwani, M.Kom</option>
-                        <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
-                        <option>Dr. Eng. Budi Irmawati, S.Kom.,M.T.</option>
-                        <option>Ario Yudo Husoda.,S.T.,M.Kom</option>
-                        <option>Andy Hidayat Jatmika,S.T.,M.Kom</option>
-                        <option>Royana Afwani, S.T.,M.T.</option>
-                        <option>Nadiyasari Agitha, S.Kom.,M.Kom</option>
-                        <option>Ariyan Zubaidi,S.Kom.,M.T.</option>
-                        <option>Fitri Bimantoro S.T.,M.Kom</option>
-                        <option>Moh. Ali Akbar, S.T.,M.Eng</option>
-                        <option>Ahmad Zafrullah M.,S.T.,M.Eng</option>
-                        <option>Dr.Eng. I Gede Putu Wirarama WW., S.T.,M.T.</option>
-                        <option>Gibran Satya Nugraha, S.Kom.,M.Eng</option>
-                        <option>Ramaditia Dwiyansaputra,S.T.,M.Eng</option>
-                        <option>Arik Aranta, S.Kom.,M.Kom</option>
-                      </Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId="Form.ControlNoHP">
-                    <Form.Label>No. HP</Form.Label>
-                      <Form.Control type="nohp" placeholder="Masukkan nomor handphone yang dapat dihubungi" />
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                      Submit
-                    </Button>
+                    <Form onSubmit={this.handleSubmit}>
+                      <Row>
+                        <Col md="6">
+                          <Form.Row>
+                            <Form.Group as={Col} controlId="Form.ControlNama">
+                              <Form.Label>Nama</Form.Label>
+                              <Form.Control
+                                type="text"
+                                name="nama-lengkap"
+                                placeholder="Masukkan nama lengkap"
+                              />
+                            </Form.Group>
+                          </Form.Row>
+                          <Form.Group controlId="Form.ControlNama">
+                            <Form.Label>NIM</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nim"
+                              placeholder="Masukkan NIM"
+                            />
+                          </Form.Group>
+                          <Form.Group controlId="Form.ControlJudul">
+                            <Form.Label>Judul Tugas Akhir</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="judul"
+                              placeholder="Masukkan judul tugas akhir"
+                            />
+                          </Form.Group>
+                          <Form.Group controlId="Form.ControlDospem1">
+                            <Form.Label>Pembimbing 1</Form.Label>
+                            <Form.Control as="select" name="dosen-pembimbing-1">
+                              <option>---Pilih---</option>
+                              <option>Ir.Sri Endang Anjarwani, M.Kom</option>
+                              <option>
+                                Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng
+                              </option>
+                              <option>
+                                Dr. Eng. Budi Irmawati, S.Kom.,M.T.
+                              </option>
+                              <option>Ario Yudo Husoda.,S.T.,M.Kom</option>
+                              <option>Andy Hidayat Jatmika,S.T.,M.Kom</option>
+                              <option>Royana Afwani, S.T.,M.T.</option>
+                              <option>Nadiyasari Agitha, S.Kom.,M.Kom</option>
+                              <option>Ariyan Zubaidi,S.Kom.,M.T.</option>
+                              <option>Fitri Bimantoro S.T.,M.Kom</option>
+                              <option>Moh. Ali Akbar, S.T.,M.Eng</option>
+                              <option>Ahmad Zafrullah M.,S.T.,M.Eng</option>
+                              <option>
+                                Dr.Eng. I Gede Putu Wirarama WW., S.T.,M.T.
+                              </option>
+                              <option>
+                                Gibran Satya Nugraha, S.Kom.,M.Eng
+                              </option>
+                              <option>
+                                Ramaditia Dwiyansaputra,S.T.,M.Eng
+                              </option>
+                              <option>Arik Aranta, S.Kom.,M.Kom</option>
+                            </Form.Control>
+                          </Form.Group>
+                          <Form.Group controlId="Form.ControlDospem2">
+                            <Form.Label>Pembimbing 2</Form.Label>
+                            <Form.Control as="select" name="dosen-pembimbing-2">
+                              <option>---Pilih---</option>
+                              <option>Ir.Sri Endang Anjarwani, M.Kom</option>
+                              <option>
+                                Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng
+                              </option>
+                              <option>
+                                Dr. Eng. Budi Irmawati, S.Kom.,M.T.
+                              </option>
+                              <option>Ario Yudo Husoda.,S.T.,M.Kom</option>
+                              <option>Andy Hidayat Jatmika,S.T.,M.Kom</option>
+                              <option>Royana Afwani, S.T.,M.T.</option>
+                              <option>Nadiyasari Agitha, S.Kom.,M.Kom</option>
+                              <option>Ariyan Zubaidi,S.Kom.,M.T.</option>
+                              <option>Fitri Bimantoro S.T.,M.Kom</option>
+                              <option>Moh. Ali Akbar, S.T.,M.Eng</option>
+                              <option>Ahmad Zafrullah M.,S.T.,M.Eng</option>
+                              <option>
+                                Dr.Eng. I Gede Putu Wirarama WW., S.T.,M.T.
+                              </option>
+                              <option>
+                                Gibran Satya Nugraha, S.Kom.,M.Eng
+                              </option>
+                              <option>
+                                Ramaditia Dwiyansaputra,S.T.,M.Eng
+                              </option>
+                              <option>Arik Aranta, S.Kom.,M.Kom</option>
+                            </Form.Control>
+                          </Form.Group>
+                          <Form.Group controlId="Form.ControlNoHP">
+                            <Form.Label>No. HP</Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="no-hp"
+                              placeholder="Masukkan nomor handphone yang dapat dihubungi"
+                            />
+                          </Form.Group>
+                          <Button variant="primary" type="submit">
+                            Submit
+                          </Button>
+                        </Col>
+                        <Col md="6">
+                          {/* <Form.Group as={Col} controlId="Form.ControlNama"> */}
+                          <Table striped bordered hover size="sm">
+                            <thead>
+                              <tr>
+                                <th>No</th>
+
+                                <th>Jenis Dokumen</th>
+                                <th>Aksi</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>1</td>
+                                <td>
+                                  Kelengkapan Laporan (Cover, Lembar
+                                  Pengesahan,Abstrak, Lembar Konsultasi)
+                                </td>
+                                <td>
+                                  {/* <Button variant="primary" size="sm">
+                                      Upload
+                                    </Button> */}
+                                  {/* <input type="file"></input> */}
+                                  {/* <Form.Label>Upload file</Form.Label> */}
+                                  <Form.Control
+                                    type="file"
+                                    name="file-laporan"
+                                  ></Form.Control>
+                                  {/* <Button variant="secondary" size="sm">
+                                    Delete
+                                  </Button> */}
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>2</td>
+                                <td>Kartu kontrol seminar proposal TA</td>
+                                <td>
+                                  <Form.Control
+                                    type="file"
+                                    name="file-kartu-kontrol"
+                                  ></Form.Control>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>3</td>
+                                <td>Surat Puas PKL</td>
+                                <td>
+                                  <Form.Control
+                                    type="file"
+                                    name="file-surat-puas"
+                                  ></Form.Control>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>4</td>
+                                <td>
+                                  Fotocopy KRS yang menunjukkan MK Tugas Akhir I
+                                </td>
+                                <td>
+                                  <Form.Control
+                                    type="file"
+                                    name="file-krs"
+                                  ></Form.Control>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                          {/* </Form.Group> */}
+                        </Col>
+                      </Row>
                     </Form>
-                    </Col>
-                    <Col md="6">
-                    <Form.Group as={Col} controlId="Form.ControlNama">
-                    <Table striped bordered hover size = "sm">
-                      <thead>
-                        <tr>
-                          <th>No</th>
-                          <th>Jenis Dokumen</th>
-                          <th>Aksi</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Kelengkapan Laporan 
-                            (Cover, Lembar Pengesahan,Abstrak, Lembar Konsultasi)</td>
-                          <td>
-                          <Button variant="primary" size="sm">Upload</Button>
-                          <Button variant="secondary" size="sm">Delete</Button>                 
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Kartu kontrol seminar proposal TA</td>
-                          <td>
-                          <Button variant="primary" size="sm">Upload</Button>
-                          <Button variant="secondary" size="sm">Delete</Button>                 
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Surat Puas PKL</td>
-                          <td>
-                          <Button variant="primary" size="sm">Upload</Button>
-                          <Button variant="secondary" size="sm">Delete</Button>                
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>Fotocopy KRS yang menunjukkan MK Tugas Akhir I</td>
-                          <td>
-                          <Button variant="primary" size="sm">Upload</Button>
-                          <Button variant="secondary" size="sm">Delete</Button>                 
-                          </td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                    </Form.Group>
-                    </Col>
-                    </Row>
-                    </Card>
+                  </Card>
                 </CardHeader>
               </Card>
             </Col>
