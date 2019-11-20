@@ -1,112 +1,200 @@
 import React from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Logo from "./bkg.png";
+// import logo from "./gambar1.png";
+import "./App.css";
+import {
+  // BrowserRouter as Router,
+  // Switch,
+  // Route,
+  // Link,
+  Redirect,
+  useHistory,
+  useLocation
+} from "react-router-dom";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+function Login(props) {
+  let history = useHistory();
+  let location = useLocation();
 
-const useStyles = makeStyles(theme => ({
-  "@global": {
-    body: {
-      backgroundColor: theme.palette.common.white
+  let { from } = location.state || { from: { pathname: "/" } };
+  let login = event => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    var email = data.get("email");
+    var password = data.get("password");
+    if (email === "user@gmail.com") {
+      props.fakeAuth.authenticate(() => {
+        history.replace("/user/seminar");
+      });
+    } else if (email === "admin@gmail.com") {
+      props.fakeAuth.authenticate(() => {
+        history.replace("/admin/seminar");
+      });
     }
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
-}));
-
-export default function SignIn() {
-  const classes = useStyles();
-
+  };
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        {/* <Avatar className={classes.avatar}></Avatar> */}
-        <img src={Logo} width="150px" height="150px"></img>
-        {/* <Typography component="h1" variant="h5">
-          Sign in
-        </Typography> */}
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="nim"
-            label="NIM"
-            name="nim"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
+    <div className="App">
+      <div class="container" id="content-wrapper">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-12 p-md-3">
+                  <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">
+                        Active
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        Contact Us
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">
+                        About
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
+              <div class="row">
+                <div class="col-md-6" />
+                <div class="col-md-6">
+                  <h1 class="d-flex justify-content-center">
+                    Seminar Calendar
+                  </h1>
+                  <p class="d-flex justify-content-center">
+                    Welcome, please login to your account
+                  </p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6" />
+                <div class="col-md-6 pl-sm-6 pr-sm-6">
+                  {/* <form>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Email address</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="Enter email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Password</label>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="exampleInputPassword1"
+                        placeholder="Password"
+                      />
+                    </div>
+                    <div class="form-group form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label class="form-check-label" for="exampleCheck1">
+                        Remember me
+                      </label>
+                    </div>
+                    <button onClick={login} class="btn btn-primary">
+                      Sign in
+                    </button>
+                  </form> */}
+                  <form onSubmit={login}>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Email address</label>
+                      <input
+                        name="email"
+                        type="email"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="Enter email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Password</label>
+                      <input
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        id="exampleInputPassword1"
+                        placeholder="Password"
+                      />
+                    </div>
+                    <div class="form-group form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck1"
+                      />
+                      <label class="form-check-label" for="exampleCheck1">
+                        Remember me
+                      </label>
+                    </div>
+                    <button class="btn btn-primary">Sign in</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      {/* <Box mt={8}>
-        <Copyright />
-      </Box> */}
-    </Container>
+    </div>
   );
 }
+
+// class Login extends React.Component {
+//   constructor(props) {
+//     super();
+//     this.login = this.login.bind(this);
+//     // let history = useHistory();
+//     // let location = useLocation();
+
+//     // let { from } = location.state || { from: { pathname: "/" } };
+//   }
+
+//   login() {
+//     // console.log("click");
+//     let history = useHistory();
+//     let location = useLocation();
+
+//     let { from } = location.state || { from: { pathname: "/" } };
+//     this.props.fakeAuth.authenticate(() => {
+//       history.replace(from);
+//     });
+//   }
+
+//   render() {
+//     return (
+//       <table border="1px">
+//         <tr>
+//           <td class="logo-area">
+//             <img src={logo} className="App-logo" alt="logo" />
+//           </td>
+//           <td class="wrapper-area">
+//             <h1 class="title">Seminar Calendar</h1>
+//             <h4 class="title2">Welcome, please login to your account</h4>
+//             <div class="form">
+//               <input placeholder="form nama" />
+//               <input placeholder="form password" />
+//               <button onClick={this.login} class="button-login">
+//                 login
+//               </button>
+//             </div>
+//           </td>
+//         </tr>
+//       </table>
+//     );
+//   }
+// }
+
+export default Login;
