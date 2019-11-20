@@ -35,23 +35,24 @@ const fakeAuth = {
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
 function PrivateRoute({ children, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        fakeAuth.isAuthenticated ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />
-        )
-      }
-    />
-  );
+  return fakeAuth.isAuthenticated ? children : <Redirect to="/login" />;
+  // return (
+  //   <Route
+  //     {...rest}
+  //     render={({ location }) =>
+  //       fakeAuth.isAuthenticated ? (
+  //         children
+  //       ) : (
+  //         <Redirect
+  //           to={{
+  //             pathname: "/login",
+  //             state: { from: location }
+  //           }}
+  //         />
+  //       )
+  //     }
+  //   />
+  // );
 }
 
 export default function App() {
@@ -66,7 +67,7 @@ export default function App() {
           <Route path="/admin" render={props => <AdminLayout {...props} />} />
         </PrivateRoute> */}
         {/* <Route path="/admin" render={props => <AdminLayout {...props} />} /> */}
-        <PrivateRoute>
+        {/* <PrivateRoute>
           <Switch>
             <Route
               path="/user"
@@ -74,7 +75,20 @@ export default function App() {
             ></Route>
             <Route path="/admin" render={props => <AdminLayout {...props} />} />
           </Switch>
+        </PrivateRoute> */}
+        <PrivateRoute path="/user">
+          <Route
+            path="/user"
+            render={props => <UserLayout {...props} fakeAuth={fakeAuth} />}
+          />
         </PrivateRoute>
+        <PrivateRoute path="/admin">
+          <Route
+            path="/admin"
+            render={props => <AdminLayout {...props} fakeAuth={fakeAuth} />}
+          />
+        </PrivateRoute>
+        <Redirect to="/login"></Redirect>
         {/* <Route path="/user" render={props => <UserLayout {...props} />}></Route> */}
         {/* <PrivateRoute path="/dashboard">
           <Dashboard />

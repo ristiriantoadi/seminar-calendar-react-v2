@@ -27,7 +27,8 @@ import Sidebar from "components/Sidebar/Sidebar.jsx";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
 
 import routes from "routes.js";
-
+import firebase from "firebase";
+import config from "config";
 var ps;
 
 class Dashboard extends React.Component {
@@ -35,9 +36,20 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       backgroundColor: "black",
-      activeColor: "info"
+      activeColor: "info",
+      events: []
     };
     this.mainPanel = React.createRef();
+    if (!firebase.apps.length) {
+      // firebase.initializeApp({});
+      this.app = firebase.initializeApp(config);
+    } else {
+      this.app = firebase.apps[0];
+    }
+    // this.database = this.app
+    //   .database()
+    //   .ref()
+    //   .child("seminar");
   }
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -45,6 +57,24 @@ class Dashboard extends React.Component {
       document.body.classList.toggle("perfect-scrollbar-on");
     }
   }
+  componentWillMount() {
+    const seminar_ref = this.app
+      .database()
+      .ref()
+      .child("seminar");
+    const previousEvents = this.state.events;
+    seminar_ref.on("child_added", snap => {
+      previousEvents.push({
+        title: snap.val().title,
+        start: snap.val().startDate,
+        end: snap.val().startDate
+      });
+      this.setState({
+        events: previousEvents
+      });
+    });
+  }
+
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps.destroy();
@@ -64,6 +94,7 @@ class Dashboard extends React.Component {
     this.setState({ backgroundColor: color });
   };
   render() {
+    console.log(this.state.events);
     return (
       <div className="wrapper">
         <Sidebar
@@ -73,13 +104,15 @@ class Dashboard extends React.Component {
           activeColor={this.state.activeColor}
         />
         <div className="main-panel" ref={this.mainPanel}>
-          <DemoNavbar {...this.props} />
+          <DemoNavbar fakeAuth={this.props.fakeAuth} {...this.props} />
           <Switch>
             {routes.map((prop, key) => {
               return (
                 <Route
                   path={prop.layout + prop.path}
-                  component={prop.component}
+                  render={() => (
+                    <prop.component events={this.state.events}></prop.component>
+                  )}
                   key={key}
                 />
               );

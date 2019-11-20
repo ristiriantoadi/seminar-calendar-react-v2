@@ -184,7 +184,16 @@ class Header extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem tag="a">Pengaturan Akun</DropdownItem>
-                  <DropdownItem tag="a">Log out</DropdownItem>
+                  <DropdownItem
+                    tag="a"
+                    onClick={() => {
+                      this.props.fakeAuth.signout(() => {
+                        this.props.history.push("/login");
+                      });
+                    }}
+                  >
+                    Log out
+                  </DropdownItem>
                   {/* <DropdownItem tag="a">Something else here</DropdownItem> */}
                 </DropdownMenu>
               </Dropdown>
