@@ -81,14 +81,21 @@ function Login(props) {
   let login = event => {
     event.preventDefault();
     const data = new FormData(event.target);
-    // var email = data.get("email");
-    var email,user_id;
+    var email = data.get("email");
+    var user_id;
     var password = data.get("password");
 
     // if (email === "user@gmail.com") {
     //   props.fakeAuth.authenticate(() => {
     //     history.replace("/user/seminar");
     //   });
+    if (email === "admin@gmail.com") {
+        props.fakeAuth.authenticate(() => {
+          history.replace("/admin/seminar");
+        });
+        return;
+    }else{
+
     axios.post('https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=' + email)
                         
                         .then(function (response) {
@@ -96,7 +103,7 @@ function Login(props) {
                           cookie.save('user_id', response.data.NIM, {
                           path: '/'
                           })
-                          
+
                             if (user_id !== null) {
                                 console.log(response.data);
                                 props.fakeAuth.authenticate(() => {
@@ -130,6 +137,7 @@ function Login(props) {
     //     history.replace("/admin/seminar");
     //   });
     // }
+  }
   };
   return (
     <div className="App">
