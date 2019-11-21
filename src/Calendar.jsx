@@ -25,9 +25,14 @@ class Calendar extends React.Component {
   }
   handleClick(info) {
     //showModal();
+    // console.log("info.event.extendedProps: ");
+    // console.log(info.event.extendedProps);
     const myEvent = {
       title: info.event.title,
-      start:
+      judul: info.event.extendedProps.judul,
+      pembimbingDua: info.event.extendedProps.pembimbingDua,
+      pembimbingSatu: info.event.extendedProps.pembimbingSatu,
+      tanggal:
         info.event.start.getYear() +
         1900 +
         "-" +
@@ -42,8 +47,11 @@ class Calendar extends React.Component {
   }
   render() {
     const someEvents = this.props.events.map(event => ({
-      title: event.title,
-      start: event.start
+      title: "[Seminar TA 1] " + event.namaLengkap + " (" + event.nim + ")",
+      start: event.startDate,
+      judul: event.judul,
+      pembimbingDua: event.pembimbingDua,
+      pembimbingSatu: event.pembimbingSatu
     }));
     return (
       <div>

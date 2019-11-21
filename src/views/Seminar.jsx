@@ -239,9 +239,6 @@ class Seminar extends React.Component {
                           <CardTitle tag="h5">Notifications Style</CardTitle>
                         </CardHeader> */}
                         <CardBody>
-                          <Button onClick={this.handleButtonClick}>
-                            Something
-                          </Button>
                           <Calendar events={this.props.events}></Calendar>
                         </CardBody>
                         {/* <CardBody>

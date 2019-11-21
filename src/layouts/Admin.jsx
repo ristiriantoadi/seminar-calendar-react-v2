@@ -65,9 +65,13 @@ class Dashboard extends React.Component {
     const previousEvents = this.state.events;
     seminar_ref.on("child_added", snap => {
       previousEvents.push({
-        title: snap.val().title,
-        start: snap.val().startDate,
-        end: snap.val().startDate
+        judul: snap.val().judul,
+        startDate: snap.val().startDate,
+        // end: snap.val().startDate,
+        namaLengkap: snap.val().namaLengkap,
+        nim: snap.val().nim,
+        pembimbingDua: snap.val().pembimbingDua,
+        pembimbingSatu: snap.val().pembimbingSatu
       });
       this.setState({
         events: previousEvents
