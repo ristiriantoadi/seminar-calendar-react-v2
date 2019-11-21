@@ -1,5 +1,9 @@
 import React from "react";
 import axios from 'axios';
+// import cookie from 'react-cookies';
+// import swal from 'sweetalert';
+// import firebase from 'firebase';
+
 // import logo from "./gambar1.png";
 import "./App.css";
 
@@ -12,9 +16,10 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
+import Header from "components/Navbars/DemoNavbar";
 
 // function componentWillMount() {
-//   axios.get("https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=F1D016038")
+//   axios.get("https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=F1D016038","Basic RjFEMDE2MDg2OjEyMzQ1Njc4")
 //       .then(response => {
 //           this.setState({
 //               company: response.data.company,
@@ -27,10 +32,10 @@ import {
 //           console.log(error);
 //       });
 // }
-//componentWillMount();
+// componentWillMount();
 
 // function componentDidMount(){
-//   const urlFetch = fetch('https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=f1d016086')
+//   const urlFetch = fetch('https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=f1d016086',"Basic RjFEMDE2MDg2OjEyMzQ1Njc4")
 //   urlFetch.then( res => {
 //      if(res.status === 200)
 //         return res.json()   
@@ -42,14 +47,13 @@ import {
 // }
 // componentDidMount();
 
-//uthorization: Basic RjFEMDE2MDg2OjEyMzQ1Njc4
-
 function api(){
-  axios.get("https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=f1d016086",
+  axios.get('https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=f1d016086'
+  , 
   {
-    params: {
-      //authorization: "Basic RjFEMDE2MDg2OjEyMzQ1Njc4"
+    params : {
       authorization: "Basic RjFEMDE2MDg2OjEyMzQ1Njc4"
+      
     }
   }
   )
@@ -77,17 +81,67 @@ function Login(props) {
   let login = event => {
     event.preventDefault();
     const data = new FormData(event.target);
-    var email = data.get("email");
+    // var email = data.get("email");
+    var email;
     var password = data.get("password");
-    if (email === "user@gmail.com") {
-      props.fakeAuth.authenticate(() => {
-        history.replace("/user/seminar");
-      });
-    } else if (email === "admin@gmail.com") {
-      props.fakeAuth.authenticate(() => {
-        history.replace("/admin/seminar");
-      });
-    }
+
+    // if (email === "user@gmail.com") {
+    //   props.fakeAuth.authenticate(() => {
+    //     history.replace("/user/seminar");
+    //   });
+    axios.post('https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=' + this.state.email)
+                        .then(function (response) {
+                            if (response.data !== 'kosong') {
+                                console.log(response.data);
+                                props.fakeAuth.authenticate(() => {
+                                  history.replace("/user/seminar");
+                                });
+                                // cookie.save('user_id', response.data.NIM, {
+                                //     path: '/'
+                                // })
+                                // cookie.save('access', response.data.NIM, {
+                                //     path: '/'
+                                // })
+                                // cookie.save('role', 1, {
+                                //     path: '/'
+                                // })
+                                setTimeout(() => {
+                                    // todosRef.set({
+                                    //     //foto: response.data.foto,
+                                    //     kode_prodi: response.data.kode_prodi,
+                                    //     password: response.data.NIM,
+                                    //     nama: response.data.nama,
+                                    //    // tgl_lahir: response.data.tgl_lahir,
+                                    //     jns_kelamin: response.data.jns_kelamin,
+                                    //   //  email: response.data.email,
+                                    //   //  no_hp: response.data.no_hp,
+                                    //     //kode_agama: response.data.kode_agama,
+
+                                    // });
+                                }
+                                , 0);
+                                window.location = "/user/seminar";
+                            } else {
+                                this.setState({
+                                    loading: false
+                                })
+                                // swal("Oops!", "Username atau Password salah!", "error");
+                            }
+                        })
+                        .catch(function (error) {
+                            this.setState({
+                                loading: false,
+                                nip: '',
+                                password: ''
+                            })
+                            console.log(error);
+                        });
+
+    // } else if (email === "admin@gmail.com") {
+    //   props.fakeAuth.authenticate(() => {
+    //     history.replace("/admin/seminar");
+    //   });
+    // }
   };
   return (
     <div className="App">
@@ -171,7 +225,7 @@ function Login(props) {
                       <label for="exampleInputEmail1">Email address</label>
                       <input
                         name="email"
-                        type="email"
+                        type="text"
                         class="form-control"
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
