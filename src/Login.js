@@ -94,7 +94,13 @@ function Login(props) {
           history.replace("/admin/seminar");
         });
         return;
-    }else{
+    }
+    else if (email.slice(0,3) !== 'F1D') {
+      props.fakeAuth.authenticate(() => {
+        swal("Oops!", "Password salah!", "error");
+      });
+      return;
+  }else{
 
     axios.post('https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=' + email)
                         
