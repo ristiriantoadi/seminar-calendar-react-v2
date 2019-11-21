@@ -27,7 +27,8 @@ import Sidebar from "components/Sidebar/Sidebar.jsx";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
 
 import routes from "userRoutes.js";
-
+import firebase from "firebase";
+import config from "config";
 var ps;
 
 class Dashboard extends React.Component {
@@ -35,10 +36,54 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       backgroundColor: "black",
-      activeColor: "info"
+      activeColor: "info",
+      events: []
     };
     this.mainPanel = React.createRef();
+    if (!firebase.apps.length) {
+      // firebase.initializeApp({});
+      this.app = firebase.initializeApp(config);
+    } else {
+      this.app = firebase.apps[0];
+    }
   }
+  componentWillMount() {
+    // const seminar_ref = this.app
+    //   .database()
+    //   .ref()
+    //   .child("seminar");
+    // const previousEvents = this.state.events;
+    // seminar_ref.on("child_added", snap => {
+    //   previousEvents.push({
+    //     title: snap.val().title,
+    //     start: snap.val().startDate,
+    //     end: snap.val().startDate
+    //   });
+    //   this.setState({
+    //     events: previousEvents
+    //   });
+    // });
+    const seminar_ref = this.app
+      .database()
+      .ref()
+      .child("seminar");
+    const previousEvents = this.state.events;
+    seminar_ref.on("child_added", snap => {
+      previousEvents.push({
+        judul: snap.val().judul,
+        startDate: snap.val().startDate,
+        // end: snap.val().startDate,
+        namaLengkap: snap.val().namaLengkap,
+        nim: snap.val().nim,
+        pembimbingDua: snap.val().pembimbingDua,
+        pembimbingSatu: snap.val().pembimbingSatu
+      });
+      this.setState({
+        events: previousEvents
+      });
+    });
+  }
+
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
@@ -73,13 +118,21 @@ class Dashboard extends React.Component {
           activeColor={this.state.activeColor}
         />
         <div className="main-panel" ref={this.mainPanel}>
-          <DemoNavbar {...this.props} />
+          <DemoNavbar fakeAuth={this.props.fakeAuth} {...this.props} />
           <Switch>
             {routes.map((prop, key) => {
               return (
                 <Route
                   path={prop.layout + prop.path}
-                  component={prop.component}
+                  // component={prop.component}
+                  render={() => {
+                    return (
+                      <prop.component
+                        events={this.state.events}
+                        app={this.app}
+                      ></prop.component>
+                    );
+                  }}
                   key={key}
                 />
               );

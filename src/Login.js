@@ -77,7 +77,7 @@ function Login(props) {
   let history = useHistory();
   let location = useLocation();
 
-  let { from } = location.state || { from: { pathname: "/" } };
+  // let { from } = location.state || { from: { pathname: "/" } };
   let login = event => {
     event.preventDefault();
     const data = new FormData(event.target);

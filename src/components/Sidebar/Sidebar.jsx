@@ -22,8 +22,8 @@ import { Nav } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
-import logo from "logo.svg";
-
+// import logo from "logo.svg";
+import logo from "bkg.png";
 var ps;
 
 class Sidebar extends React.Component {
@@ -57,20 +57,22 @@ class Sidebar extends React.Component {
         data-active-color={this.props.activeColor}
       >
         <div className="logo">
-          <a
+          {/* <a
             href="https://www.creative-tim.com"
             className="simple-text logo-mini"
-          >
-            <div className="logo-img">
-              <img src={logo} alt="react-logo" />
-            </div>
-          </a>
-          <a
+          > */}
+          <div className="logo-img" style={{ textAlign: "center" }}>
+            <img src={logo} alt="react-logo" height="120" />
+          </div>
+          {/* Seminar Calendar */}
+          {/* </a> */}
+          {/* <a
             href="https://www.creative-tim.com"
             className="simple-text logo-normal"
           >
             Creative Tim
-          </a>
+          </a> */}
+          {/* <p>Seminar Calendar</p> */}
         </div>
         <div className="sidebar-wrapper" ref={this.sidebar}>
           <Nav>
