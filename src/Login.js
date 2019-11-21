@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios';
-// import cookie from 'react-cookies';
-// import swal from 'sweetalert';
+import cookie from 'react-cookies';
+import swal from 'sweetalert';
 // import firebase from 'firebase';
 
 // import logo from "./gambar1.png";
@@ -82,50 +82,38 @@ function Login(props) {
     event.preventDefault();
     const data = new FormData(event.target);
     // var email = data.get("email");
-    var email;
+    var email,user_id;
     var password = data.get("password");
 
     // if (email === "user@gmail.com") {
     //   props.fakeAuth.authenticate(() => {
     //     history.replace("/user/seminar");
     //   });
-    axios.post('https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=' + this.state.email)
+    axios.post('https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=' + email)
+                        
                         .then(function (response) {
-                            if (response.data !== 'kosong') {
+                          console.log(response.data);
+                          cookie.save('user_id', response.data.NIM, {
+                          path: '/'
+                          })
+                          
+                            if (user_id !== null) {
                                 console.log(response.data);
                                 props.fakeAuth.authenticate(() => {
                                   history.replace("/user/seminar");
                                 });
-                                // cookie.save('user_id', response.data.NIM, {
-                                //     path: '/'
-                                // })
-                                // cookie.save('access', response.data.NIM, {
-                                //     path: '/'
-                                // })
-                                // cookie.save('role', 1, {
-                                //     path: '/'
-                                // })
+                                
                                 setTimeout(() => {
-                                    // todosRef.set({
-                                    //     //foto: response.data.foto,
-                                    //     kode_prodi: response.data.kode_prodi,
-                                    //     password: response.data.NIM,
-                                    //     nama: response.data.nama,
-                                    //    // tgl_lahir: response.data.tgl_lahir,
-                                    //     jns_kelamin: response.data.jns_kelamin,
-                                    //   //  email: response.data.email,
-                                    //   //  no_hp: response.data.no_hp,
-                                    //     //kode_agama: response.data.kode_agama,
-
-                                    // });
+                                    
                                 }
                                 , 0);
-                                window.location = "/user/seminar";
+                                // history.replace("/user/seminar");
                             } else {
-                                this.setState({
-                                    loading: false
-                                })
-                                // swal("Oops!", "Username atau Password salah!", "error");
+                                // this.setState({
+                                //     loading: false
+                                // })
+                                swal("Oops!", "Username atau Password salah!", "error");
+                                history.replace("/login");
                             }
                         })
                         .catch(function (error) {
