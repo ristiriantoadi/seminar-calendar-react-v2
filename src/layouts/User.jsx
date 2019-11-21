@@ -130,6 +130,7 @@ class Dashboard extends React.Component {
                       <prop.component
                         events={this.state.events}
                         app={this.app}
+                        {...this.props}
                       ></prop.component>
                     );
                   }}
@@ -140,12 +141,12 @@ class Dashboard extends React.Component {
           </Switch>
           <Footer fluid />
         </div>
-        <FixedPlugin
+        {/* <FixedPlugin
           bgColor={this.state.backgroundColor}
           activeColor={this.state.activeColor}
           handleActiveClick={this.handleActiveClick}
           handleBgClick={this.handleBgClick}
-        />
+        /> */}
       </div>
     );
   }

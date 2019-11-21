@@ -24,7 +24,7 @@ import Calendar from "Calendar";
 // reactstrap components
 import {
   UncontrolledAlert,
-  Alert,
+  // Alert,
   Card,
   CardHeader,
   CardBody,
@@ -36,6 +36,7 @@ import {
 import { Form } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/button";
+// import Alert from "react-bootstrap/alert";
 
 class Mahasiswa extends React.Component {
   constructor() {
@@ -142,7 +143,33 @@ class Mahasiswa extends React.Component {
       .ref("proposal-seminar/" + data.get("nim") + "/fileKRS.pdf")
       .put(data.get("file-krs"));
     // console.log(this.props.events);
+    this.props.history.push("/user/seminar");
   }
+
+  // componentWillMount() {
+  //   const proposal_seminar_ref = this.props.app
+  //     .database()
+  //     .ref()
+  //     .child("proposal-seminar/F1D016078");
+  //   proposal_seminar_ref.once("value", snap => {
+  //     console.log(snap.exists());
+  //   });
+  //   // const previousEvents = this.state.events;
+  //   // seminar_ref.on("child_added", snap => {
+  //   //   previousEvents.push({
+  //   //     judul: snap.val().judul,
+  //   //     startDate: snap.val().startDate,
+  //   //     // end: snap.val().startDate,
+  //   //     namaLengkap: snap.val().namaLengkap,
+  //   //     nim: snap.val().nim,
+  //   //     pembimbingDua: snap.val().pembimbingDua,
+  //   //     pembimbingSatu: snap.val().pembimbingSatu
+  //   //   });
+  //   //   this.setState({
+  //   //     events: previousEvents
+  //   //   });
+  //   // });
+  // }
 
   render() {
     console.log(this.props.app);
@@ -150,6 +177,7 @@ class Mahasiswa extends React.Component {
       <>
         <div className="content">
           <NotificationAlert ref={this.notificationAlert} />
+          {/* <Alert color="primary">This is primary alert</Alert> */}
           <Row>
             <Col md="12">
               <Card>
