@@ -20,9 +20,10 @@
 import React from "react";
 // react plugin for creating notifications over the dashboard
 import NotificationAlert from "react-notification-alert";
-import Calendar from "Calendar";
+// import Calendar from "Calendar";
 // reactstrap components
-import firebase from "firebase";
+// import firebase from "firebase";
+import ModalAdmin from "ModalAdmin";
 import {
   UncontrolledAlert,
   Alert,
@@ -36,7 +37,7 @@ import {
 } from "reactstrap";
 // import config from "config";
 
-class Seminar extends React.Component {
+class ProposalSeminar extends React.Component {
   constructor() {
     super();
     // if (!firebase.apps.length) {
@@ -52,57 +53,12 @@ class Seminar extends React.Component {
     this.state = {
       // events: [],
       visible: true,
-      status: -1 //0 = menunggu, 1=accepted,-1 = belum mengajukan
+      showModal: false,
+      clickedProposal: {}
     };
+    this.handleClose = this.handleClose.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
-  // componentWillMount() {
-  //   var isExist = false;
-  //   var eventSeminar = {};
-  //   const proposal_seminar_ref = this.props.app
-  //     .database()
-  //     .ref()
-  //     .child("proposal-seminar/F1D016078");
-  //   proposal_seminar_ref.once("value", snap => {
-  //     console.log(snap.exists());
-  //     isExist = snap.exists();
-  //     eventSeminar = snap.val();
-
-  //     // this.setState({
-  //     //   status: 1
-  //     // });
-  //   });
-  //   if (!isExist) {
-  //     this.setState({
-  //       status: -1
-  //     });
-  //   } else {
-  //     if (eventSeminar.statusDiterima == true) {
-  //       this.setState({
-  //         status: 1
-  //       });
-  //     } else {
-  //       this.setState({
-  //         status: 0
-  //       });
-  //     }
-  //   }
-
-  // const previousEvents = this.state.events;
-  // seminar_ref.on("child_added", snap => {
-  //   previousEvents.push({
-  //     judul: snap.val().judul,
-  //     startDate: snap.val().startDate,
-  //     // end: snap.val().startDate,
-  //     namaLengkap: snap.val().namaLengkap,
-  //     nim: snap.val().nim,
-  //     pembimbingDua: snap.val().pembimbingDua,
-  //     pembimbingSatu: snap.val().pembimbingSatu
-  //   });
-  //   this.setState({
-  //     events: previousEvents
-  //   });
-  // });
-  // }
   // componentDidMount() {
   //   const previousEvents = this.state.events;
   //   this.database.on("child_added", snap => {
@@ -160,26 +116,55 @@ class Seminar extends React.Component {
     };
     this.notificationAlert.current.notificationAlert(options);
   }
+
+  handleClose() {
+    this.setState({
+      showModal: false
+    });
+  }
+
+  handleClick(proposalSeminar) {
+    this.setState({
+      clickedProposal: proposalSeminar,
+      showModal: true
+    });
+  }
+
   render() {
-    // console.log("Status proposal " + this.props.statusProposal);
-    const statusAlert =
-      this.props.statusProposal == 0 ? (
-        <Alert color="info">
-          Proposal Seminar Anda dalam proses <i>review</i>. Harap menunggu.
-        </Alert>
-      ) : (
-        undefined
+    const tableStyle = {
+      border: "1px solid #000000",
+      borderCollapse: "collapse"
+    };
+    const rowTable = this.props.proposalSeminars.map(proposalSeminar => {
+      return (
+        <tr style={tableStyle}>
+          <td style={tableStyle}>{proposalSeminar.nim}</td>
+          <td style={tableStyle}>{proposalSeminar.namaLengkap}</td>
+          <td style={tableStyle}>{proposalSeminar.judul}</td>
+          <td style={tableStyle}>
+            {/* <button onClick={this.handleClick(proposalSeminar)}> */}
+            <button onClick={e => this.handleClick(proposalSeminar)}>
+              Lihat dokumen
+            </button>
+          </td>
+        </tr>
       );
+    });
+
     return (
       <>
         <div className="content">
+          <ModalAdmin
+            event={this.state.clickedProposal}
+            show={this.state.showModal}
+            handleClose={this.handleClose}
+          ></ModalAdmin>
           <NotificationAlert ref={this.notificationAlert} />
-          {statusAlert}
           <Row>
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h3">Kalender</CardTitle>
+                  <CardTitle tag="h3">Daftar Proposal Seminar</CardTitle>
                   {/* <p className="card-category">
                     Handcrafted by our colleague{" "}
                     <a
@@ -291,6 +276,7 @@ class Seminar extends React.Component {
                       </Card>
                     </Col>
                   </Row> */}
+
                   <Row>
                     <Col md="12">
                       <Card className="card-plain">
@@ -298,7 +284,16 @@ class Seminar extends React.Component {
                           <CardTitle tag="h5">Notifications Style</CardTitle>
                         </CardHeader> */}
                         <CardBody>
-                          <Calendar events={this.props.events}></Calendar>
+                          {/* <Calendar events={this.props.events}></Calendar> */}
+                          <table style={tableStyle}>
+                            <tr style={tableStyle}>
+                              <th style={tableStyle}>NIM</th>
+                              <th style={tableStyle}>Nama</th>
+                              <th style={tableStyle}>Judul</th>
+                              <th style={tableStyle}>Aksi</th>
+                            </tr>
+                            {rowTable}
+                          </table>
                         </CardBody>
                         {/* <CardBody>
                           <Alert color="info">
@@ -354,4 +349,4 @@ class Seminar extends React.Component {
   handleButtonClick() {}
 }
 
-export default Seminar;
+export default ProposalSeminar;

@@ -37,7 +37,8 @@ class Dashboard extends React.Component {
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
-      events: []
+      events: [],
+      statusProposal: -1 //-1 = no proposal, 0 = menunggu, 1 = diterima, 2 = ditolak
     };
     this.mainPanel = React.createRef();
     if (!firebase.apps.length) {
@@ -48,21 +49,47 @@ class Dashboard extends React.Component {
     }
   }
   componentWillMount() {
-    // const seminar_ref = this.app
-    //   .database()
-    //   .ref()
-    //   .child("seminar");
-    // const previousEvents = this.state.events;
-    // seminar_ref.on("child_added", snap => {
-    //   previousEvents.push({
-    //     title: snap.val().title,
-    //     start: snap.val().startDate,
-    //     end: snap.val().startDate
-    //   });
-    //   this.setState({
-    //     events: previousEvents
-    //   });
-    // });
+    var isExist = false;
+    // console.log("i need to know if it exist");
+    var eventSeminar = {};
+    const proposal_seminar_ref = this.app
+      .database()
+      .ref()
+      .child("proposal-seminar/F1D016078");
+    proposal_seminar_ref.once("value", snap => {
+      console.log("Does it exist? " + snap.exists());
+      isExist = snap.exists();
+      eventSeminar = snap.val();
+
+      if (!isExist) {
+        this.setState({
+          statusProposal: -1
+        });
+        console.log("statusProposal = -1");
+      } else {
+        if (eventSeminar.statusProposal === "terima") {
+          this.setState({
+            statusProposal: 1
+          });
+          console.log("statusProposal = 1");
+        } else if (eventSeminar.statusProposal === "tunggu") {
+          this.setState({
+            statusProposal: 0
+          });
+          console.log("statusProposal = 0");
+        } else if (eventSeminar.statusProposal === "tolak") {
+          this.setState({
+            statusProposal: 2
+          });
+          console.log("statusProposal = 2");
+        }
+      }
+
+      // this.setState({
+      //   status: 1
+      // });
+    });
+
     const seminar_ref = this.app
       .database()
       .ref()
@@ -130,6 +157,7 @@ class Dashboard extends React.Component {
                       <prop.component
                         events={this.state.events}
                         app={this.app}
+                        statusProposal={this.state.statusProposal}
                         {...this.props}
                       ></prop.component>
                     );

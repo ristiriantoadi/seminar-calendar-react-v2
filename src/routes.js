@@ -27,6 +27,8 @@ import Icons from "views/Icons.jsx";
 // import UpgradeToPro from "views/Upgrade.jsx";
 import Mahasiswa from "views/Mahasiswa.jsx";
 import TambahSeminar from "views/TambahSeminar.jsx";
+import ProposalSeminar from "views/ProposalSeminar.jsx";
+
 var routes = [
   {
     path: "/seminar",
@@ -35,7 +37,13 @@ var routes = [
     component: Seminar,
     layout: "/admin"
   },
-
+  {
+    path: "/proposal-seminar",
+    name: "Proposal Seminar",
+    icon: "nc-icon nc-bell-55",
+    component: ProposalSeminar,
+    layout: "/admin"
+  },
   {
     path: "/pengajuan-seminar",
     name: "Pengajuan Seminar",

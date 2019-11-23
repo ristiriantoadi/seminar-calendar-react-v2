@@ -37,7 +37,8 @@ class Dashboard extends React.Component {
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
-      events: []
+      events: [],
+      proposalSeminars: []
     };
     this.mainPanel = React.createRef();
     if (!firebase.apps.length) {
@@ -58,6 +59,54 @@ class Dashboard extends React.Component {
     }
   }
   componentWillMount() {
+    const proposal_ref = this.app
+      .database()
+      .ref()
+      .child("proposal-seminar");
+    const previousProposals = this.state.proposalSeminars;
+    proposal_ref.on("child_added", snap => {
+      //download from URL here
+      var storage = firebase.storage();
+      // var pathReference = storage.ref("proposal-seminar/F1D016078");
+      var fileKRSReference = storage.ref(snap.val().fileKRS);
+      fileKRSReference.getDownloadURL().then(fileKRSURL => {
+        var fileKartuKontrolReference = storage.ref(
+          snap.val().fileKartuKontrol
+        );
+        fileKartuKontrolReference.getDownloadURL().then(fileKartuKontrolURL => {
+          var fileLaporanReference = storage.ref(snap.val().fileLaporan);
+          fileLaporanReference.getDownloadURL().then(fileLaporanURL => {
+            var fileSuratPuasReference = storage.ref(snap.val().fileSuratPuas);
+            fileSuratPuasReference.getDownloadURL().then(fileSuratPuasURL => {
+              // console.log("URL File Kartu Kontrol: " + fileKartuKontrolURL);
+              // console.log("URL File Laporan: " + fileLaporanURL);
+              // console.log("URL File Surat Puas: " + fileSuratPuasURL);
+              // console.log("URL File KRS: " + fileKRSURL);
+              previousProposals.push({
+                nim: snap.val().nim,
+                judul: snap.val().judul,
+                namaLengkap: snap.val().namaLengkap,
+                noHP: snap.val().noHP,
+                pembimbingDua: snap.val().pembimbingDua,
+                pembimbingSatu: snap.val().pembimbingSatu,
+                fileKartuKontrolURL: fileKartuKontrolURL,
+                fileLaporanURL: fileLaporanURL,
+                fileSuratPuasURL: fileSuratPuasURL,
+                fileKRSURL: fileKRSURL
+              });
+              this.setState({
+                proposalSeminars: previousProposals
+              });
+            });
+          });
+        });
+      });
+
+      // console.log("Proposal seminar: " + this.state.proposalSeminars);
+    });
+
+    //download files from URL
+
     const seminar_ref = this.app
       .database()
       .ref()
@@ -75,6 +124,7 @@ class Dashboard extends React.Component {
       });
       this.setState({
         events: previousEvents
+        // proposalSeminars: previousProposals
       });
     });
   }
@@ -98,7 +148,7 @@ class Dashboard extends React.Component {
     this.setState({ backgroundColor: color });
   };
   render() {
-    console.log(this.state.events);
+    // console.log(this.state.events);
     return (
       <div className="wrapper">
         <Sidebar
@@ -115,7 +165,10 @@ class Dashboard extends React.Component {
                 <Route
                   path={prop.layout + prop.path}
                   render={() => (
-                    <prop.component events={this.state.events}></prop.component>
+                    <prop.component
+                      events={this.state.events}
+                      proposalSeminars={this.state.proposalSeminars}
+                    ></prop.component>
                   )}
                   key={key}
                 />

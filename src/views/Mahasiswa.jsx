@@ -127,7 +127,14 @@ class Mahasiswa extends React.Component {
         judul: data.get("judul"),
         pembimbingSatu: data.get("dosen-pembimbing-1"),
         pembimbingDua: data.get("dosen-pembimbing-2"),
-        noHp: data.get("no-hp")
+        noHp: data.get("no-hp"),
+        statusProposal: "tunggu",
+        fileLaporan: "proposal-seminar/" + data.get("nim") + "/fileLaporan.pdf",
+        fileKartuKontrol:
+          "proposal-seminar/" + data.get("nim") + "/fileKartuKontrol.pdf",
+        fileSuratPuas:
+          "proposal-seminar/" + data.get("nim") + "/fileSuratPuas.pdf",
+        fileKRS: "proposal-seminar/" + data.get("nim") + "/fileKRS.pdf"
       });
     const storage = this.props.app.storage();
     storage
