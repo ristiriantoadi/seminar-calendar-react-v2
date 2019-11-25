@@ -8,13 +8,18 @@
     "@fullcalendar/interaction": "^4.3.0",
     "@fullcalendar/react": "^4.3.0",
     "@fullcalendar/timegrid": "^4.3.0",
+    "axios": "^0.19.0",
     "firebase": "^7.3.0",
     "paper-dashboard-react": "^1.1.0",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.14",
+    "react-cookie": "^4.0.1",
+    "react-cookies": "^0.1.1",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.1.2"
+    "react-scripts": "^3.1.2",
+    "swal": "^0.1.0",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
