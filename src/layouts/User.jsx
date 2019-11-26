@@ -24,7 +24,8 @@ import { Route, Switch } from "react-router-dom";
 import DemoNavbar from "components/Navbars/UserNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
+// import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
+import { Alert } from "reactstrap";
 
 import routes from "userRoutes.js";
 import firebase from "firebase";
@@ -48,6 +49,34 @@ class Dashboard extends React.Component {
       this.app = firebase.apps[0];
     }
   }
+
+  renderAlert(statusProposal) {
+    switch (statusProposal) {
+      case 0:
+        return (
+          <Alert color="info">
+            Proposal Seminar Anda dalam proses <i>review</i>. Harap menunggu.
+          </Alert>
+        );
+        break;
+      case 1:
+        return (
+          <Alert color="success">
+            Proposal Seminar Anda telah diterima oleh Admin. Silakan lihat
+            jadwal di kalender
+          </Alert>
+        );
+        break;
+      case 2:
+        return (
+          <Alert color="danger">
+            Proposal Seminar Anda ditolak oleh Admin. Silakan mengisi kembali
+            Form Seminar Tugas Akhir
+          </Alert>
+        );
+    }
+  }
+
   componentWillMount() {
     var isExist = false;
     // console.log("i need to know if it exist");
@@ -56,7 +85,7 @@ class Dashboard extends React.Component {
       .database()
       .ref()
       .child("proposal-seminar/F1D016078");
-    proposal_seminar_ref.once("value", snap => {
+    proposal_seminar_ref.on("value", snap => {
       console.log("Does it exist? " + snap.exists());
       isExist = snap.exists();
       eventSeminar = snap.val();
@@ -159,6 +188,7 @@ class Dashboard extends React.Component {
                         app={this.app}
                         statusProposal={this.state.statusProposal}
                         {...this.props}
+                        renderAlert={this.renderAlert}
                       ></prop.component>
                     );
                   }}

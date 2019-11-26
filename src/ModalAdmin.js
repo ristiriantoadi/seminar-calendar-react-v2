@@ -36,9 +36,16 @@ function Example(props) {
         </ul>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.handleClose}>
-          Close
+        <Button variant="success" onClick={props.handleTerima}>
+          Terima
         </Button>
+        <Button variant="danger" onClick={props.handleClose}>
+          Tolak
+        </Button>
+        {/* <Button variant="secondary" onClick={props.handleClose}>
+          Close
+        </Button> */}
+
         {/* <Button variant="primary" onClick={props.handleClose}>
           Save Changes
         </Button> */}

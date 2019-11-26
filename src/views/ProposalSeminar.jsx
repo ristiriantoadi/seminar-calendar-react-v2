@@ -24,6 +24,7 @@ import NotificationAlert from "react-notification-alert";
 // reactstrap components
 // import firebase from "firebase";
 import ModalAdmin from "ModalAdmin";
+import ModalTambahSeminar from "ModalAdminTambahSeminar";
 import {
   UncontrolledAlert,
   Alert,
@@ -54,10 +55,15 @@ class ProposalSeminar extends React.Component {
       // events: [],
       visible: true,
       showModal: false,
+      showModalTambahSeminar: false,
       clickedProposal: {}
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleCloseModalTambahSeminar = this.handleCloseModalTambahSeminar.bind(
+      this
+    );
+    this.handleTerima = this.handleTerima.bind(this);
   }
   // componentDidMount() {
   //   const previousEvents = this.state.events;
@@ -122,12 +128,27 @@ class ProposalSeminar extends React.Component {
       showModal: false
     });
   }
+  handleCloseModalTambahSeminar() {
+    this.setState({
+      showModalTambahSeminar: false
+    });
+  }
 
   handleClick(proposalSeminar) {
     this.setState({
       clickedProposal: proposalSeminar,
       showModal: true
     });
+  }
+
+  handleTerima() {
+    this.setState({
+      showModalTambahSeminar: true,
+      showModal: false
+    });
+  }
+  handleTolak() {
+    console.log("ditolak");
   }
 
   render() {
@@ -158,7 +179,14 @@ class ProposalSeminar extends React.Component {
             event={this.state.clickedProposal}
             show={this.state.showModal}
             handleClose={this.handleClose}
+            handleTerima={this.handleTerima}
+            handleTolak={this.handleTolak}
           ></ModalAdmin>
+          <ModalTambahSeminar
+            show={this.state.showModalTambahSeminar}
+            handleClose={this.handleCloseModalTambahSeminar}
+            event={this.state.clickedProposal}
+          ></ModalTambahSeminar>
           <NotificationAlert ref={this.notificationAlert} />
           <Row>
             <Col md="12">

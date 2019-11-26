@@ -25,7 +25,7 @@ import Calendar from "Calendar";
 import firebase from "firebase";
 import {
   UncontrolledAlert,
-  Alert,
+  // Alert,
   Button,
   Card,
   CardHeader,
@@ -160,16 +160,37 @@ class Seminar extends React.Component {
     };
     this.notificationAlert.current.notificationAlert(options);
   }
+
+  // renderAlert(statusProposal) {
+  //   switch (statusProposal) {
+  //     case 0:
+  //       return (
+  //         <Alert color="info">
+  //           Proposal Seminar Anda dalam proses <i>review</i>. Harap menunggu.
+  //         </Alert>
+  //       );
+  //       break;
+  //     case 1:
+  //       return (
+  //         <Alert color="success">
+  //           Proposal Seminar Anda telah diterima oleh Admin. Silakan lihat
+  //           jadwal di kalender
+  //         </Alert>
+  //       );
+  //       break;
+  //     case 2:
+  //       return (
+  //         <Alert color="danger">
+  //           Proposal Seminar Anda ditolak oleh Admin. Silakan mengisi kembali
+  //           Form Seminar Tugas Akhir
+  //         </Alert>
+  //       );
+  //   }
+  // }
+
   render() {
     // console.log("Status proposal " + this.props.statusProposal);
-    const statusAlert =
-      this.props.statusProposal == 0 ? (
-        <Alert color="info">
-          Proposal Seminar Anda dalam proses <i>review</i>. Harap menunggu.
-        </Alert>
-      ) : (
-        undefined
-      );
+    const statusAlert = this.props.renderAlert(this.props.statusProposal);
     return (
       <>
         <div className="content">
