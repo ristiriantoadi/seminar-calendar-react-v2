@@ -20,13 +20,9 @@
 // import Notifications from "views/Notifications.jsx";
 import Seminar from "views/Seminar.jsx";
 import Icons from "views/Icons.jsx";
-// import Typography from "views/Typography.jsx";
-// import TableList from "views/Tables.jsx";
-// import Maps from "views/Map.jsx";
-// import UserPage from "views/User.jsx";
-// import UpgradeToPro from "views/Upgrade.jsx";
 import Mahasiswa from "views/Mahasiswa.jsx";
 import TambahSeminar from "views/TambahSeminar.jsx";
+import Konfirmasi from "views/Konfirmasi.jsx";
 var routes = [
   {
     path: "/seminar",
@@ -47,7 +43,7 @@ var routes = [
     path: "/daftar-pengajuan-seminar",
     name: "Konfirmasi Seminar",
     icon: "nc-icon nc-diamond",
-    component: Mahasiswa,
+    component: Konfirmasi,
     layout: "/admin"
   }
   // {
