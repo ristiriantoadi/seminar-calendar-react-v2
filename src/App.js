@@ -17,6 +17,8 @@ import AdminLayout from "layouts/Admin.jsx";
 import UserLayout from "layouts/User.jsx";
 
 const fakeAuth = {
+  nama: "",
+  nim: "",
   isAuthenticated: false,
   authenticate(cb) {
     // let history = useHistory;

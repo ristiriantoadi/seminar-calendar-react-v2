@@ -38,9 +38,11 @@ class Dashboard extends React.Component {
       backgroundColor: "black",
       activeColor: "info",
       events: [],
-      proposalSeminars: []
+      proposalSeminars: [],
+      alert: ""
     };
     this.mainPanel = React.createRef();
+    this.setAlert = this.setAlert.bind(this);
     if (!firebase.apps.length) {
       // firebase.initializeApp({});
       this.app = firebase.initializeApp(config);
@@ -51,6 +53,11 @@ class Dashboard extends React.Component {
     //   .database()
     //   .ref()
     //   .child("seminar");
+  }
+  setAlert(nama, nim) {
+    this.setState({
+      alert: "Seminar atas nama " + nama + " (" + nim + ") telah didaftarkan"
+    });
   }
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -82,21 +89,23 @@ class Dashboard extends React.Component {
               // console.log("URL File Laporan: " + fileLaporanURL);
               // console.log("URL File Surat Puas: " + fileSuratPuasURL);
               // console.log("URL File KRS: " + fileKRSURL);
-              previousProposals.push({
-                nim: snap.val().nim,
-                judul: snap.val().judul,
-                namaLengkap: snap.val().namaLengkap,
-                noHP: snap.val().noHP,
-                pembimbingDua: snap.val().pembimbingDua,
-                pembimbingSatu: snap.val().pembimbingSatu,
-                fileKartuKontrolURL: fileKartuKontrolURL,
-                fileLaporanURL: fileLaporanURL,
-                fileSuratPuasURL: fileSuratPuasURL,
-                fileKRSURL: fileKRSURL
-              });
-              this.setState({
-                proposalSeminars: previousProposals
-              });
+              if (snap.val().statusProposal === "tunggu") {
+                previousProposals.push({
+                  nim: snap.val().nim,
+                  judul: snap.val().judul,
+                  namaLengkap: snap.val().namaLengkap,
+                  noHP: snap.val().noHP,
+                  pembimbingDua: snap.val().pembimbingDua,
+                  pembimbingSatu: snap.val().pembimbingSatu,
+                  fileKartuKontrolURL: fileKartuKontrolURL,
+                  fileLaporanURL: fileLaporanURL,
+                  fileSuratPuasURL: fileSuratPuasURL,
+                  fileKRSURL: fileKRSURL
+                });
+                this.setState({
+                  proposalSeminars: previousProposals
+                });
+              }
             });
           });
         });
@@ -168,6 +177,10 @@ class Dashboard extends React.Component {
                     <prop.component
                       events={this.state.events}
                       proposalSeminars={this.state.proposalSeminars}
+                      setAlert={this.setAlert}
+                      alert={this.state.alert}
+                      {...this.props}
+                      app={this.app}
                     ></prop.component>
                   )}
                   key={key}

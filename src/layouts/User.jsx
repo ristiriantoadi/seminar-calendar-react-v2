@@ -36,6 +36,8 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      nama: this.props.fakeAuth.nama,
+      nim: this.props.fakeAuth.nim,
       backgroundColor: "black",
       activeColor: "info",
       events: [],
@@ -84,7 +86,7 @@ class Dashboard extends React.Component {
     const proposal_seminar_ref = this.app
       .database()
       .ref()
-      .child("proposal-seminar/F1D016078");
+      .child("proposal-seminar/" + this.state.nim);
     proposal_seminar_ref.on("value", snap => {
       console.log("Does it exist? " + snap.exists());
       isExist = snap.exists();
@@ -174,7 +176,12 @@ class Dashboard extends React.Component {
           activeColor={this.state.activeColor}
         />
         <div className="main-panel" ref={this.mainPanel}>
-          <DemoNavbar fakeAuth={this.props.fakeAuth} {...this.props} />
+          <DemoNavbar
+            fakeAuth={this.props.fakeAuth}
+            {...this.props}
+            nama={this.state.nama}
+            nim={this.state.nim}
+          />
           <Switch>
             {routes.map((prop, key) => {
               return (

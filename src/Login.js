@@ -1,11 +1,12 @@
 import React from "react";
-import axios from 'axios';
-import cookie from 'react-cookies';
-import swal from 'sweetalert';
-// import firebase from 'firebase';
+import axios from "axios";
+import cookie from "react-cookies";
+import swal from "sweetalert";
+import firebase from "firebase";
 
 // import logo from "./gambar1.png";
 import "./App.css";
+import config from "config";
 
 import {
   // BrowserRouter as Router,
@@ -38,7 +39,7 @@ import Header from "components/Navbars/DemoNavbar";
 //   const urlFetch = fetch('https://sia.unram.ac.id/index.php/api/Mahasiswa?NIM=f1d016086',"Basic RjFEMDE2MDg2OjEyMzQ1Njc4")
 //   urlFetch.then( res => {
 //      if(res.status === 200)
-//         return res.json()   
+//         return res.json()
 //   }).then( resJson => {
 //      this.setState({
 //          data: resJson
@@ -47,104 +48,147 @@ import Header from "components/Navbars/DemoNavbar";
 // }
 // componentDidMount();
 
-function api(){
-  axios.get('https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=f1d016086'
-  , 
-  {
-    params : {
-      authorization: "Basic RjFEMDE2MDg2OjEyMzQ1Njc4"
-      
-    }
-  }
-  )
-            .then(response => {
-                this.setState({
-                    company: response.data.company,
-                    blog: response.data.blog,
-                    avatar: response.data.avatar_url,
-                    loading: false
-                });
-            }) 
-            .catch(error => {
-                console.log(error);
-            });
+function api() {
+  axios
+    .get(
+      "https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=f1d016086",
+      {
+        params: {
+          authorization: "Basic RjFEMDE2MDg2OjEyMzQ1Njc4"
+        }
+      }
+    )
+    .then(response => {
+      this.setState({
+        company: response.data.company,
+        blog: response.data.blog,
+        avatar: response.data.avatar_url,
+        loading: false
+      });
+    })
+    .catch(error => {
+      console.log(error);
+    });
 }
 api();
-
-
 
 function Login(props) {
   let history = useHistory();
   let location = useLocation();
 
-  // let { from } = location.state || { from: { pathname: "/" } };
   let login = event => {
     event.preventDefault();
     const data = new FormData(event.target);
-    var email = data.get("email");
-    var user_id;
+    var username = data.get("username");
     var password = data.get("password");
 
-    // if (email === "user@gmail.com") {
-    //   props.fakeAuth.authenticate(() => {
-    //     history.replace("/user/seminar");
-    //   });
-    if (email === "admin@gmail.com") {
-        props.fakeAuth.authenticate(() => {
-          history.replace("/admin/seminar");
-        });
-        return;
-    }
-    else if (email.slice(0,3) !== 'F1D') {
+    if (username === "admin" || username === "admin@gmail.com") {
       props.fakeAuth.authenticate(() => {
-        swal("Oops!", "Password salah!", "error");
+        history.replace("/admin/seminar");
       });
       return;
-  }else{
-
-    axios.post('https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=' + email)
-                        
-                        .then(function (response) {
-                          console.log(response.data);
-                          cookie.save('user_id', response.data.NIM, {
-                          path: '/'
-                          })
-
-                            if (user_id !== null) {
-                                console.log(response.data);
-                                props.fakeAuth.authenticate(() => {
-                                  history.replace("/user/seminar");
-                                });
-                                
-                                setTimeout(() => {
-                                    
-                                }
-                                , 0);
-                                // history.replace("/user/seminar");
-                            } else {
-                                // this.setState({
-                                //     loading: false
-                                // })
-                                swal("Oops!", "Username atau Password salah!", "error");
-                                history.replace("/login");
-                            }
-                        })
-                        .catch(function (error) {
-                            this.setState({
-                                loading: false,
-                                nip: '',
-                                password: ''
-                            })
-                            console.log(error);
-                        });
-
-    // } else if (email === "admin@gmail.com") {
-    //   props.fakeAuth.authenticate(() => {
-    //     history.replace("/admin/seminar");
-    //   });
-    // }
-  }
+    } else if (username.slice(0, 3) === "F1D") {
+      // axios
+      //   .post(
+      //     "https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=" +
+      //       username
+      //   )
+      //   .then(function(response) {
+      //     console.log(response.data);
+      //   });
+      let app;
+      if (!firebase.apps.length) {
+        // firebase.initializeApp({});
+        app = firebase.initializeApp(config);
+      } else {
+        app = firebase.apps[0];
+      }
+      app
+        .database()
+        .ref("mahasiswa/" + username)
+        .once("value")
+        .then(snapshot => {
+          var nim = snapshot.val().nim;
+          var nama = snapshot.val().nama;
+          // props.setNim(nim);
+          // props.setNama(nama);
+          props.fakeAuth.authenticate(() => {
+            props.fakeAuth.nama = nama;
+            props.fakeAuth.nim = nim;
+            history.replace("user/seminar");
+          });
+        });
+    }
   };
+
+  // let { from } = location.state || { from: { pathname: "/" } };
+  // let login = event => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.target);
+  //   var email = data.get("email");
+  //   var user_id;
+  //   var password = data.get("password");
+
+  //   // if (email === "user@gmail.com") {
+  //   //   props.fakeAuth.authenticate(() => {
+  //   //     history.replace("/user/seminar");
+  //   //   });
+  //   if (email === "admin@gmail.com") {
+  //       props.fakeAuth.authenticate(() => {
+  //         history.replace("/admin/seminar");
+  //       });
+  //       return;
+  //   }
+  //   else if (email.slice(0,3) !== 'F1D') {
+  //     props.fakeAuth.authenticate(() => {
+  //       swal("Oops!", "Password salah!", "error");
+  //     });
+  //     return;
+  // }else{
+
+  //   axios.post('https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=' + email)
+
+  //                       .then(function (response) {
+  //                         console.log(response.data);
+  //                         cookie.save('user_id', response.data.NIM, {
+  //                         path: '/'
+  //                         })
+
+  //                           if (user_id !== null) {
+  //                               console.log(response.data);
+  //                               props.fakeAuth.authenticate(() => {
+  //                                 history.replace("/user/seminar");
+  //                               });
+
+  //                               setTimeout(() => {
+
+  //                               }
+  //                               , 0);
+  //                               // history.replace("/user/seminar");
+  //                           } else {
+  //                               // this.setState({
+  //                               //     loading: false
+  //                               // })
+  //                               swal("Oops!", "Username atau Password salah!", "error");
+  //                               history.replace("/login");
+  //                           }
+  //                       })
+  //                       .catch(function (error) {
+  //                           this.setState({
+  //                               loading: false,
+  //                               nip: '',
+  //                               password: ''
+  //                           })
+  //                           console.log(error);
+  //                       });
+
+  //   // } else if (email === "admin@gmail.com") {
+  //   //   props.fakeAuth.authenticate(() => {
+  //   //     history.replace("/admin/seminar");
+  //   //   });
+  //   // }
+  // }
+  // };
   return (
     <div className="App">
       <div class="container" id="content-wrapper">
@@ -224,9 +268,9 @@ function Login(props) {
                   </form> */}
                   <form onSubmit={login}>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Email address</label>
+                      <label for="username">Username</label>
                       <input
-                        name="email"
+                        name="username"
                         type="text"
                         class="form-control"
                         id="exampleInputEmail1"
@@ -235,7 +279,7 @@ function Login(props) {
                       />
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Password</label>
+                      <label for="password">Password</label>
                       <input
                         name="password"
                         type="password"

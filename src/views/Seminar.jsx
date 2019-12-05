@@ -111,11 +111,20 @@ class Seminar extends React.Component {
     };
     this.notificationAlert.current.notificationAlert(options);
   }
+  renderAlert(alert) {
+    if (alert != "") {
+      return <Alert>{alert}</Alert>;
+    } else {
+      return;
+    }
+  }
   render() {
+    const alert = this.renderAlert(this.props.alert);
     return (
       <>
         <div className="content">
-          <NotificationAlert ref={this.notificationAlert} />
+          {/* <NotificationAlert ref={this.notificationAlert} /> */}
+          {alert}
           <Row>
             <Col md="12">
               <Card>

@@ -183,8 +183,11 @@ class ProposalSeminar extends React.Component {
             handleTolak={this.handleTolak}
           ></ModalAdmin>
           <ModalTambahSeminar
+            app={this.props.app}
+            history={this.props.history}
             show={this.state.showModalTambahSeminar}
             handleClose={this.handleCloseModalTambahSeminar}
+            setAlert={this.props.setAlert}
             event={this.state.clickedProposal}
           ></ModalTambahSeminar>
           <NotificationAlert ref={this.notificationAlert} />
