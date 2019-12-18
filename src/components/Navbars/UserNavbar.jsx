@@ -194,7 +194,7 @@ class Header extends React.Component {
                   </p> */}
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem tag="a">Pengaturan Akun</DropdownItem>
+                  {/* <DropdownItem tag="a">Pengaturan Akun</DropdownItem> */}
                   <DropdownItem
                     tag="a"
                     onClick={() => {

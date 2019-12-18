@@ -12,10 +12,22 @@ function Example(props) {
       <Modal.Body>
         {/* {console.log("the event object: ")}
         {console.log(props.event)} */}
-        <p>Judul: {props.event.judul}</p>
-        <p>Tanggal: {props.event.tanggal}</p>
-        <p>Pembimbing Satu: {props.event.pembimbingSatu}</p>
-        <p>Pembimbing Dua: {props.event.pembimbingDua}</p>
+        <p>Nama: {props.event.namaLengkap}</p>
+        <p>NIM: {props.event.nim}</p>
+        <p>Hari/Tanggal: {props.event.tanggal}</p>
+        <p>Waktu: {props.event.waktu} WITA</p>
+        <p>Judul TA 1: {props.event.judul}</p>
+        <h6>Pembimbing</h6>
+        <ul style={{ listStyleType: "none", padding: "0px" }}>
+          <li>1. {props.event.pembimbingSatu}</li>
+          <li>2. {props.event.pembimbingDua}</li>
+        </ul>
+        <h6>Penguji</h6>
+        <ul style={{ listStyleType: "none", padding: "0px" }}>
+          <li>1. {props.event.pengujiSatu}</li>
+          <li>2. {props.event.pengujiDua}</li>
+          <li>3. {props.event.pengujiTiga}</li>
+        </ul>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.handleClose}>

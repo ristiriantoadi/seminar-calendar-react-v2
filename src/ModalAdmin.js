@@ -15,11 +15,15 @@ function Example(props) {
       <Modal.Body>
         {/* {console.log("the event object: ")}
         {console.log(props.event)} */}
-        <p>Judul: {props.event.judul}</p>
-        {/* <p>Tanggal: {props.event.tanggal}</p> */}
-        <p>Pembimbing Satu: {props.event.pembimbingSatu}</p>
-        <p>Pembimbing Dua: {props.event.pembimbingDua}</p>
-        <p>Files: </p>
+        <p>Nama: {props.event.namaLengkap}</p>
+        <p>NIM: {props.event.nim}</p>
+        <p>Judul TA 1: {props.event.judul}</p>
+        <h6>Pembimbing</h6>
+        <ul style={{ listStyleType: "none", padding: "0px" }}>
+          <li>1. {props.event.pembimbingSatu}</li>
+          <li>2. {props.event.pembimbingDua}</li>
+        </ul>
+        <h6>Files</h6>
         <ul>
           <li>
             <a href={props.event.fileKRSURL}>File Krs</a>
@@ -39,7 +43,7 @@ function Example(props) {
         <Button variant="success" onClick={props.handleTerima}>
           Terima
         </Button>
-        <Button variant="danger" onClick={props.handleClose}>
+        <Button variant="danger" onClick={props.handleTolak}>
           Tolak
         </Button>
         {/* <Button variant="secondary" onClick={props.handleClose}>

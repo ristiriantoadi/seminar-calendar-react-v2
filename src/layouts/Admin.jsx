@@ -42,7 +42,11 @@ class Dashboard extends React.Component {
       alert: ""
     };
     this.mainPanel = React.createRef();
+
+    this.updateProposals = this.updateProposals.bind(this);
     this.setAlert = this.setAlert.bind(this);
+    this.setAlertTolak = this.setAlertTolak.bind(this);
+
     if (!firebase.apps.length) {
       // firebase.initializeApp({});
       this.app = firebase.initializeApp(config);
@@ -54,11 +58,26 @@ class Dashboard extends React.Component {
     //   .ref()
     //   .child("seminar");
   }
+
+  updateProposals(proposals) {
+    console.log("update is called!!!");
+    this.setState({
+      proposalSeminars: proposals
+    });
+  }
+
   setAlert(nama, nim) {
     this.setState({
       alert: "Seminar atas nama " + nama + " (" + nim + ") telah didaftarkan"
     });
   }
+
+  setAlertTolak(nama, nim) {
+    this.setState({
+      alert: "Seminar atas nama " + nama + " (" + nim + ") telah ditolak"
+    });
+  }
+
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
@@ -71,8 +90,10 @@ class Dashboard extends React.Component {
       .ref()
       .child("proposal-seminar");
     const previousProposals = this.state.proposalSeminars;
+    // console.log("this get called once");
     proposal_ref.on("child_added", snap => {
       //download from URL here
+      console.log("this get called once");
       var storage = firebase.storage();
       // var pathReference = storage.ref("proposal-seminar/F1D016078");
       var fileKRSReference = storage.ref(snap.val().fileKRS);
@@ -100,7 +121,8 @@ class Dashboard extends React.Component {
                   fileKartuKontrolURL: fileKartuKontrolURL,
                   fileLaporanURL: fileLaporanURL,
                   fileSuratPuasURL: fileSuratPuasURL,
-                  fileKRSURL: fileKRSURL
+                  fileKRSURL: fileKRSURL,
+                  startDate: snap.val().startDate
                 });
                 this.setState({
                   proposalSeminars: previousProposals
@@ -129,7 +151,10 @@ class Dashboard extends React.Component {
         namaLengkap: snap.val().namaLengkap,
         nim: snap.val().nim,
         pembimbingDua: snap.val().pembimbingDua,
-        pembimbingSatu: snap.val().pembimbingSatu
+        pembimbingSatu: snap.val().pembimbingSatu,
+        pengujiSatu: snap.val().pengujiSatu,
+        pengujiDua: snap.val().pengujiDua,
+        pengujiTiga: snap.val().pengujiTiga
       });
       this.setState({
         events: previousEvents
@@ -178,7 +203,9 @@ class Dashboard extends React.Component {
                       events={this.state.events}
                       proposalSeminars={this.state.proposalSeminars}
                       setAlert={this.setAlert}
+                      setAlertTolak={this.setAlertTolak}
                       alert={this.state.alert}
+                      updateProposals={this.updateProposals}
                       {...this.props}
                       app={this.app}
                     ></prop.component>

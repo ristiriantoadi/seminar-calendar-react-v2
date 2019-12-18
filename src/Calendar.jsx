@@ -27,11 +27,18 @@ class Calendar extends React.Component {
     //showModal();
     // console.log("info.event.extendedProps: ");
     // console.log(info.event.extendedProps);
+    console.log(info.event.start);
     const myEvent = {
       title: info.event.title,
       judul: info.event.extendedProps.judul,
+      nim: info.event.extendedProps.nim,
+      namaLengkap: info.event.extendedProps.namaLengkap,
       pembimbingDua: info.event.extendedProps.pembimbingDua,
       pembimbingSatu: info.event.extendedProps.pembimbingSatu,
+      pengujiSatu: info.event.extendedProps.pengujiSatu,
+      pengujiDua: info.event.extendedProps.pengujiDua,
+      pengujiTiga: info.event.extendedProps.pengujiTiga,
+      waktu: info.event.extendedProps.waktu,
       tanggal:
         info.event.start.getYear() +
         1900 +
@@ -46,12 +53,19 @@ class Calendar extends React.Component {
     });
   }
   render() {
+    // console.log(this.props.events[0].startDate);
     const someEvents = this.props.events.map(event => ({
       title: "[Seminar TA 1] " + event.namaLengkap + " (" + event.nim + ")",
       start: event.startDate,
       judul: event.judul,
+      nim: event.nim,
+      namaLengkap: event.namaLengkap,
       pembimbingDua: event.pembimbingDua,
-      pembimbingSatu: event.pembimbingSatu
+      pembimbingSatu: event.pembimbingSatu,
+      pengujiSatu: event.pengujiSatu,
+      pengujiDua: event.pengujiDua,
+      pengujiTiga: event.pengujiTiga,
+      waktu: event.startDate.toString().split("T")[1]
     }));
     return (
       <div>

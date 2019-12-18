@@ -60,7 +60,7 @@ class Dashboard extends React.Component {
             Proposal Seminar Anda dalam proses <i>review</i>. Harap menunggu.
           </Alert>
         );
-        break;
+      // break;
       case 1:
         return (
           <Alert color="success">
@@ -68,7 +68,7 @@ class Dashboard extends React.Component {
             jadwal di kalender
           </Alert>
         );
-        break;
+      // break;
       case 2:
         return (
           <Alert color="danger">
@@ -134,7 +134,10 @@ class Dashboard extends React.Component {
         namaLengkap: snap.val().namaLengkap,
         nim: snap.val().nim,
         pembimbingDua: snap.val().pembimbingDua,
-        pembimbingSatu: snap.val().pembimbingSatu
+        pembimbingSatu: snap.val().pembimbingSatu,
+        pengujiSatu: snap.val().pengujiSatu,
+        pengujiDua: snap.val().pengujiDua,
+        pengujiTiga: snap.val().pengujiTiga
       });
       this.setState({
         events: previousEvents
@@ -195,6 +198,8 @@ class Dashboard extends React.Component {
                         app={this.app}
                         statusProposal={this.state.statusProposal}
                         {...this.props}
+                        nama={this.state.nama}
+                        nim={this.state.nim}
                         renderAlert={this.renderAlert}
                       ></prop.component>
                     );

@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/button";
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 
 function Example(props) {
   // listURL = props.event.
@@ -46,45 +47,52 @@ function Example(props) {
         <Modal.Title>Tambah Seminar</Modal.Title>
       </Modal.Header>
       {/* <Modal.Body>{props.event.start}</Modal.Body> */}
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Modal.Body>
-          <p>
-            NIM:
-            <input type="text" name="nim" value={props.event.nim}></input>
-          </p>
-
-          <p>
-            Nama:
-            <input
+          <Form.Group>
+            <Form.Label>NIM</Form.Label>
+            <Form.Control
+              type="text"
+              name="nim"
+              placeholder="Masukkan NIM"
+              value={props.event.nim}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Nama Lengkap</Form.Label>
+            <Form.Control
               type="text"
               name="nama"
               value={props.event.namaLengkap}
-            ></input>
-          </p>
-
-          <p>
-            Judul:
-            <input type="text" name="judul" value={props.event.judul}></input>
-          </p>
-          <p>
-            Dosen Pembimbing 1:
-            <input
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Judul</Form.Label>
+            <Form.Control
+              name="judul"
               type="text"
+              value={props.event.judul}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Dosen Pembimbing 1</Form.Label>
+            <Form.Control
               name="dosen-pembimbing-1"
-              value={props.event.pembimbingSatu}
-            ></input>
-          </p>
-          <p>
-            Dosen Pembimbing 2:
-            <input
               type="text"
+              value={props.event.pembimbingSatu}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Dosen Pembimbing 2</Form.Label>
+            <Form.Control
               name="dosen-pembimbing-2"
+              type="text"
               value={props.event.pembimbingDua}
-            ></input>
-          </p>
-          <p>
-            Dosen Penguji 1:
-            <select name="dosen-penguji-1">
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Dosen Penguji 1</Form.Label>
+            <Form.Control as="select" name="dosen-penguji-1">
               <option>---Pilih---</option>
               <option>Ir.Sri Endang Anjarwani, M.Kom</option>
               <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
@@ -101,11 +109,11 @@ function Example(props) {
               <option>Gibran Satya Nugraha, S.Kom.,M.Eng</option>
               <option>Ramaditia Dwiyansaputra,S.T.,M.Eng</option>
               <option>Arik Aranta, S.Kom.,M.Kom</option>
-            </select>
-          </p>
-          <p>
-            Dosen Penguji 2:
-            <select name="dosen-penguji-2">
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Dosen Penguji 2</Form.Label>
+            <Form.Control as="select" name="dosen-penguji-2">
               <option>---Pilih---</option>
               <option>Ir.Sri Endang Anjarwani, M.Kom</option>
               <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
@@ -122,11 +130,11 @@ function Example(props) {
               <option>Gibran Satya Nugraha, S.Kom.,M.Eng</option>
               <option>Ramaditia Dwiyansaputra,S.T.,M.Eng</option>
               <option>Arik Aranta, S.Kom.,M.Kom</option>
-            </select>
-          </p>
-          <p>
-            Dosen Penguji 3:
-            <select name="dosen-penguji-3">
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Dosen Penguji 3</Form.Label>
+            <Form.Control as="select" name="dosen-penguji-3">
               <option>---Pilih---</option>
               <option>Ir.Sri Endang Anjarwani, M.Kom</option>
               <option>Prof. I Gede Pasek Suta Wijaya S.T.,M.T.,D.Eng</option>
@@ -143,12 +151,15 @@ function Example(props) {
               <option>Gibran Satya Nugraha, S.Kom.,M.Eng</option>
               <option>Ramaditia Dwiyansaputra,S.T.,M.Eng</option>
               <option>Arik Aranta, S.Kom.,M.Kom</option>
-            </select>
-          </p>
-          <p>
-            Tanggal dan waktu:
-            <input type="datetime-local" name="waktu-tanggal"></input>
-          </p>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Tanggal dan waktu</Form.Label>
+            <Form.Control
+              type="datetime-local"
+              name="waktu-tanggal"
+            ></Form.Control>
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           {/* <Button variant="success">Terima</Button>
@@ -165,7 +176,7 @@ function Example(props) {
           Save Changes
         </Button> */}
         </Modal.Footer>
-      </form>
+      </Form>
     </Modal>
   );
 }

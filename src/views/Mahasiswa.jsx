@@ -180,7 +180,7 @@ class Mahasiswa extends React.Component {
 
   render() {
     // console.log(this.props.app);
-    if (this.props.statusProposal === -1) {
+    if (this.props.statusProposal === -1 || this.props.statusProposal === 2) {
       return (
         <>
           <div className="content">
@@ -201,6 +201,7 @@ class Mahasiswa extends React.Component {
                                 <Form.Control
                                   type="text"
                                   name="nama-lengkap"
+                                  value={this.props.nama}
                                   placeholder="Masukkan nama lengkap"
                                 />
                               </Form.Group>
@@ -209,6 +210,7 @@ class Mahasiswa extends React.Component {
                               <Form.Label>NIM</Form.Label>
                               <Form.Control
                                 type="text"
+                                value={this.props.nim}
                                 name="nim"
                                 placeholder="Masukkan NIM"
                               />

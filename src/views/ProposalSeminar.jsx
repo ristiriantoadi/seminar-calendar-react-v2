@@ -22,7 +22,7 @@ import React from "react";
 import NotificationAlert from "react-notification-alert";
 // import Calendar from "Calendar";
 // reactstrap components
-// import firebase from "firebase";
+import firebase from "firebase";
 import ModalAdmin from "ModalAdmin";
 import ModalTambahSeminar from "ModalAdminTambahSeminar";
 import {
@@ -64,6 +64,7 @@ class ProposalSeminar extends React.Component {
       this
     );
     this.handleTerima = this.handleTerima.bind(this);
+    this.handleTolak = this.handleTolak.bind(this);
   }
   // componentDidMount() {
   //   const previousEvents = this.state.events;
@@ -148,10 +149,76 @@ class ProposalSeminar extends React.Component {
     });
   }
   handleTolak() {
-    console.log("ditolak");
+    // console.log("ditolak");
+    this.setState({
+      showModal: false
+    });
+    this.props.app
+      .database()
+      .ref(
+        "proposal-seminar/" + this.state.clickedProposal.nim + "/statusProposal"
+      )
+      .set("tolak");
+    this.props.setAlertTolak(
+      this.state.clickedProposal.namaLengkap,
+      this.state.clickedProposal.nim
+    );
+    const proposal_ref = this.props.app
+      .database()
+      .ref()
+      .child("proposal-seminar");
+    const previousProposals = [];
+    proposal_ref.once("child_added", snap => {
+      console.log("Called again");
+      var storage = this.props.app.storage();
+      console.log(storage);
+      // var pathReference = storage.ref("proposal-seminar/F1D016078");
+      var fileKRSReference = storage.ref(snap.val().fileKRS);
+      fileKRSReference.getDownloadURL().then(fileKRSURL => {
+        var fileKartuKontrolReference = storage.ref(
+          snap.val().fileKartuKontrol
+        );
+        fileKartuKontrolReference.getDownloadURL().then(fileKartuKontrolURL => {
+          var fileLaporanReference = storage.ref(snap.val().fileLaporan);
+          fileLaporanReference.getDownloadURL().then(fileLaporanURL => {
+            var fileSuratPuasReference = storage.ref(snap.val().fileSuratPuas);
+            fileSuratPuasReference.getDownloadURL().then(fileSuratPuasURL => {
+              // console.log("URL File Kartu Kontrol: " + fileKartuKontrolURL);
+              // console.log("URL File Laporan: " + fileLaporanURL);
+              // console.log("URL File Surat Puas: " + fileSuratPuasURL);
+              // console.log("URL File KRS: " + fileKRSURL);
+              if (snap.val().statusProposal === "tunggu") {
+                previousProposals.push({
+                  nim: snap.val().nim,
+                  judul: snap.val().judul,
+                  namaLengkap: snap.val().namaLengkap,
+                  noHP: snap.val().noHP,
+                  pembimbingDua: snap.val().pembimbingDua,
+                  pembimbingSatu: snap.val().pembimbingSatu,
+                  fileKartuKontrolURL: fileKartuKontrolURL,
+                  fileLaporanURL: fileLaporanURL,
+                  fileSuratPuasURL: fileSuratPuasURL,
+                  fileKRSURL: fileKRSURL
+                });
+                this.props.updateProposals(previousProposals);
+              }
+            });
+          });
+        });
+      });
+    });
+    // props.history.push("/admin/seminar");
+  }
+  renderAlert(alert) {
+    if (alert != "") {
+      return <Alert color="danger">{alert}</Alert>;
+    } else {
+      return;
+    }
   }
 
   render() {
+    const alert = this.renderAlert(this.props.alert);
     const tableStyle = {
       border: "1px solid #000000",
       borderCollapse: "collapse"
@@ -176,6 +243,7 @@ class ProposalSeminar extends React.Component {
       <>
         <div className="content">
           <ModalAdmin
+            // app={this.props.app}
             event={this.state.clickedProposal}
             show={this.state.showModal}
             handleClose={this.handleClose}
@@ -191,6 +259,7 @@ class ProposalSeminar extends React.Component {
             event={this.state.clickedProposal}
           ></ModalTambahSeminar>
           <NotificationAlert ref={this.notificationAlert} />
+          {alert}
           <Row>
             <Col md="12">
               <Card>
