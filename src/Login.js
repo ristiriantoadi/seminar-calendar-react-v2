@@ -112,12 +112,21 @@ function Login(props) {
           var nama = snapshot.val().nama;
           // props.setNim(nim);
           // props.setNama(nama);
-          props.fakeAuth.authenticate(() => {
-            props.fakeAuth.nama = nama;
-            props.fakeAuth.nim = nim;
-            history.replace("user/seminar");
-          });
+          if(nim === nama)
+            props.fakeAuth.authenticate(() => {
+              props.fakeAuth.nama = nama;
+              props.fakeAuth.nim = nim;
+              history.replace("user/seminar");
+            });
+          else{
+            swal("Oops!", "Anda Tidak Terdafar!", "error");
+                
+          }
         });
+    }else{
+      props.fakeAuth.authenticate(() => {
+        swal("Oops!", "Anda Tidak Terdafar!", "error");
+      });return;
     }
   };
 
@@ -140,9 +149,9 @@ function Login(props) {
   //       return;
   //   }
   //   else if (email.slice(0,3) !== 'F1D') {
-  //     props.fakeAuth.authenticate(() => {
-  //       swal("Oops!", "Password salah!", "error");
-  //     });
+      // props.fakeAuth.authenticate(() => {
+      //   swal("Oops!", "Password salah!", "error");
+      // });
   //     return;
   // }else{
 
