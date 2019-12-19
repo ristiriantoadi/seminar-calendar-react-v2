@@ -112,14 +112,16 @@ function Login(props) {
           var nama = snapshot.val().nama;
           // props.setNim(nim);
           // props.setNama(nama);
-          if(nim === nama)
+          console.log(nim);
+          console.log(nama);
+          if(nim == username)
             props.fakeAuth.authenticate(() => {
               props.fakeAuth.nama = nama;
               props.fakeAuth.nim = nim;
               history.replace("user/seminar");
             });
           else{
-            swal("Oops!", "Anda Tidak Terdafar!", "error");
+            swal("Oops!", "Password salah!", "error");
                 
           }
         });
