@@ -208,19 +208,19 @@ function Login(props) {
                 <div class="col-sm-12 p-md-3">
                   <ul class="nav justify-content-end">
                     <li class="nav-item">
-                      <a class="nav-link active" href="#">
+                      {/* <a class="nav-link active" href="#">
                         Active
-                      </a>
+                      </a> */}
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
+                      {/* <a class="nav-link" href="#">
                         Contact Us
-                      </a>
+                      </a> */}
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
+                      {/* <a class="nav-link" href="#">
                         About
-                      </a>
+                      </a> */}
                     </li>
                   </ul>
                 </div>
