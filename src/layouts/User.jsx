@@ -24,7 +24,8 @@ import { Route, Switch } from "react-router-dom";
 import DemoNavbar from "components/Navbars/UserNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
+// import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
+import { Alert } from "reactstrap";
 
 import routes from "userRoutes.js";
 import firebase from "firebase";
@@ -35,9 +36,12 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      nama: this.props.fakeAuth.nama,
+      nim: this.props.fakeAuth.nim,
       backgroundColor: "black",
       activeColor: "info",
-      events: []
+      events: [],
+      statusProposal: -1 //-1 = no proposal, 0 = menunggu, 1 = diterima, 2 = ditolak
     };
     this.mainPanel = React.createRef();
     if (!firebase.apps.length) {
@@ -47,22 +51,76 @@ class Dashboard extends React.Component {
       this.app = firebase.apps[0];
     }
   }
+
+  renderAlert(statusProposal) {
+    switch (statusProposal) {
+      case 0:
+        return (
+          <Alert color="info">
+            Proposal Seminar Anda dalam proses <i>review</i>. Harap menunggu.
+          </Alert>
+        );
+      // break;
+      case 1:
+        return (
+          <Alert color="success">
+            Proposal Seminar Anda telah diterima oleh Admin. Silakan lihat
+            jadwal di kalender
+          </Alert>
+        );
+      // break;
+      case 2:
+        return (
+          <Alert color="danger">
+            Proposal Seminar Anda ditolak oleh Admin. Silakan mengisi kembali
+            Form Seminar Tugas Akhir
+          </Alert>
+        );
+    }
+  }
+
   componentWillMount() {
-    // const seminar_ref = this.app
-    //   .database()
-    //   .ref()
-    //   .child("seminar");
-    // const previousEvents = this.state.events;
-    // seminar_ref.on("child_added", snap => {
-    //   previousEvents.push({
-    //     title: snap.val().title,
-    //     start: snap.val().startDate,
-    //     end: snap.val().startDate
-    //   });
-    //   this.setState({
-    //     events: previousEvents
-    //   });
-    // });
+    var isExist = false;
+    // console.log("i need to know if it exist");
+    var eventSeminar = {};
+    const proposal_seminar_ref = this.app
+      .database()
+      .ref()
+      .child("proposal-seminar/" + this.state.nim);
+    proposal_seminar_ref.on("value", snap => {
+      console.log("Does it exist? " + snap.exists());
+      isExist = snap.exists();
+      eventSeminar = snap.val();
+
+      if (!isExist) {
+        this.setState({
+          statusProposal: -1
+        });
+        console.log("statusProposal = -1");
+      } else {
+        if (eventSeminar.statusProposal === "terima") {
+          this.setState({
+            statusProposal: 1
+          });
+          console.log("statusProposal = 1");
+        } else if (eventSeminar.statusProposal === "tunggu") {
+          this.setState({
+            statusProposal: 0
+          });
+          console.log("statusProposal = 0");
+        } else if (eventSeminar.statusProposal === "tolak") {
+          this.setState({
+            statusProposal: 2
+          });
+          console.log("statusProposal = 2");
+        }
+      }
+
+      // this.setState({
+      //   status: 1
+      // });
+    });
+
     const seminar_ref = this.app
       .database()
       .ref()
@@ -76,7 +134,10 @@ class Dashboard extends React.Component {
         namaLengkap: snap.val().namaLengkap,
         nim: snap.val().nim,
         pembimbingDua: snap.val().pembimbingDua,
-        pembimbingSatu: snap.val().pembimbingSatu
+        pembimbingSatu: snap.val().pembimbingSatu,
+        pengujiSatu: snap.val().pengujiSatu,
+        pengujiDua: snap.val().pengujiDua,
+        pengujiTiga: snap.val().pengujiTiga
       });
       this.setState({
         events: previousEvents
@@ -118,7 +179,12 @@ class Dashboard extends React.Component {
           activeColor={this.state.activeColor}
         />
         <div className="main-panel" ref={this.mainPanel}>
-          <DemoNavbar fakeAuth={this.props.fakeAuth} {...this.props} />
+          <DemoNavbar
+            fakeAuth={this.props.fakeAuth}
+            {...this.props}
+            nama={this.state.nama}
+            nim={this.state.nim}
+          />
           <Switch>
             {routes.map((prop, key) => {
               return (
@@ -130,6 +196,11 @@ class Dashboard extends React.Component {
                       <prop.component
                         events={this.state.events}
                         app={this.app}
+                        statusProposal={this.state.statusProposal}
+                        {...this.props}
+                        nama={this.state.nama}
+                        nim={this.state.nim}
+                        renderAlert={this.renderAlert}
                       ></prop.component>
                     );
                   }}
@@ -140,12 +211,12 @@ class Dashboard extends React.Component {
           </Switch>
           <Footer fluid />
         </div>
-        <FixedPlugin
+        {/* <FixedPlugin
           bgColor={this.state.backgroundColor}
           activeColor={this.state.activeColor}
           handleActiveClick={this.handleActiveClick}
           handleBgClick={this.handleBgClick}
-        />
+        /> */}
       </div>
     );
   }

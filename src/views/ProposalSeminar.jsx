@@ -20,9 +20,11 @@
 import React from "react";
 // react plugin for creating notifications over the dashboard
 import NotificationAlert from "react-notification-alert";
-import Calendar from "Calendar";
+// import Calendar from "Calendar";
 // reactstrap components
 import firebase from "firebase";
+import ModalAdmin from "ModalAdmin";
+import ModalTambahSeminar from "ModalAdminTambahSeminar";
 import {
   UncontrolledAlert,
   Alert,
@@ -36,7 +38,7 @@ import {
 } from "reactstrap";
 // import config from "config";
 
-class Seminar extends React.Component {
+class ProposalSeminar extends React.Component {
   constructor() {
     super();
     // if (!firebase.apps.length) {
@@ -51,8 +53,18 @@ class Seminar extends React.Component {
     //   .child("seminar");
     this.state = {
       // events: [],
-      visible: true
+      visible: true,
+      showModal: false,
+      showModalTambahSeminar: false,
+      clickedProposal: {}
     };
+    this.handleClose = this.handleClose.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleCloseModalTambahSeminar = this.handleCloseModalTambahSeminar.bind(
+      this
+    );
+    this.handleTerima = this.handleTerima.bind(this);
+    this.handleTolak = this.handleTolak.bind(this);
   }
   // componentDidMount() {
   //   const previousEvents = this.state.events;
@@ -111,25 +123,148 @@ class Seminar extends React.Component {
     };
     this.notificationAlert.current.notificationAlert(options);
   }
+
+  handleClose() {
+    this.setState({
+      showModal: false
+    });
+  }
+  handleCloseModalTambahSeminar() {
+    this.setState({
+      showModalTambahSeminar: false
+    });
+  }
+
+  handleClick(proposalSeminar) {
+    this.setState({
+      clickedProposal: proposalSeminar,
+      showModal: true
+    });
+  }
+
+  handleTerima() {
+    this.setState({
+      showModalTambahSeminar: true,
+      showModal: false
+    });
+  }
+  handleTolak() {
+    // console.log("ditolak");
+    this.setState({
+      showModal: false
+    });
+    this.props.app
+      .database()
+      .ref(
+        "proposal-seminar/" + this.state.clickedProposal.nim + "/statusProposal"
+      )
+      .set("tolak");
+    this.props.setAlertTolak(
+      this.state.clickedProposal.namaLengkap,
+      this.state.clickedProposal.nim
+    );
+    const proposal_ref = this.props.app
+      .database()
+      .ref()
+      .child("proposal-seminar");
+    const previousProposals = [];
+    proposal_ref.once("child_added", snap => {
+      console.log("Called again");
+      var storage = this.props.app.storage();
+      console.log(storage);
+      // var pathReference = storage.ref("proposal-seminar/F1D016078");
+      var fileKRSReference = storage.ref(snap.val().fileKRS);
+      fileKRSReference.getDownloadURL().then(fileKRSURL => {
+        var fileKartuKontrolReference = storage.ref(
+          snap.val().fileKartuKontrol
+        );
+        fileKartuKontrolReference.getDownloadURL().then(fileKartuKontrolURL => {
+          var fileLaporanReference = storage.ref(snap.val().fileLaporan);
+          fileLaporanReference.getDownloadURL().then(fileLaporanURL => {
+            var fileSuratPuasReference = storage.ref(snap.val().fileSuratPuas);
+            fileSuratPuasReference.getDownloadURL().then(fileSuratPuasURL => {
+              // console.log("URL File Kartu Kontrol: " + fileKartuKontrolURL);
+              // console.log("URL File Laporan: " + fileLaporanURL);
+              // console.log("URL File Surat Puas: " + fileSuratPuasURL);
+              // console.log("URL File KRS: " + fileKRSURL);
+              if (snap.val().statusProposal === "tunggu") {
+                previousProposals.push({
+                  nim: snap.val().nim,
+                  judul: snap.val().judul,
+                  namaLengkap: snap.val().namaLengkap,
+                  noHP: snap.val().noHP,
+                  pembimbingDua: snap.val().pembimbingDua,
+                  pembimbingSatu: snap.val().pembimbingSatu,
+                  fileKartuKontrolURL: fileKartuKontrolURL,
+                  fileLaporanURL: fileLaporanURL,
+                  fileSuratPuasURL: fileSuratPuasURL,
+                  fileKRSURL: fileKRSURL
+                });
+                this.props.updateProposals(previousProposals);
+              }
+            });
+          });
+        });
+      });
+    });
+    // props.history.push("/admin/seminar");
+  }
   renderAlert(alert) {
     if (alert != "") {
-      return <Alert>{alert}</Alert>;
+      return <Alert color="danger">{alert}</Alert>;
     } else {
       return;
     }
   }
+
   render() {
     const alert = this.renderAlert(this.props.alert);
+    const tableStyle = {
+      border: "1px solid #000000",
+      borderCollapse: "collapse"
+    };
+    const rowTable = this.props.proposalSeminars.map(proposalSeminar => {
+      return (
+        <tr style={tableStyle}>
+          <td style={tableStyle}>{proposalSeminar.nim}</td>
+          <td style={tableStyle}>{proposalSeminar.namaLengkap}</td>
+          <td style={tableStyle}>{proposalSeminar.judul}</td>
+          <td style={tableStyle}>
+            {/* <button onClick={this.handleClick(proposalSeminar)}> */}
+            <button onClick={e => this.handleClick(proposalSeminar)}>
+              Lihat dokumen
+            </button>
+          </td>
+        </tr>
+      );
+    });
+
     return (
       <>
         <div className="content">
-          {/* <NotificationAlert ref={this.notificationAlert} /> */}
+          <ModalAdmin
+            // app={this.props.app}
+            event={this.state.clickedProposal}
+            show={this.state.showModal}
+            handleClose={this.handleClose}
+            handleTerima={this.handleTerima}
+            handleTolak={this.handleTolak}
+          ></ModalAdmin>
+          <ModalTambahSeminar
+            app={this.props.app}
+            history={this.props.history}
+            show={this.state.showModalTambahSeminar}
+            handleClose={this.handleCloseModalTambahSeminar}
+            setAlert={this.props.setAlert}
+            event={this.state.clickedProposal}
+          ></ModalTambahSeminar>
+          <NotificationAlert ref={this.notificationAlert} />
           {alert}
           <Row>
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h3">Kalender</CardTitle>
+                  <CardTitle tag="h3">Daftar Proposal Seminar</CardTitle>
                   {/* <p className="card-category">
                     Handcrafted by our colleague{" "}
                     <a
@@ -241,6 +376,7 @@ class Seminar extends React.Component {
                       </Card>
                     </Col>
                   </Row> */}
+
                   <Row>
                     <Col md="12">
                       <Card className="card-plain">
@@ -248,7 +384,16 @@ class Seminar extends React.Component {
                           <CardTitle tag="h5">Notifications Style</CardTitle>
                         </CardHeader> */}
                         <CardBody>
-                          <Calendar events={this.props.events}></Calendar>
+                          {/* <Calendar events={this.props.events}></Calendar> */}
+                          <table style={tableStyle}>
+                            <tr style={tableStyle}>
+                              <th style={tableStyle}>NIM</th>
+                              <th style={tableStyle}>Nama</th>
+                              <th style={tableStyle}>Judul</th>
+                              <th style={tableStyle}>Aksi</th>
+                            </tr>
+                            {rowTable}
+                          </table>
                         </CardBody>
                         {/* <CardBody>
                           <Alert color="info">
@@ -304,4 +449,4 @@ class Seminar extends React.Component {
   handleButtonClick() {}
 }
 
-export default Seminar;
+export default ProposalSeminar;

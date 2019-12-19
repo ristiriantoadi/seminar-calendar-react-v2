@@ -3,10 +3,13 @@ import Button from "react-bootstrap/button";
 import Modal from "react-bootstrap/Modal";
 
 function Example(props) {
+  // listURL = props.event.
   return (
     <Modal show={props.show} onHide={props.handleClose} size="lg">
       <Modal.Header closeButton>
-        <Modal.Title>{props.event.title}</Modal.Title>
+        <Modal.Title>
+          [Seminar TA 1] {props.event.namaLengkap} ({props.event.nim}){" "}
+        </Modal.Title>
       </Modal.Header>
       {/* <Modal.Body>{props.event.start}</Modal.Body> */}
       <Modal.Body>
@@ -14,25 +17,39 @@ function Example(props) {
         {console.log(props.event)} */}
         <p>Nama: {props.event.namaLengkap}</p>
         <p>NIM: {props.event.nim}</p>
-        <p>Hari/Tanggal: {props.event.tanggal}</p>
-        <p>Waktu: {props.event.waktu} WITA</p>
         <p>Judul TA 1: {props.event.judul}</p>
         <h6>Pembimbing</h6>
         <ul style={{ listStyleType: "none", padding: "0px" }}>
           <li>1. {props.event.pembimbingSatu}</li>
           <li>2. {props.event.pembimbingDua}</li>
         </ul>
-        <h6>Penguji</h6>
-        <ul style={{ listStyleType: "none", padding: "0px" }}>
-          <li>1. {props.event.pengujiSatu}</li>
-          <li>2. {props.event.pengujiDua}</li>
-          <li>3. {props.event.pengujiTiga}</li>
+        <h6>Files</h6>
+        <ul>
+          <li>
+            <a href={props.event.fileKRSURL}>File Krs</a>
+          </li>
+          <li>
+            <a href={props.event.fileKartuKontrolURL}>File Kartu kontrol</a>
+          </li>
+          <li>
+            <a href={props.event.fileLaporanURL}>File Laporan</a>
+          </li>
+          <li>
+            <a href={props.event.fileLaporanURL}>File Surat Puas</a>
+          </li>
         </ul>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.handleClose}>
-          Close
+        <Button variant="success" onClick={props.handleTerima}>
+          Terima
         </Button>
+        <Button variant="danger" onClick={props.handleTolak}>
+          Tolak
+        </Button>
+        {/* <Button variant="secondary" onClick={props.handleClose}>
+          Close
+        </Button> */}
+
         {/* <Button variant="primary" onClick={props.handleClose}>
           Save Changes
         </Button> */}

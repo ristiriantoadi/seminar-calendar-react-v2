@@ -186,13 +186,15 @@ class Header extends React.Component {
               >
                 <DropdownToggle caret nav>
                   {/* <i className="nc-icon nc-bell-55" /> */}
-                  <span>Ristirianto Adi (F1D016078)</span>
+                  <span>
+                    {this.props.nama} ({this.props.nim})
+                  </span>
                   {/* <p>
                     <span className="d-lg-none d-md-block">Some Actions</span>
                   </p> */}
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem tag="a">Pengaturan Akun</DropdownItem>
+                  {/* <DropdownItem tag="a">Pengaturan Akun</DropdownItem> */}
                   <DropdownItem
                     tag="a"
                     onClick={() => {

@@ -24,7 +24,7 @@
 // // import Maps from "views/Map.jsx";
 // // import UserPage from "views/User.jsx";
 // import UpgradeToPro from "views/Upgrade.jsx";
-import Seminar from "views/Seminar";
+import Seminar from "views/SeminarMahasiswa";
 import Mahasiswa from "views/Mahasiswa";
 
 var routes = [

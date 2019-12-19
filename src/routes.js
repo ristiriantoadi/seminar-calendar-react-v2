@@ -26,7 +26,9 @@ import Icons from "views/Icons.jsx";
 // import UserPage from "views/User.jsx";
 // import UpgradeToPro from "views/Upgrade.jsx";
 import Mahasiswa from "views/Mahasiswa.jsx";
-import TambahSeminar from "views/TambahSeminar.jsx";
+// import TambahSeminar from "views/TambahSeminar.jsx";
+import ProposalSeminar from "views/ProposalSeminar.jsx";
+
 var routes = [
   {
     path: "/seminar",
@@ -35,21 +37,27 @@ var routes = [
     component: Seminar,
     layout: "/admin"
   },
-
   {
-    path: "/pengajuan-seminar",
-    name: "Pengajuan Seminar",
-    icon: "nc-icon nc-diamond",
-    component: TambahSeminar,
-    layout: "/admin"
-  },
-  {
-    path: "/daftar-pengajuan-seminar",
-    name: "Konfirmasi Seminar",
-    icon: "nc-icon nc-diamond",
-    component: Mahasiswa,
+    path: "/proposal-seminar",
+    name: "Proposal Seminar",
+    icon: "nc-icon nc-bell-55",
+    component: ProposalSeminar,
     layout: "/admin"
   }
+  // {
+  //   path: "/pengajuan-seminar",
+  //   name: "Pengajuan Seminar",
+  //   icon: "nc-icon nc-diamond",
+  //   component: TambahSeminar,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/daftar-pengajuan-seminar",
+  //   name: "Konfirmasi Seminar",
+  //   icon: "nc-icon nc-diamond",
+  //   component: Mahasiswa,
+  //   layout: "/admin"
+  // }
   // {
   //   path: "/user-page",
   //   name: "Profil Pengguna",

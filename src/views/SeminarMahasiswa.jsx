@@ -25,7 +25,7 @@ import Calendar from "Calendar";
 import firebase from "firebase";
 import {
   UncontrolledAlert,
-  Alert,
+  // Alert,
   Button,
   Card,
   CardHeader,
@@ -51,9 +51,58 @@ class Seminar extends React.Component {
     //   .child("seminar");
     this.state = {
       // events: [],
-      visible: true
+      visible: true,
+      status: -1 //0 = menunggu, 1=accepted,-1 = belum mengajukan
     };
   }
+  // componentWillMount() {
+  //   var isExist = false;
+  //   var eventSeminar = {};
+  //   const proposal_seminar_ref = this.props.app
+  //     .database()
+  //     .ref()
+  //     .child("proposal-seminar/F1D016078");
+  //   proposal_seminar_ref.once("value", snap => {
+  //     console.log(snap.exists());
+  //     isExist = snap.exists();
+  //     eventSeminar = snap.val();
+
+  //     // this.setState({
+  //     //   status: 1
+  //     // });
+  //   });
+  //   if (!isExist) {
+  //     this.setState({
+  //       status: -1
+  //     });
+  //   } else {
+  //     if (eventSeminar.statusDiterima == true) {
+  //       this.setState({
+  //         status: 1
+  //       });
+  //     } else {
+  //       this.setState({
+  //         status: 0
+  //       });
+  //     }
+  //   }
+
+  // const previousEvents = this.state.events;
+  // seminar_ref.on("child_added", snap => {
+  //   previousEvents.push({
+  //     judul: snap.val().judul,
+  //     startDate: snap.val().startDate,
+  //     // end: snap.val().startDate,
+  //     namaLengkap: snap.val().namaLengkap,
+  //     nim: snap.val().nim,
+  //     pembimbingDua: snap.val().pembimbingDua,
+  //     pembimbingSatu: snap.val().pembimbingSatu
+  //   });
+  //   this.setState({
+  //     events: previousEvents
+  //   });
+  // });
+  // }
   // componentDidMount() {
   //   const previousEvents = this.state.events;
   //   this.database.on("child_added", snap => {
@@ -111,20 +160,42 @@ class Seminar extends React.Component {
     };
     this.notificationAlert.current.notificationAlert(options);
   }
-  renderAlert(alert) {
-    if (alert != "") {
-      return <Alert>{alert}</Alert>;
-    } else {
-      return;
-    }
-  }
+
+  // renderAlert(statusProposal) {
+  //   switch (statusProposal) {
+  //     case 0:
+  //       return (
+  //         <Alert color="info">
+  //           Proposal Seminar Anda dalam proses <i>review</i>. Harap menunggu.
+  //         </Alert>
+  //       );
+  //       break;
+  //     case 1:
+  //       return (
+  //         <Alert color="success">
+  //           Proposal Seminar Anda telah diterima oleh Admin. Silakan lihat
+  //           jadwal di kalender
+  //         </Alert>
+  //       );
+  //       break;
+  //     case 2:
+  //       return (
+  //         <Alert color="danger">
+  //           Proposal Seminar Anda ditolak oleh Admin. Silakan mengisi kembali
+  //           Form Seminar Tugas Akhir
+  //         </Alert>
+  //       );
+  //   }
+  // }
+
   render() {
-    const alert = this.renderAlert(this.props.alert);
+    // console.log("Status proposal " + this.props.statusProposal);
+    const statusAlert = this.props.renderAlert(this.props.statusProposal);
     return (
       <>
         <div className="content">
-          {/* <NotificationAlert ref={this.notificationAlert} /> */}
-          {alert}
+          <NotificationAlert ref={this.notificationAlert} />
+          {statusAlert}
           <Row>
             <Col md="12">
               <Card>
