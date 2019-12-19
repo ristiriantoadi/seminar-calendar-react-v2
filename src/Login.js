@@ -114,7 +114,7 @@ function Login(props) {
           // props.setNama(nama);
           console.log(nim);
           console.log(nama);
-          if(nim == username)
+          if(nim == password)
             props.fakeAuth.authenticate(() => {
               props.fakeAuth.nama = nama;
               props.fakeAuth.nim = nim;
