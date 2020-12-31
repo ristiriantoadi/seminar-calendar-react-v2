@@ -1,8 +1,6 @@
 import React from "react";
-//import logo from './bg1.png';
-// import logo from "./gambar1.png";
-// import "./App.css";
 import Login from "./Login";
+import axios from "axios";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,7 +10,6 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
-// import Dashboard from "./Dashboard";
 import AdminLayout from "layouts/Admin.jsx";
 import UserLayout from "layouts/User.jsx";
 
@@ -20,17 +17,46 @@ const fakeAuth = {
   nama: "",
   nim: "",
   isAuthenticated: false,
-  authenticate(cb) {
+  authenticate(successCb,failCb,username,password) {
     // let history = useHistory;
-    fakeAuth.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
+    axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
+      // Login...
+      axios.post('http://localhost:8000/login',{
+        email:username,
+        password
+      })
+      .then(res=>{
+        console.log(res.status)
+        this.isAuthenticated=true
+        successCb()
+      })
+      .catch(err=>{
+        console.log(err)
+        failCb()
+        // console.log("this is an error")
+      })
+    });
+
+    // fakeAuth.isAuthenticated = true;
+    // setTimeout(cb, 100); // fake async
     // setTimeout(() => {
     //   history.replace("/admin/seminar");
     // }, 100);
   },
   signout(cb) {
-    fakeAuth.isAuthenticated = false;
-    setTimeout(cb, 100);
+    axios.post('http://localhost:8000/logout')
+    .then(function (response) {
+        // handle success
+        console.log(response);
+        fakeAuth.isAuthenticated = false;
+        cb()
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    })
+    // fakeAuth.isAuthenticated = false;
+    // setTimeout(cb, 100);
   }
 };
 
@@ -38,46 +64,16 @@ const fakeAuth = {
 // screen if you're not yet authenticated.
 function PrivateRoute({ children, ...rest }) {
   return fakeAuth.isAuthenticated ? children : <Redirect to="/login" />;
-  // return (
-  //   <Route
-  //     {...rest}
-  //     render={({ location }) =>
-  //       fakeAuth.isAuthenticated ? (
-  //         children
-  //       ) : (
-  //         <Redirect
-  //           to={{
-  //             pathname: "/login",
-  //             state: { from: location }
-  //           }}
-  //         />
-  //       )
-  //     }
-  //   />
-  // );
 }
 
 export default function App() {
+  axios.defaults.withCredentials = true
   return (
     <Router>
       <Switch>
-        {/* <Redirect to="/login"></Redirect> */}
         <Route path="/login">
           <Login fakeAuth={fakeAuth} />
         </Route>
-        {/* <PrivateRoute>
-          <Route path="/admin" render={props => <AdminLayout {...props} />} />
-        </PrivateRoute> */}
-        {/* <Route path="/admin" render={props => <AdminLayout {...props} />} /> */}
-        {/* <PrivateRoute>
-          <Switch>
-            <Route
-              path="/user"
-              render={props => <UserLayout {...props} />}
-            ></Route>
-            <Route path="/admin" render={props => <AdminLayout {...props} />} />
-          </Switch>
-        </PrivateRoute> */}
         <PrivateRoute path="/user">
           <Route
             path="/user"
@@ -91,13 +87,6 @@ export default function App() {
           />
         </PrivateRoute>
         <Redirect to="/login"></Redirect>
-        {/* <Route path="/user" render={props => <UserLayout {...props} />}></Route> */}
-        {/* <PrivateRoute path="/dashboard">
-          <Dashboard />
-        </PrivateRoute> */}
-        {/* <PrivateRoute path="/protected">
-            <ProtectedPage />
-          </PrivateRoute> */}
       </Switch>
     </Router>
   );

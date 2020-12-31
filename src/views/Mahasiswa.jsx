@@ -35,7 +35,7 @@ import {
 
 import { Form } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/button";
+import Button from "react-bootstrap/Button";
 // import Alert from "react-bootstrap/alert";
 
 class Mahasiswa extends React.Component {

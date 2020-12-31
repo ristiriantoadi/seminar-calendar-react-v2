@@ -48,29 +48,29 @@ import Header from "components/Navbars/DemoNavbar";
 // }
 // componentDidMount();
 
-function api() {
-  axios
-    .get(
-      "https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=f1d016086",
-      {
-        params: {
-          authorization: "Basic RjFEMDE2MDg2OjEyMzQ1Njc4"
-        }
-      }
-    )
-    .then(response => {
-      this.setState({
-        company: response.data.company,
-        blog: response.data.blog,
-        avatar: response.data.avatar_url,
-        loading: false
-      });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-}
-api();
+// function api() {
+//   axios
+//     .get(
+//       "https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=f1d016086",
+//       {
+//         params: {
+//           authorization: "Basic RjFEMDE2MDg2OjEyMzQ1Njc4"
+//         }
+//       }
+//     )
+//     .then(response => {
+//       this.setState({
+//         company: response.data.company,
+//         blog: response.data.blog,
+//         avatar: response.data.avatar_url,
+//         loading: false
+//       });
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     });
+// }
+// api();
 
 function Login(props) {
   let history = useHistory();
@@ -82,55 +82,79 @@ function Login(props) {
     var username = data.get("username");
     var password = data.get("password");
 
-    if (username === "admin" || username === "admin@gmail.com") {
-      props.fakeAuth.authenticate(() => {
-        history.replace("/admin/seminar");
-      });
-      return;
-    } else if (username.slice(0, 3) === "F1D") {
-      // axios
-      //   .post(
-      //     "https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=" +
-      //       username
-      //   )
-      //   .then(function(response) {
-      //     console.log(response.data);
-      //   });
-      let app;
-      if (!firebase.apps.length) {
-        // firebase.initializeApp({});
-        app = firebase.initializeApp(config);
-      } else {
-        app = firebase.apps[0];
-      }
-      app
-        .database()
-        .ref("mahasiswa/" + username)
-        .once("value")
-        .then(snapshot => {
-          var nim = snapshot.val().nim;
-          var nama = snapshot.val().nama;
-          // props.setNim(nim);
-          // props.setNama(nama);
-          console.log(nim);
-          console.log(nama);
-          if(nim == password)
-            props.fakeAuth.authenticate(() => {
-              props.fakeAuth.nama = nama;
-              props.fakeAuth.nim = nim;
-              history.replace("user/seminar");
-            });
-          else{
-            swal("Oops!", "Password salah!", "error");
-                
-          }
-        });
-    }else{
-      props.fakeAuth.authenticate(() => {
-        swal("Oops!", "Anda Tidak Terdafar!", "error");
-      });return;
+    // axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
+    //   // Login...
+    //   axios.post('http://localhost:8000/login',{
+    //     email:username,
+    //     password
+    //   })
+    //   .then(res=>{
+    //     console.log(res)
+    //   })
+    //   .catch(err=>{
+    //     console.log(err)
+    //   })
+    // });
+    var successCb = ()=>{
+      console.log("authenticated");
+      history.replace("/user/seminar");
     }
-  };
+    var failCb = ()=>{
+      console.log("Username atau password salah")
+      swal("Oops!", "Anda Tidak Terdafar!", "error");
+    }
+
+    props.fakeAuth.authenticate(successCb,failCb,username,password)
+  }
+  //   if (username === "admin" || username === "admin@gmail.com") {
+  //     props.fakeAuth.authenticate(() => {
+  //       history.replace("/admin/seminar");
+  //     });
+  //     return;
+  //   } else if (username.slice(0, 3) === "F1D") {
+  //     // axios
+  //     //   .post(
+  //     //     "https://sia.unram.ac.id/index.php/api/Mahasiswa/Profil?nim=" +
+  //     //       username
+  //     //   )
+  //     //   .then(function(response) {
+  //     //     console.log(response.data);
+  //     //   });
+  //     let app;
+  //     if (!firebase.apps.length) {
+  //       // firebase.initializeApp({});
+  //       app = firebase.initializeApp(config);
+  //     } else {
+  //       app = firebase.apps[0];
+  //     }
+  //     app
+  //       .database()
+  //       .ref("mahasiswa/" + username)
+  //       .once("value")
+  //       .then(snapshot => {
+  //         var nim = snapshot.val().nim;
+  //         var nama = snapshot.val().nama;
+  //         // props.setNim(nim);
+  //         // props.setNama(nama);
+  //         console.log(nim);
+  //         console.log(nama);
+  //         if(nim == password)
+  //           props.fakeAuth.authenticate(() => {
+  //             props.fakeAuth.nama = nama;
+  //             props.fakeAuth.nim = nim;
+  //             history.replace("user/seminar");
+  //           });
+  //         else{
+  //           swal("Oops!", "Password salah!", "error");
+                
+  //         }
+  //       });
+  //   }else{
+  //     props.fakeAuth.authenticate(() => {
+  //       swal("Oops!", "Anda Tidak Terdafar!", "error");
+  //     });return;
+  //   }
+  // };
 
   // let { from } = location.state || { from: { pathname: "/" } };
   // let login = event => {
