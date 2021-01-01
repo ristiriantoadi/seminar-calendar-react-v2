@@ -43,11 +43,13 @@ const fakeAuth = {
     axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
       // Login...
       axios.post('http://localhost:8000/login',{
-        email:username,
+        nim:username,
         password
       })
       .then(res=>{
-        console.log(res.status)
+        console.log(res.data)
+        this.nama = res.data.name
+        this.nim = res.data.nim
         this.isAuthenticated=true
         successCb()
       })
