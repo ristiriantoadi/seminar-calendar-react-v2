@@ -1,5 +1,6 @@
 import React from "react";
 import Login from "./Login";
+import LoginAdmin from "./LoginAdmin";
 import axios from "axios";
 import {
   BrowserRouter as Router,
@@ -17,6 +18,26 @@ const fakeAuth = {
   nama: "",
   nim: "",
   isAuthenticated: false,
+  authenticateAdmin(successCb,failCb,username,password) {
+    
+    axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
+      // Login...
+      axios.post('http://localhost:8000/admin/login',{
+        username,
+        password
+      })
+      .then(res=>{
+        console.log(res.status)
+        this.isAuthenticated=true
+        successCb()
+      })
+      .catch(err=>{
+        console.log(err)
+        failCb()
+        // console.log("this is an error")
+      })
+    })
+  },
   authenticate(successCb,failCb,username,password) {
     // let history = useHistory;
     axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
@@ -36,12 +57,6 @@ const fakeAuth = {
         // console.log("this is an error")
       })
     });
-
-    // fakeAuth.isAuthenticated = true;
-    // setTimeout(cb, 100); // fake async
-    // setTimeout(() => {
-    //   history.replace("/admin/seminar");
-    // }, 100);
   },
   signout(cb) {
     axios.post('http://localhost:8000/logout')
@@ -73,6 +88,9 @@ export default function App() {
       <Switch>
         <Route path="/login">
           <Login fakeAuth={fakeAuth} />
+        </Route>
+        <Route path="/admin/login">
+          <LoginAdmin fakeAuth={fakeAuth} />
         </Route>
         <PrivateRoute path="/user">
           <Route
