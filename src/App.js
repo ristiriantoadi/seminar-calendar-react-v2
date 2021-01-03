@@ -34,12 +34,10 @@ const fakeAuth = {
       .catch(err=>{
         console.log(err)
         failCb()
-        // console.log("this is an error")
       })
     })
   },
   authenticate(successCb,failCb,username,password) {
-    // let history = useHistory;
     axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
       // Login...
       axios.post('http://localhost:8000/login',{
@@ -56,7 +54,6 @@ const fakeAuth = {
       .catch(err=>{
         console.log(err)
         failCb()
-        // console.log("this is an error")
       })
     });
   },

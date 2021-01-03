@@ -20,6 +20,7 @@ import React from "react";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import { Route, Switch } from "react-router-dom";
+import axios from "axios";
 
 import DemoNavbar from "components/Navbars/UserNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
@@ -81,7 +82,6 @@ class Dashboard extends React.Component {
 
   componentWillMount() {
     var isExist = false;
-    // console.log("i need to know if it exist");
     var eventSeminar = {};
     const proposal_seminar_ref = this.app
       .database()
@@ -115,34 +115,63 @@ class Dashboard extends React.Component {
           console.log("statusProposal = 2");
         }
       }
-
-      // this.setState({
-      //   status: 1
-      // });
     });
 
-    const seminar_ref = this.app
-      .database()
-      .ref()
-      .child("seminar");
+    // const seminar_ref = this.app
+    //   .database()
+    //   .ref()
+    //   .child("seminar");
+    // const previousEvents = this.state.events;
+    // seminar_ref.on("child_added", snap => {
+    //   previousEvents.push({
+    //     judul: snap.val().judul,
+    //     startDate: snap.val().startDate,
+    //     // end: snap.val().startDate,
+    //     namaLengkap: snap.val().namaLengkap,
+    //     nim: snap.val().nim,
+    //     pembimbingDua: snap.val().pembimbingDua,
+    //     pembimbingSatu: snap.val().pembimbingSatu,
+    //     pengujiSatu: snap.val().pengujiSatu,
+    //     pengujiDua: snap.val().pengujiDua,
+    //     pengujiTiga: snap.val().pengujiTiga
+    //   });
+    //   this.setState({
+    //     events: previousEvents
+    //   });
+    // });
+
     const previousEvents = this.state.events;
-    seminar_ref.on("child_added", snap => {
-      previousEvents.push({
-        judul: snap.val().judul,
-        startDate: snap.val().startDate,
-        // end: snap.val().startDate,
-        namaLengkap: snap.val().namaLengkap,
-        nim: snap.val().nim,
-        pembimbingDua: snap.val().pembimbingDua,
-        pembimbingSatu: snap.val().pembimbingSatu,
-        pengujiSatu: snap.val().pengujiSatu,
-        pengujiDua: snap.val().pengujiDua,
-        pengujiTiga: snap.val().pengujiTiga
+    axios.get('http://localhost:8000/seminar')
+      .then(function (response) {
+          // handle success
+          // console.log(response.data);
+          // var data = response.data;
+          response.data.forEach(function(data, index) {
+            previousEvents.push({
+              judul: data.judul,
+              // startDate: snap.val().startDate,
+              // end: snap.val().startDate,
+              startDate: '2021-01-10',
+              namaLengkap: data.user.name,
+              nim: data.user.nim,
+              pembimbingDua: data.pembimbing_dua,
+              pembimbingSatu: data.pembimbing_satu,
+              pengujiSatu: data.penguji_satu,
+              pengujiDua: data.penguji_dua,
+              pengujiTiga: data.penguji_tiga
+            });
+          });
+          this.setState({
+            events: previousEvents
+          });
+      })
+      .catch(function (error) {
+          // handle error
+          console.log(error);
+      })
+      .then(function () {
+          // always executed
       });
-      this.setState({
-        events: previousEvents
-      });
-    });
   }
 
   componentDidMount() {
