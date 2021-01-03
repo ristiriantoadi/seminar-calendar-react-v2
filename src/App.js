@@ -27,7 +27,7 @@ const fakeAuth = {
         password
       })
       .then(res=>{
-        console.log(res.status)
+        // console.log(res.status)
         this.isAuthenticated=true
         successCb()
       })
@@ -45,7 +45,7 @@ const fakeAuth = {
         password
       })
       .then(res=>{
-        console.log(res.data)
+        // console.log(res.data)
         this.nama = res.data.name
         this.nim = res.data.nim
         this.isAuthenticated=true

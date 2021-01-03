@@ -226,24 +226,24 @@ function Login(props) {
   // };
   return (
     <div className="App">
-      <div class="container" id="content-wrapper">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-12 p-md-3">
-                  <ul class="nav justify-content-end">
-                    <li class="nav-item">
+      <div className="container" id="content-wrapper">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="container">
+              <div className="row">
+                <div className="col-sm-12 p-md-3">
+                  <ul className="nav justify-content-end">
+                    <li className="nav-item">
                       {/* <a class="nav-link active" href="#">
                         Active
                       </a> */}
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       {/* <a class="nav-link" href="#">
                         Contact Us
                       </a> */}
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       {/* <a class="nav-link" href="#">
                         About
                       </a> */}
@@ -252,21 +252,21 @@ function Login(props) {
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-6" />
-                <div class="col-md-6">
-                  <h1 class="d-flex justify-content-center">
+              <div className="row">
+                <div className="col-md-6" />
+                <div className="col-md-6">
+                  <h1 className="d-flex justify-content-center">
                     Seminar Calendar
                   </h1>
-                  <p class="d-flex justify-content-center">
+                  <p className="d-flex justify-content-center">
                     Welcome, please login to your account
                   </p>
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-md-6" />
-                <div class="col-md-6 pl-sm-6 pr-sm-6">
+              <div className="row">
+                <div className="col-md-6" />
+                <div className="col-md-6 pl-sm-6 pr-sm-6">
                   {/* <form>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Email address</label>
@@ -302,38 +302,38 @@ function Login(props) {
                     </button>
                   </form> */}
                   <form onSubmit={login}>
-                    <div class="form-group">
-                      <label for="username">Username</label>
+                    <div className="form-group">
+                      <label htmlFor="username">Username</label>
                       <input
                         name="username"
                         type="text"
-                        class="form-control"
+                        className="form-control"
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
                         placeholder="Enter email"
                       />
                     </div>
-                    <div class="form-group">
-                      <label for="password">Password</label>
+                    <div className="form-group">
+                      <label htmlFor="password">Password</label>
                       <input
                         name="password"
                         type="password"
-                        class="form-control"
+                        className="form-control"
                         id="exampleInputPassword1"
                         placeholder="Password"
                       />
                     </div>
-                    <div class="form-group form-check">
+                    <div className="form-group form-check">
                       <input
                         type="checkbox"
-                        class="form-check-input"
+                        className="form-check-input"
                         id="exampleCheck1"
                       />
-                      <label class="form-check-label" for="exampleCheck1">
+                      <label className="form-check-label" htmlFor="exampleCheck1">
                         Remember me
                       </label>
                     </div>
-                    <button class="btn btn-primary">Sign in</button>
+                    <button className="btn btn-primary">Sign in</button>
                   </form>
                 </div>
               </div>

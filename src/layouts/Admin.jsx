@@ -84,7 +84,7 @@ class Dashboard extends React.Component {
       document.body.classList.toggle("perfect-scrollbar-on");
     }
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const proposal_ref = this.app
       .database()
       .ref()
