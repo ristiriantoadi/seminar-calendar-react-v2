@@ -143,6 +143,7 @@ class Dashboard extends React.Component {
     const previousEvents = this.state.events;
     axios.get('http://localhost:8000/seminar')
       .then(function (response) {
+        console.log("yes");
           // handle success
           // console.log(response.data);
           // var data = response.data;
@@ -151,7 +152,7 @@ class Dashboard extends React.Component {
               judul: data.judul,
               // startDate: snap.val().startDate,
               // end: snap.val().startDate,
-              startDate: '2021-01-10',
+              startDate: data.tanggal_dan_waktu,
               namaLengkap: data.user.name,
               nim: data.user.nim,
               pembimbingDua: data.pembimbing_dua,
