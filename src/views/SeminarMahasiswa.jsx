@@ -191,6 +191,7 @@ class Seminar extends React.Component {
   render() {
     // console.log("Status proposal " + this.props.statusProposal);
     const statusAlert = this.props.renderAlert(this.props.statusProposal);
+    // console.log("key: "+this.props.key)
     return (
       <>
         <div className="content">

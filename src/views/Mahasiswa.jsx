@@ -33,6 +33,8 @@ import {
   Col
 } from "reactstrap";
 
+import axios from "axios";
+import swal from "sweetalert";
 import { Form } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -106,51 +108,138 @@ class Mahasiswa extends React.Component {
   //   });
   // }
 
+  readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+
   handleSubmit(event) {
     event.preventDefault();
-    console.log("something");
+    const FormData = require('form-data');
     const data = new FormData(event.target);
-    console.log(data.get("nama-lengkap"));
-    console.log(data.get("nim"));
-    console.log(data.get("judul"));
-    console.log(data.get("dosen-pembimbing-1"));
-    console.log(data.get("dosen-pembimbing-2"));
-    console.log(data.get("no-hp"));
-    console.log(data.get("file-laporan"));
+    const formData = new FormData();
 
-    this.props.app
-      .database()
-      .ref("proposal-seminar/" + data.get("nim"))
-      .set({
-        namaLengkap: data.get("nama-lengkap"),
-        nim: data.get("nim"),
-        judul: data.get("judul"),
-        pembimbingSatu: data.get("dosen-pembimbing-1"),
-        pembimbingDua: data.get("dosen-pembimbing-2"),
-        noHp: data.get("no-hp"),
-        statusProposal: "tunggu",
-        fileLaporan: "proposal-seminar/" + data.get("nim") + "/fileLaporan.pdf",
-        fileKartuKontrol:
-          "proposal-seminar/" + data.get("nim") + "/fileKartuKontrol.pdf",
-        fileSuratPuas:
-          "proposal-seminar/" + data.get("nim") + "/fileSuratPuas.pdf",
-        fileKRS: "proposal-seminar/" + data.get("nim") + "/fileKRS.pdf"
-      });
-    const storage = this.props.app.storage();
-    storage
-      .ref("proposal-seminar/" + data.get("nim") + "/fileLaporan.pdf")
-      .put(data.get("file-laporan"));
-    storage
-      .ref("proposal-seminar/" + data.get("nim") + "/fileKartuKontrol.pdf")
-      .put(data.get("file-kartu-kontrol"));
-    storage
-      .ref("proposal-seminar/" + data.get("nim") + "/fileSuratPuas.pdf")
-      .put(data.get("file-surat-puas"));
-    storage
-      .ref("proposal-seminar/" + data.get("nim") + "/fileKRS.pdf")
-      .put(data.get("file-krs"));
+    console.log(data);
+    var namaLengkap = data.get("nama_lengkap") 
+    var nim = data.get("nim");
+    var judul = data.get("judul");
+    var dosenPembimbing1 = data.get("dosen_pembimbing_1");
+    var dosenPembimbing2 = data.get("dosen_pembimbing_2");
+    var noHp = data.get("no_hp");
+    var fileLaporan = data.get("file_laporan");
+    var fileKartuKontrol = data.get("file_kartu_kontrol");
+    var fileSuratPuas = data.get("file_surat_puas");
+    var fileKrs = data.get("file_krs");
+    console.log(namaLengkap)
+    console.log(nim)
+    console.log(judul)
+    console.log(dosenPembimbing1)
+    console.log(dosenPembimbing2)
+    console.log(noHp)
+    console.log(fileLaporan)
+    console.log(fileKartuKontrol)
+    console.log(fileSuratPuas)
+    console.log(fileKrs)
+
+
+    formData.append("namaLengkap", namaLengkap);
+    formData.append("nim", nim);
+    formData.append("judul", judul);
+    formData.append("dosenPembimbing1", dosenPembimbing1);
+    formData.append("dosenPembimbing2", dosenPembimbing2);
+    formData.append("noHp", noHp);
+    formData.append("fileLaporan", fileLaporan);
+    formData.append("fileKartuKontrol", fileKartuKontrol);
+    formData.append("fileSuratPuas", fileSuratPuas);
+    formData.append("fileKrs", fileKrs);
+
+    
+    // Send a POST request
+    axios({
+      method: 'post',
+      url: 'http://localhost:8000/seminar/daftar',
+      data
+      // headers: {'Content-Type': 'multipart/form-data;--- WebKit193844043-h'}
+    })
+    .then(res=>{
+      console.log(res)
+      this.props.history.push("/user/seminar");
+    })
+    .catch(err=>{
+      swal("Terjadi kesalahan dalam pengiriman data. Silahkan ulangi pengisian data");
+      console.log(err)
+    })
+
+    // fetch('http://localhost:8000/seminar/daftar', {
+    //   method: 'POST',
+    //   credentials: 'include',
+    //   body: new FormData(),
+    //   headers:{
+    //     "X-XSRF-TOKEN":this.readCookie("XSRF-TOKEN")
+    //   }
+    // }).then((response)=>{
+    //   console.log(response);
+    // })
+    // console.log(this.readCookie("XSRF-TOKEN"))
+
+    // axios.post('http://localhost:8000/seminar/daftar',{
+    //   namaLengkap,
+    //   nim,
+    //   judul,
+    //   dosenPembimbing1,
+    //   dosenPembimbing2,
+    //   noHp,
+    //   fileLaporan,
+    //   fileKartuKontrol,
+    //   fileSuratPuas,
+    //   fileKrs
+    // })
+    // .then(res=>{
+    //   console.log(res)
+    // })
+    // .catch(err=>{
+    //   console.log(err)
+    // })
+
+    // this.props.app
+    //   .database()
+    //   .ref("proposal-seminar/" + data.get("nim"))
+    //   .set({
+    //     namaLengkap: data.get("nama-lengkap"),
+    //     nim: data.get("nim"),
+    //     judul: data.get("judul"),
+    //     pembimbingSatu: data.get("dosen-pembimbing-1"),
+    //     pembimbingDua: data.get("dosen-pembimbing-2"),
+    //     noHp: data.get("no-hp"),
+    //     statusProposal: "tunggu",
+    //     fileLaporan: "proposal-seminar/" + data.get("nim") + "/fileLaporan.pdf",
+    //     fileKartuKontrol:
+    //       "proposal-seminar/" + data.get("nim") + "/fileKartuKontrol.pdf",
+    //     fileSuratPuas:
+    //       "proposal-seminar/" + data.get("nim") + "/fileSuratPuas.pdf",
+    //     fileKRS: "proposal-seminar/" + data.get("nim") + "/fileKRS.pdf"
+    //   });
+    // const storage = this.props.app.storage();
+    // storage
+    //   .ref("proposal-seminar/" + data.get("nim") + "/fileLaporan.pdf")
+    //   .put(data.get("file-laporan"));
+    // storage
+    //   .ref("proposal-seminar/" + data.get("nim") + "/fileKartuKontrol.pdf")
+    //   .put(data.get("file-kartu-kontrol"));
+    // storage
+    //   .ref("proposal-seminar/" + data.get("nim") + "/fileSuratPuas.pdf")
+    //   .put(data.get("file-surat-puas"));
+    // storage
+    //   .ref("proposal-seminar/" + data.get("nim") + "/fileKRS.pdf")
+    //   .put(data.get("file-krs"));
     // console.log(this.props.events);
-    this.props.history.push("/user/seminar");
   }
 
   // componentWillMount() {
@@ -200,15 +289,19 @@ class Mahasiswa extends React.Component {
                                 <Form.Label>Nama</Form.Label>
                                 <Form.Control
                                   type="text"
-                                  name="nama-lengkap"
+                                  name="nama_lengkap"
                                   value={this.props.nama}
                                   placeholder="Masukkan nama lengkap"
+                                  required
+                                  // disabled
                                 />
                               </Form.Group>
                             </Form.Row>
                             <Form.Group controlId="Form.ControlNama">
                               <Form.Label>NIM</Form.Label>
                               <Form.Control
+                                required
+                                // disabled
                                 type="text"
                                 value={this.props.nim}
                                 name="nim"
@@ -218,6 +311,7 @@ class Mahasiswa extends React.Component {
                             <Form.Group controlId="Form.ControlJudul">
                               <Form.Label>Judul Tugas Akhir</Form.Label>
                               <Form.Control
+                                required
                                 type="text"
                                 name="judul"
                                 placeholder="Masukkan judul tugas akhir"
@@ -226,8 +320,9 @@ class Mahasiswa extends React.Component {
                             <Form.Group controlId="Form.ControlDospem1">
                               <Form.Label>Pembimbing 1</Form.Label>
                               <Form.Control
+                                required
                                 as="select"
-                                name="dosen-pembimbing-1"
+                                name="dosen_pembimbing_1"
                               >
                                 <option>---Pilih---</option>
                                 <option>Ir.Sri Endang Anjarwani, M.Kom</option>
@@ -260,8 +355,9 @@ class Mahasiswa extends React.Component {
                             <Form.Group controlId="Form.ControlDospem2">
                               <Form.Label>Pembimbing 2</Form.Label>
                               <Form.Control
+                                required
                                 as="select"
-                                name="dosen-pembimbing-2"
+                                name="dosen_pembimbing_2"
                               >
                                 <option>---Pilih---</option>
                                 <option>Ir.Sri Endang Anjarwani, M.Kom</option>
@@ -294,8 +390,9 @@ class Mahasiswa extends React.Component {
                             <Form.Group controlId="Form.ControlNoHP">
                               <Form.Label>No. HP</Form.Label>
                               <Form.Control
+                                required
                                 type="text"
-                                name="no-hp"
+                                name="no_hp"
                                 placeholder="Masukkan nomor handphone yang dapat dihubungi"
                               />
                             </Form.Group>
@@ -328,8 +425,9 @@ class Mahasiswa extends React.Component {
                                     {/* <input type="file"></input> */}
                                     {/* <Form.Label>Upload file</Form.Label> */}
                                     <Form.Control
+                                      required
                                       type="file"
-                                      name="file-laporan"
+                                      name="file_laporan"
                                     ></Form.Control>
                                     {/* <Button variant="secondary" size="sm">
                                     Delete
@@ -341,8 +439,9 @@ class Mahasiswa extends React.Component {
                                   <td>Kartu kontrol seminar proposal TA</td>
                                   <td>
                                     <Form.Control
+                                      required
                                       type="file"
-                                      name="file-kartu-kontrol"
+                                      name="file_kartu_kontrol"
                                     ></Form.Control>
                                   </td>
                                 </tr>
@@ -351,8 +450,9 @@ class Mahasiswa extends React.Component {
                                   <td>Surat Puas PKL</td>
                                   <td>
                                     <Form.Control
+                                      required
                                       type="file"
-                                      name="file-surat-puas"
+                                      name="file_surat_puas"
                                     ></Form.Control>
                                   </td>
                                 </tr>
@@ -364,8 +464,9 @@ class Mahasiswa extends React.Component {
                                   </td>
                                   <td>
                                     <Form.Control
+                                      required
                                       type="file"
-                                      name="file-krs"
+                                      name="file_krs"
                                     ></Form.Control>
                                   </td>
                                 </tr>

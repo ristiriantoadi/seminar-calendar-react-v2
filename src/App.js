@@ -38,24 +38,26 @@ const fakeAuth = {
     })
   },
   authenticate(successCb,failCb,username,password) {
-    axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
+    axios.get('http://localhost:8000/sanctum/csrf-cookie')
+    .then(response => {
       // Login...
-      axios.post('http://localhost:8000/login',{
+      return axios.post('http://localhost:8000/login',{
         nim:username,
         password
       })
-      .then(res=>{
-        // console.log(res.data)
-        this.nama = res.data.name
-        this.nim = res.data.nim
-        this.isAuthenticated=true
-        successCb()
-      })
-      .catch(err=>{
-        console.log(err)
-        failCb()
-      })
-    });
+    })
+    .then(res=>{
+      // console.log(res.data)
+      this.nama = res.data.name
+      this.nim = res.data.nim
+      this.isAuthenticated=true
+      successCb()
+    })
+    .catch(err=>{
+      console.log("terjadi kesalahan login")
+      console.log(err)
+      failCb()
+    })
   },
   signout(cb) {
     axios.post('http://localhost:8000/logout')
@@ -94,7 +96,8 @@ export default function App() {
         <PrivateRoute path="/user">
           <Route
             path="/user"
-            render={props => <UserLayout {...props} fakeAuth={fakeAuth} />}
+            key={window.location.href}
+            render={props => <UserLayout {...props} key={window.location.href} fakeAuth={fakeAuth} />}
           />
         </PrivateRoute>
         <PrivateRoute path="/admin">

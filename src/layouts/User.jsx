@@ -182,10 +182,11 @@ class Dashboard extends React.Component {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle("perfect-scrollbar-on");
     }
-      const previousEvents = this.state.events;
+    
+    //get seminar data
+    const previousEvents = this.state.events;
     axios.get('http://localhost:8000/seminar')
       .then((response) => {
-        // console.log("yes");
           // handle success
           console.log(response.data);
           // var data = response.data;
@@ -208,13 +209,20 @@ class Dashboard extends React.Component {
             return {events:previousEvents};
           });
       })
+      //check the proposal status of the user
+      .then(()=>{
+        return axios.get('http://localhost:8000/seminar/status_seminar_proposal')
+      })
+      .then(response=>{
+        this.setState((state, props) => {
+          return {statusProposal: response.data};
+        });
+      
+      })
       .catch(function (error) {
           // handle error
           console.log(error);
       })
-      .then(function () {
-          // always executed
-      });
   }
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -252,16 +260,19 @@ class Dashboard extends React.Component {
           />
           <Switch>
             {routes.map((prop, key) => {
+              // console.log(window.location.href)
               return (
                 <Route
                   path={prop.layout + prop.path}
                   // component={prop.component}
+                  key={window.location.href}
                   render={() => {
                     return (
                       <prop.component
                         events={this.state.events}
                         app={this.app}
                         statusProposal={this.state.statusProposal}
+                        key={window.location.href}
                         {...this.props}
                         nama={this.state.nama}
                         nim={this.state.nim}
@@ -269,7 +280,7 @@ class Dashboard extends React.Component {
                       ></prop.component>
                     );
                   }}
-                  key={key}
+                  // key={key}
                 />
               );
             })}
