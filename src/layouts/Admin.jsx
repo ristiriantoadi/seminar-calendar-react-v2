@@ -29,6 +29,7 @@ import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
 import routes from "routes.js";
 import firebase from "firebase";
 import config from "config";
+import axios from "axios";
 var ps;
 
 class Dashboard extends React.Component {
@@ -83,85 +84,101 @@ class Dashboard extends React.Component {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle("perfect-scrollbar-on");
     }
-  }
-  UNSAFE_componentWillMount() {
-    const proposal_ref = this.app
-      .database()
-      .ref()
-      .child("proposal-seminar");
-    const previousProposals = this.state.proposalSeminars;
-    // console.log("this get called once");
-    proposal_ref.on("child_added", snap => {
-      //download from URL here
-      console.log("this get called once");
-      var storage = firebase.storage();
-      // var pathReference = storage.ref("proposal-seminar/F1D016078");
-      var fileKRSReference = storage.ref(snap.val().fileKRS);
-      fileKRSReference.getDownloadURL().then(fileKRSURL => {
-        var fileKartuKontrolReference = storage.ref(
-          snap.val().fileKartuKontrol
-        );
-        fileKartuKontrolReference.getDownloadURL().then(fileKartuKontrolURL => {
-          var fileLaporanReference = storage.ref(snap.val().fileLaporan);
-          fileLaporanReference.getDownloadURL().then(fileLaporanURL => {
-            var fileSuratPuasReference = storage.ref(snap.val().fileSuratPuas);
-            fileSuratPuasReference.getDownloadURL().then(fileSuratPuasURL => {
-              // console.log("URL File Kartu Kontrol: " + fileKartuKontrolURL);
-              // console.log("URL File Laporan: " + fileLaporanURL);
-              // console.log("URL File Surat Puas: " + fileSuratPuasURL);
-              // console.log("URL File KRS: " + fileKRSURL);
-              if (snap.val().statusProposal === "tunggu") {
-                previousProposals.push({
-                  nim: snap.val().nim,
-                  judul: snap.val().judul,
-                  namaLengkap: snap.val().namaLengkap,
-                  noHP: snap.val().noHP,
-                  pembimbingDua: snap.val().pembimbingDua,
-                  pembimbingSatu: snap.val().pembimbingSatu,
-                  fileKartuKontrolURL: fileKartuKontrolURL,
-                  fileLaporanURL: fileLaporanURL,
-                  fileSuratPuasURL: fileSuratPuasURL,
-                  fileKRSURL: fileKRSURL,
-                  startDate: snap.val().startDate
-                });
-                this.setState({
-                  proposalSeminars: previousProposals
-                });
-              }
-            });
+
+    axios.get('http://localhost:8000/admin/proposal_seminar')
+    .then((response)=> {
+        // handle success
+        console.log(response.data);
+        this.setState((state, props) => {
+          return {proposalSeminars: response.data};
           });
-        });
-      });
-
-      // console.log("Proposal seminar: " + this.state.proposalSeminars);
-    });
-
-    //download files from URL
-
-    const seminar_ref = this.app
-      .database()
-      .ref()
-      .child("seminar");
-    const previousEvents = this.state.events;
-    seminar_ref.on("child_added", snap => {
-      previousEvents.push({
-        judul: snap.val().judul,
-        startDate: snap.val().startDate,
-        // end: snap.val().startDate,
-        namaLengkap: snap.val().namaLengkap,
-        nim: snap.val().nim,
-        pembimbingDua: snap.val().pembimbingDua,
-        pembimbingSatu: snap.val().pembimbingSatu,
-        pengujiSatu: snap.val().pengujiSatu,
-        pengujiDua: snap.val().pengujiDua,
-        pengujiTiga: snap.val().pengujiTiga
-      });
-      this.setState({
-        events: previousEvents
-        // proposalSeminars: previousProposals
-      });
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    })
+    .then(function () {
+        // always executed
     });
   }
+  // UNSAFE_componentWillMount() {
+  //   const proposal_ref = this.app
+  //     .database()
+  //     .ref()
+  //     .child("proposal-seminar");
+  //   const previousProposals = this.state.proposalSeminars;
+  //   // console.log("this get called once");
+  //   proposal_ref.on("child_added", snap => {
+  //     //download from URL here
+  //     console.log("this get called once");
+  //     var storage = firebase.storage();
+  //     // var pathReference = storage.ref("proposal-seminar/F1D016078");
+  //     var fileKRSReference = storage.ref(snap.val().fileKRS);
+  //     fileKRSReference.getDownloadURL().then(fileKRSURL => {
+  //       var fileKartuKontrolReference = storage.ref(
+  //         snap.val().fileKartuKontrol
+  //       );
+  //       fileKartuKontrolReference.getDownloadURL().then(fileKartuKontrolURL => {
+  //         var fileLaporanReference = storage.ref(snap.val().fileLaporan);
+  //         fileLaporanReference.getDownloadURL().then(fileLaporanURL => {
+  //           var fileSuratPuasReference = storage.ref(snap.val().fileSuratPuas);
+  //           fileSuratPuasReference.getDownloadURL().then(fileSuratPuasURL => {
+  //             // console.log("URL File Kartu Kontrol: " + fileKartuKontrolURL);
+  //             // console.log("URL File Laporan: " + fileLaporanURL);
+  //             // console.log("URL File Surat Puas: " + fileSuratPuasURL);
+  //             // console.log("URL File KRS: " + fileKRSURL);
+  //             if (snap.val().statusProposal === "tunggu") {
+  //               previousProposals.push({
+  //                 nim: snap.val().nim,
+  //                 judul: snap.val().judul,
+  //                 namaLengkap: snap.val().namaLengkap,
+  //                 noHP: snap.val().noHP,
+  //                 pembimbingDua: snap.val().pembimbingDua,
+  //                 pembimbingSatu: snap.val().pembimbingSatu,
+  //                 fileKartuKontrolURL: fileKartuKontrolURL,
+  //                 fileLaporanURL: fileLaporanURL,
+  //                 fileSuratPuasURL: fileSuratPuasURL,
+  //                 fileKRSURL: fileKRSURL,
+  //                 startDate: snap.val().startDate
+  //               });
+  //               this.setState({
+  //                 proposalSeminars: previousProposals
+  //               });
+  //             }
+  //           });
+  //         });
+  //       });
+  //     });
+
+  //     // console.log("Proposal seminar: " + this.state.proposalSeminars);
+  //   });
+
+  //   //download files from URL
+
+  //   const seminar_ref = this.app
+  //     .database()
+  //     .ref()
+  //     .child("seminar");
+  //   const previousEvents = this.state.events;
+  //   seminar_ref.on("child_added", snap => {
+  //     previousEvents.push({
+  //       judul: snap.val().judul,
+  //       startDate: snap.val().startDate,
+  //       // end: snap.val().startDate,
+  //       namaLengkap: snap.val().namaLengkap,
+  //       nim: snap.val().nim,
+  //       pembimbingDua: snap.val().pembimbingDua,
+  //       pembimbingSatu: snap.val().pembimbingSatu,
+  //       pengujiSatu: snap.val().pengujiSatu,
+  //       pengujiDua: snap.val().pengujiDua,
+  //       pengujiTiga: snap.val().pengujiTiga
+  //     });
+  //     this.setState({
+  //       events: previousEvents
+  //       // proposalSeminars: previousProposals
+  //     });
+  //   });
+  // }
 
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {

@@ -4,26 +4,27 @@ import Modal from "react-bootstrap/Modal";
 
 function Example(props) {
   // listURL = props.event.
+  console.log(props.event)
   return (
     <Modal show={props.show} onHide={props.handleClose} size="lg">
       <Modal.Header closeButton>
         <Modal.Title>
-          [Seminar TA 1] {props.event.namaLengkap} ({props.event.nim}){" "}
+          [Seminar TA 1] {props.event.name} ({props.event.nim}){" "}
         </Modal.Title>
       </Modal.Header>
       {/* <Modal.Body>{props.event.start}</Modal.Body> */}
       <Modal.Body>
         {/* {console.log("the event object: ")}
         {console.log(props.event)} */}
-        <p>Nama: {props.event.namaLengkap}</p>
+        <p>Nama: {props.event.name}</p>
         <p>NIM: {props.event.nim}</p>
         <p>Judul TA 1: {props.event.judul}</p>
         <h6>Pembimbing</h6>
         <ul style={{ listStyleType: "none", padding: "0px" }}>
-          <li>1. {props.event.pembimbingSatu}</li>
-          <li>2. {props.event.pembimbingDua}</li>
+          <li>1. {props.event.pembimbing_satu}</li>
+          <li>2. {props.event.pembimbing_dua}</li>
         </ul>
-        <h6>Files</h6>
+        <h6>Berkas Prasyarat</h6>
         <ul>
           <li>
             <a href={props.event.fileKRSURL}>File Krs</a>

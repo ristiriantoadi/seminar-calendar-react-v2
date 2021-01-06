@@ -28,7 +28,7 @@ import ModalTambahSeminar from "ModalAdminTambahSeminar";
 import {
   UncontrolledAlert,
   Alert,
-  Button,
+  // Button,
   Card,
   CardHeader,
   CardBody,
@@ -36,6 +36,9 @@ import {
   Row,
   Col
 } from "reactstrap";
+
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 // import config from "config";
 
 class ProposalSeminar extends React.Component {
@@ -136,10 +139,31 @@ class ProposalSeminar extends React.Component {
   }
 
   handleClick(proposalSeminar) {
-    this.setState({
-      clickedProposal: proposalSeminar,
-      showModal: true
-    });
+    // console.log("proposalseminar");
+    // console.log(proposalSeminar);
+    var baseURL = "http://localhost:8000/storage/proposal_seminar/"+proposalSeminar.user.nim+"/"
+    this.setState((state, props) => {
+      return {clickedProposal: {
+        name:proposalSeminar.user.name,
+        nim:proposalSeminar.user.nim,
+        judul:proposalSeminar.judul,
+        pembimbing_satu:proposalSeminar.pembimbing_satu,
+        pembimbing_dua:proposalSeminar.pembimbing_dua,
+        fileKRSURL:baseURL+"file_krs.pdf",
+        fileKartuKontrolURL:baseURL+"file_kartu_kontrol.pdf",
+        fileLaporanURL:baseURL+"file_laporan.pdf",
+        fileSuratPuasURL:baseURL+"file_surat_puas.pdf"
+      },showModal:true};
+      },()=>{
+        // console.log("clicked-proposal");
+        // console.log(this.state.clickedProposal)
+      });
+
+    // this.setState({
+    //   clickedProposal: proposalSeminar,
+    //   showModal: true
+    // });
+    // console.log(this.state.clickedProposal)
   }
 
   handleTerima() {
@@ -225,15 +249,14 @@ class ProposalSeminar extends React.Component {
     };
     const rowTable = this.props.proposalSeminars.map(proposalSeminar => {
       return (
-        <tr style={tableStyle}>
-          <td style={tableStyle}>{proposalSeminar.nim}</td>
-          <td style={tableStyle}>{proposalSeminar.namaLengkap}</td>
-          <td style={tableStyle}>{proposalSeminar.judul}</td>
-          <td style={tableStyle}>
-            {/* <button onClick={this.handleClick(proposalSeminar)}> */}
-            <button onClick={e => this.handleClick(proposalSeminar)}>
+        <tr>
+          <td>{proposalSeminar.user.nim}</td>
+          <td>{proposalSeminar.user.name}</td>
+          <td>{proposalSeminar.judul}</td>
+          <td>
+            <Button variant="primary" onClick={e => this.handleClick(proposalSeminar)}>
               Lihat dokumen
-            </button>
+            </Button>
           </td>
         </tr>
       );
@@ -384,8 +407,21 @@ class ProposalSeminar extends React.Component {
                           <CardTitle tag="h5">Notifications Style</CardTitle>
                         </CardHeader> */}
                         <CardBody>
+                        <Table bordered hover>
+                          <thead>
+                            <tr>
+                              <th>NIM</th>
+                              <th>Nama Mahasiswa</th>
+                              <th>Judul Tugas Akhir</th>
+                              <th>Aksi</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {rowTable}
+                          </tbody>
+                        </Table>
                           {/* <Calendar events={this.props.events}></Calendar> */}
-                          <table style={tableStyle}>
+                          {/* <table style={tableStyle}>
                             <tr style={tableStyle}>
                               <th style={tableStyle}>NIM</th>
                               <th style={tableStyle}>Nama</th>
@@ -393,7 +429,8 @@ class ProposalSeminar extends React.Component {
                               <th style={tableStyle}>Aksi</th>
                             </tr>
                             {rowTable}
-                          </table>
+                          </table> */}
+                          
                         </CardBody>
                         {/* <CardBody>
                           <Alert color="info">
