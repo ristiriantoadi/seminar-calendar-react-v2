@@ -80,102 +80,6 @@ class Dashboard extends React.Component {
     }
   }
 
-  // UNSAFE_componentWillMount() {
-  //   console.log("b");
-  //   var isExist = false;
-  //   var eventSeminar = {};
-  //   const proposal_seminar_ref = this.app
-  //     .database()
-  //     .ref()
-  //     .child("proposal-seminar/" + this.state.nim);
-  //   proposal_seminar_ref.on("value", snap => {
-  //     console.log("Does it exist? " + snap.exists());
-  //     isExist = snap.exists();
-  //     eventSeminar = snap.val();
-
-  //     if (!isExist) {
-  //       this.setState({
-  //         statusProposal: -1
-  //       });
-  //       console.log("statusProposal = -1");
-  //     } else {
-  //       if (eventSeminar.statusProposal === "terima") {
-  //         this.setState({
-  //           statusProposal: 1
-  //         });
-  //         console.log("statusProposal = 1");
-  //       } else if (eventSeminar.statusProposal === "tunggu") {
-  //         this.setState({
-  //           statusProposal: 0
-  //         });
-  //         console.log("statusProposal = 0");
-  //       } else if (eventSeminar.statusProposal === "tolak") {
-  //         this.setState({
-  //           statusProposal: 2
-  //         });
-  //         console.log("statusProposal = 2");
-  //       }
-  //     }
-  //   });
-
-  //   // const seminar_ref = this.app
-  //   //   .database()
-  //   //   .ref()
-  //   //   .child("seminar");
-  //   // const previousEvents = this.state.events;
-  //   // seminar_ref.on("child_added", snap => {
-  //   //   previousEvents.push({
-  //   //     judul: snap.val().judul,
-  //   //     startDate: snap.val().startDate,
-  //   //     // end: snap.val().startDate,
-  //   //     namaLengkap: snap.val().namaLengkap,
-  //   //     nim: snap.val().nim,
-  //   //     pembimbingDua: snap.val().pembimbingDua,
-  //   //     pembimbingSatu: snap.val().pembimbingSatu,
-  //   //     pengujiSatu: snap.val().pengujiSatu,
-  //   //     pengujiDua: snap.val().pengujiDua,
-  //   //     pengujiTiga: snap.val().pengujiTiga
-  //   //   });
-  //   //   this.setState({
-  //   //     events: previousEvents
-  //   //   });
-  //   // });
-
-  //   const previousEvents = this.state.events;
-  //   axios.get('http://localhost:8000/seminar')
-  //     .then(function (response) {
-  //       console.log("yes");
-  //         // handle success
-  //         // console.log(response.data);
-  //         // var data = response.data;
-  //         response.data.forEach(function(data, index) {
-  //           previousEvents.push({
-  //             judul: data.judul,
-  //             // startDate: snap.val().startDate,
-  //             // end: snap.val().startDate,
-  //             startDate: data.tanggal_dan_waktu,
-  //             namaLengkap: data.user.name,
-  //             nim: data.user.nim,
-  //             pembimbingDua: data.pembimbing_dua,
-  //             pembimbingSatu: data.pembimbing_satu,
-  //             pengujiSatu: data.penguji_satu,
-  //             pengujiDua: data.penguji_dua,
-  //             pengujiTiga: data.penguji_tiga
-  //           });
-  //         });
-  //         this.setState({
-  //           events: previousEvents
-  //         });
-  //     })
-  //     .catch(function (error) {
-  //         // handle error
-  //         console.log(error);
-  //     })
-  //     .then(function () {
-  //         // always executed
-  //     });
-  // }
-
   componentDidMount() {
     // console.log("s");
     if (navigator.platform.indexOf("Win") > -1) {
@@ -221,6 +125,7 @@ class Dashboard extends React.Component {
       })
       .catch(function (error) {
           // handle error
+          console.log("Error")
           console.log(error);
       })
   }

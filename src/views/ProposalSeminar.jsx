@@ -146,6 +146,7 @@ class ProposalSeminar extends React.Component {
     this.setState((state, props) => {
       return {clickedProposal: {
         id:proposalSeminar.id,
+        user_id:proposalSeminar.user_id,
         name:proposalSeminar.user.name,
         nim:proposalSeminar.user.nim,
         judul:proposalSeminar.judul,
@@ -169,10 +170,21 @@ class ProposalSeminar extends React.Component {
   }
 
   handleTerima(proposalSeminar) {
+
     this.setState({
       showModalTambahSeminar: true,
       showModal: false
     });
+
+    // //terima the proposal
+    // axios.post('http://localhost:8000/admin/proposal_seminar/terima',{
+    //   id:proposalSeminar.id
+    // })
+    // .then(res=>{
+    // })
+    // .catch(err=>{
+    //   console.log(err)
+    // })
   }
   handleTolak(proposalSeminar) {
     axios.post('http://localhost:8000/admin/proposal_seminar/tolak',{
@@ -192,58 +204,6 @@ class ProposalSeminar extends React.Component {
     .catch(err=>{
       console.log(err)
     })
-
-    // this.props.app
-    //   .database()
-    //   .ref(
-    //     "proposal-seminar/" + this.state.clickedProposal.nim + "/statusProposal"
-    //   )
-    //   .set("tolak");
-    // const proposal_ref = this.props.app
-    //   .database()
-    //   .ref()
-    //   .child("proposal-seminar");
-    // const previousProposals = [];
-    // proposal_ref.once("child_added", snap => {
-    //   console.log("Called again");
-    //   var storage = this.props.app.storage();
-    //   console.log(storage);
-    //   // var pathReference = storage.ref("proposal-seminar/F1D016078");
-    //   var fileKRSReference = storage.ref(snap.val().fileKRS);
-    //   fileKRSReference.getDownloadURL().then(fileKRSURL => {
-    //     var fileKartuKontrolReference = storage.ref(
-    //       snap.val().fileKartuKontrol
-    //     );
-    //     fileKartuKontrolReference.getDownloadURL().then(fileKartuKontrolURL => {
-    //       var fileLaporanReference = storage.ref(snap.val().fileLaporan);
-    //       fileLaporanReference.getDownloadURL().then(fileLaporanURL => {
-    //         var fileSuratPuasReference = storage.ref(snap.val().fileSuratPuas);
-    //         fileSuratPuasReference.getDownloadURL().then(fileSuratPuasURL => {
-    //           // console.log("URL File Kartu Kontrol: " + fileKartuKontrolURL);
-    //           // console.log("URL File Laporan: " + fileLaporanURL);
-    //           // console.log("URL File Surat Puas: " + fileSuratPuasURL);
-    //           // console.log("URL File KRS: " + fileKRSURL);
-    //           if (snap.val().statusProposal === "tunggu") {
-    //             previousProposals.push({
-    //               nim: snap.val().nim,
-    //               judul: snap.val().judul,
-    //               namaLengkap: snap.val().namaLengkap,
-    //               noHP: snap.val().noHP,
-    //               pembimbingDua: snap.val().pembimbingDua,
-    //               pembimbingSatu: snap.val().pembimbingSatu,
-    //               fileKartuKontrolURL: fileKartuKontrolURL,
-    //               fileLaporanURL: fileLaporanURL,
-    //               fileSuratPuasURL: fileSuratPuasURL,
-    //               fileKRSURL: fileKRSURL
-    //             });
-    //             this.props.updateProposals(previousProposals);
-    //           }
-    //         });
-    //       });
-    //     });
-    //   });
-    // });
-    // props.history.push("/admin/seminar");
   }
   renderAlert(alert) {
     if (alert != "") {
@@ -287,6 +247,7 @@ class ProposalSeminar extends React.Component {
           ></ModalAdmin>
           <ModalTambahSeminar
             app={this.props.app}
+            clickedProposal={this.state.clickedProposal}
             history={this.props.history}
             show={this.state.showModalTambahSeminar}
             handleClose={this.handleCloseModalTambahSeminar}
