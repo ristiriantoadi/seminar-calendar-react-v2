@@ -47,6 +47,7 @@ class Dashboard extends React.Component {
     this.updateProposals = this.updateProposals.bind(this);
     this.setAlert = this.setAlert.bind(this);
     this.setAlertTolak = this.setAlertTolak.bind(this);
+    this.updateDaftarProposalSeminar = this.updateDaftarProposalSeminar.bind(this);
 
     if (!firebase.apps.length) {
       // firebase.initializeApp({});
@@ -85,21 +86,7 @@ class Dashboard extends React.Component {
       document.body.classList.toggle("perfect-scrollbar-on");
     }
 
-    axios.get('http://localhost:8000/admin/proposal_seminar')
-    .then((response)=> {
-        // handle success
-        console.log(response.data);
-        this.setState((state, props) => {
-          return {proposalSeminars: response.data};
-          });
-    })
-    .catch(function (error) {
-        // handle error
-        console.log(error);
-    })
-    .then(function () {
-        // always executed
-    });
+    this.updateDaftarProposalSeminar()
   }
   // UNSAFE_componentWillMount() {
   //   const proposal_ref = this.app
@@ -186,18 +173,40 @@ class Dashboard extends React.Component {
       document.body.classList.toggle("perfect-scrollbar-on");
     }
   }
+  
   componentDidUpdate(e) {
     if (e.history.action === "PUSH") {
       this.mainPanel.current.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
     }
   }
+  
   handleActiveClick = color => {
     this.setState({ activeColor: color });
   };
+  
   handleBgClick = color => {
     this.setState({ backgroundColor: color });
   };
+
+  updateDaftarProposalSeminar(){
+    axios.get('http://localhost:8000/admin/proposal_seminar')
+    .then((response)=> {
+        // handle success
+        console.log(response.data);
+        this.setState((state, props) => {
+          return {proposalSeminars: response.data};
+        });
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    })
+    .then(function () {
+        // always executed
+    });
+  }
+
   render() {
     // console.log(this.state.events);
     return (
@@ -223,6 +232,7 @@ class Dashboard extends React.Component {
                       setAlertTolak={this.setAlertTolak}
                       alert={this.state.alert}
                       updateProposals={this.updateProposals}
+                      updateDaftarProposalSeminar={this.updateDaftarProposalSeminar}
                       {...this.props}
                       app={this.app}
                     ></prop.component>

@@ -41,10 +41,12 @@ function Example(props) {
         </ul>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="success" onClick={props.handleTerima}>
+        {/* <Button variant="success" onClick={props.handleTerima}> */}
+        <Button variant="success" onClick={e => props.handleTerima(props.event)}>
           Terima
         </Button>
-        <Button variant="danger" onClick={props.handleTolak}>
+        {/* <Button variant="danger"  onClick={props.handleTolak}> */}
+        <Button variant="danger"  onClick={e => props.handleTolak(props.event)}>
           Tolak
         </Button>
         {/* <Button variant="secondary" onClick={props.handleClose}>
