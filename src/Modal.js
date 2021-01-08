@@ -6,7 +6,7 @@ function Example(props) {
   return (
     <Modal show={props.show} onHide={props.handleClose} size="lg">
       <Modal.Header closeButton>
-        <Modal.Title>{props.event.title}</Modal.Title>
+        <Modal.Title>[Seminar TA 1] {props.event.title}</Modal.Title>
       </Modal.Header>
       {/* <Modal.Body>{props.event.start}</Modal.Body> */}
       <Modal.Body>

@@ -18,14 +18,15 @@
 */
 // import Dashboard from "views/Dashboard.jsx";
 // import Notifications from "views/Notifications.jsx";
-import Seminar from "views/Seminar.jsx";
+// import Seminar from "views/Seminar.jsx";
+import SeminarMahasiswa from "views/Seminar";
 import Icons from "views/Icons.jsx";
 // import Typography from "views/Typography.jsx";
 // import TableList from "views/Tables.jsx";
 // import Maps from "views/Map.jsx";
 // import UserPage from "views/User.jsx";
 // import UpgradeToPro from "views/Upgrade.jsx";
-import Mahasiswa from "views/Mahasiswa.jsx";
+// import Mahasiswa from "views/Mahasiswa.jsx";
 // import TambahSeminar from "views/TambahSeminar.jsx";
 import ProposalSeminar from "views/ProposalSeminar.jsx";
 
@@ -34,7 +35,8 @@ var routes = [
     path: "/seminar",
     name: "Jadwal Seminar",
     icon: "nc-icon nc-bell-55",
-    component: Seminar,
+    // component: Seminar,
+    component:SeminarMahasiswa,
     layout: "/admin"
   },
   {

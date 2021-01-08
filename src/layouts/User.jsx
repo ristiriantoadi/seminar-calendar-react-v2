@@ -25,7 +25,6 @@ import axios from "axios";
 import DemoNavbar from "components/Navbars/UserNavbar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-// import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
 import { Alert } from "reactstrap";
 
 import routes from "userRoutes.js";
@@ -61,7 +60,6 @@ class Dashboard extends React.Component {
             Proposal Seminar Anda dalam proses <i>review</i>. Harap menunggu.
           </Alert>
         );
-      // break;
       case 1:
         return (
           <Alert color="success">
@@ -69,7 +67,6 @@ class Dashboard extends React.Component {
             jadwal di kalender
           </Alert>
         );
-      // break;
       case 2:
         return (
           <Alert color="danger">
@@ -81,24 +78,22 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    // console.log("s");
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle("perfect-scrollbar-on");
     }
     
     //get seminar data
-    const previousEvents = this.state.events;
+    const previousEvents = [];
     axios.get('http://localhost:8000/seminar')
       .then((response) => {
-          // handle success
-          console.log(response.data);
-          // var data = response.data;
-          response.data.forEach(function(data, index) {
+          response.data.forEach((data, index)=>{
+            var backgroundColor = "blue";
+            if(data.user.nim == this.state.nim){
+              backgroundColor = "green";  
+            }
             previousEvents.push({
               judul: data.judul,
-              // startDate: snap.val().startDate,
-              // end: snap.val().startDate,
               startDate: data.tanggal_dan_waktu,
               namaLengkap: data.user.name,
               nim: data.user.nim,
@@ -106,7 +101,8 @@ class Dashboard extends React.Component {
               pembimbingSatu: data.pembimbing_satu,
               pengujiSatu: data.penguji_satu,
               pengujiDua: data.penguji_dua,
-              pengujiTiga: data.penguji_tiga
+              pengujiTiga: data.penguji_tiga,
+              backgroundColor
             });
           });
           this.setState((state, props) => {

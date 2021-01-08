@@ -5,7 +5,6 @@ import Form from "react-bootstrap/Form";
 import axios from "axios";
 
 function Example(props) {
-  // listURL = props.event.
   function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
@@ -14,10 +13,8 @@ function Example(props) {
     data.append('judul', props.clickedProposal.judul);
     data.append('pembimbing_satu', props.clickedProposal.pembimbing_satu);
     data.append('pembimbing_dua', props.clickedProposal.pembimbing_dua);
-    // data.append('nim', props.clickedProposal.nim);
-
     
-    //terima the proposal
+    //terima proposal
     axios.post('http://localhost:8000/admin/proposal_seminar/terima',{
       id:props.clickedProposal.id
     })
@@ -29,41 +26,14 @@ function Example(props) {
        });
     })
     .then(res=>{
-      console.log(res);
+      props.updateDaftarProposalSeminar();
+      props.setAlert(data.get('nama'), data.get('nim'));
+      props.handleClose();
+      // props.history.push("/admin/seminar");
     })
     .catch(err=>{
       console.log(err)
     })
-    // const nama = data.get("nama");
-    // const nim = data.get("nim");
-    // const judul = data.get("judul");
-    // const dosenPembimbing1 = data.get("dosen-pembimbing-1");
-    // const dosenPembimbing2 = data.get("dosen-pembimbing-2");
-    // const dosenPenguji1 = data.get("dosen-penguji-1");
-    // const dosenPenguji2 = data.get("dosen-penguji-2");
-    // const dosenPenguji3 = data.get("dosen-penguji-3");
-    // const waktuTanggal = data.get("waktu-tanggal");
-    // console.log(waktuTanggal);
-    // props.app
-    //   .database()
-    //   .ref("seminar/" + nim)
-    //   .set({
-    //     namaLengkap: nama,
-    //     nim: nim,
-    //     judul: judul,
-    //     pembimbingSatu: dosenPembimbing1,
-    //     pembimbingDua: dosenPembimbing2,
-    //     pengujiSatu: dosenPenguji1,
-    //     pengujiDua: dosenPenguji2,
-    //     pengujiTiga: dosenPenguji3,
-    //     startDate: waktuTanggal
-    //   });
-    // props.app
-    //   .database()
-    //   .ref("proposal-seminar/" + nim + "/statusProposal")
-    //   .set("terima");
-    // props.setAlert(nama, nim);
-    props.history.push("/admin/seminar");
   }
 
   return (
@@ -184,28 +154,22 @@ function Example(props) {
               <option>Arik Aranta, S.Kom.,M.Kom</option>
             </Form.Control>
           </Form.Group>
-          {/* <Form.Group>
+          <Form.Group>
             <Form.Label>Tanggal dan waktu</Form.Label>
             <Form.Control
-              type="datetime-local"
-              name="waktu-tanggal"
+              type="date"
+              name="tanggal"
             ></Form.Control>
-          </Form.Group> */}
+            <Form.Control
+              type="time"
+              name="waktu"
+            ></Form.Control>
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          {/* <Button variant="success">Terima</Button>
-        <Button variant="danger">Tolak</Button> */}
           <Button type="submit" variant="warning">
             Publish
           </Button>
-
-          {/* <Button variant="secondary" onClick={props.handleClose}>
-          Close
-        </Button> */}
-
-          {/* <Button variant="primary" onClick={props.handleClose}>
-          Save Changes
-        </Button> */}
         </Modal.Footer>
       </Form>
     </Modal>

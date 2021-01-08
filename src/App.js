@@ -103,7 +103,7 @@ export default function App() {
         <PrivateRoute path="/admin">
           <Route
             path="/admin"
-            render={props => <AdminLayout {...props} fakeAuth={fakeAuth} />}
+            render={props => <AdminLayout key={window.location.href} {...props} fakeAuth={fakeAuth} />}
           />
         </PrivateRoute>
         <Redirect to="/login"></Redirect>

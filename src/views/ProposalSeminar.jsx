@@ -140,8 +140,6 @@ class ProposalSeminar extends React.Component {
   }
 
   handleClick(proposalSeminar) {
-    // console.log("proposalseminar");
-    // console.log(proposalSeminar);
     var baseURL = "http://localhost:8000/storage/proposal_seminar/"+proposalSeminar.user.nim+"/"
     this.setState((state, props) => {
       return {clickedProposal: {
@@ -175,17 +173,8 @@ class ProposalSeminar extends React.Component {
       showModalTambahSeminar: true,
       showModal: false
     });
-
-    // //terima the proposal
-    // axios.post('http://localhost:8000/admin/proposal_seminar/terima',{
-    //   id:proposalSeminar.id
-    // })
-    // .then(res=>{
-    // })
-    // .catch(err=>{
-    //   console.log(err)
-    // })
   }
+  
   handleTolak(proposalSeminar) {
     axios.post('http://localhost:8000/admin/proposal_seminar/tolak',{
       id:proposalSeminar.id
@@ -206,10 +195,15 @@ class ProposalSeminar extends React.Component {
     })
   }
   renderAlert(alert) {
-    if (alert != "") {
+    // if (alert != "") {
+    //   return <Alert color="danger">{alert}</Alert>;
+    // } else {
+    //   return;
+    // }
+    if(alert.includes("ditambahkan")){
+      return <Alert color="success">{alert}</Alert>;
+    }else if(alert.includes("ditolak")){
       return <Alert color="danger">{alert}</Alert>;
-    } else {
-      return;
     }
   }
 
@@ -248,6 +242,7 @@ class ProposalSeminar extends React.Component {
           <ModalTambahSeminar
             app={this.props.app}
             clickedProposal={this.state.clickedProposal}
+            updateDaftarProposalSeminar={this.props.updateDaftarProposalSeminar}
             history={this.props.history}
             show={this.state.showModalTambahSeminar}
             handleClose={this.handleCloseModalTambahSeminar}

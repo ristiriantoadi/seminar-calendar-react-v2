@@ -53,9 +53,8 @@ class Calendar extends React.Component {
     });
   }
   render() {
-    // console.log(this.props.events[0].startDate);
     const someEvents = this.props.events.map(event => ({
-      title: "[Seminar TA 1] " + event.namaLengkap + " (" + event.nim + ")",
+      title: event.namaLengkap + " (" + event.nim + ")",
       start: event.startDate,
       judul: event.judul,
       nim: event.nim,
@@ -65,7 +64,8 @@ class Calendar extends React.Component {
       pengujiSatu: event.pengujiSatu,
       pengujiDua: event.pengujiDua,
       pengujiTiga: event.pengujiTiga,
-      waktu: event.startDate.toString().split("T")[1]
+      waktu: event.startDate.toString().split(" ")[1],
+      backgroundColor:event.backgroundColor
     }));
     return (
       <div>
