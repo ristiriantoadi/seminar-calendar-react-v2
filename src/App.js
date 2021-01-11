@@ -29,6 +29,7 @@ const fakeAuth = {
       .then(res=>{
         // console.log(res.status)
         this.isAuthenticated=true
+        localStorage.setItem("isAuthenticatedAdmin", true);
         successCb()
       })
       .catch(err=>{
@@ -41,21 +42,24 @@ const fakeAuth = {
     axios.get('http://localhost:8000/sanctum/csrf-cookie')
     .then(response => {
       // Login...
+      const options={
+        headers:{'Accept': 'application/json'}
+      }
       return axios.post('http://localhost:8000/login',{
         nim:username,
         password
       })
     })
     .then(res=>{
-      // console.log(res.data)
       this.nama = res.data.name
       this.nim = res.data.nim
       this.isAuthenticated=true
+      localStorage.setItem("isAuthenticatedUser", true);
+      localStorage.setItem("nama", res.data.name);
+      localStorage.setItem("nim",res.data.nim);
       successCb()
     })
     .catch(err=>{
-      console.log("terjadi kesalahan login")
-      console.log(err)
       failCb()
     })
   },
@@ -79,7 +83,13 @@ const fakeAuth = {
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
 function PrivateRoute({ children, ...rest }) {
-  return fakeAuth.isAuthenticated ? children : <Redirect to="/login" />;
+  // return fakeAuth.isAuthenticated ? children : <Redirect to="/login" />;
+  return localStorage.getItem("isAuthenticatedUser") ? children : <Redirect to="/login" />;
+}
+
+function PrivateRouteAdmin({ children, ...rest }) {
+  // return fakeAuth.isAuthenticated ? children : <Redirect to="/login" />;
+  return localStorage.getItem("isAuthenticatedAdmin") ? children : <Redirect to="/admin/login" />;
 }
 
 export default function App() {
@@ -100,12 +110,12 @@ export default function App() {
             render={props => <UserLayout {...props} key={window.location.href} fakeAuth={fakeAuth} />}
           />
         </PrivateRoute>
-        <PrivateRoute path="/admin">
+        <PrivateRouteAdmin path="/admin">
           <Route
             path="/admin"
             render={props => <AdminLayout key={window.location.href} {...props} fakeAuth={fakeAuth} />}
           />
-        </PrivateRoute>
+        </PrivateRouteAdmin>
         <Redirect to="/login"></Redirect>
       </Switch>
     </Router>

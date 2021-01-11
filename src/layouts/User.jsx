@@ -36,8 +36,8 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nama: this.props.fakeAuth.nama,
-      nim: this.props.fakeAuth.nim,
+      nama: localStorage.getItem("nama"),
+      nim: localStorage.getItem("nim"),
       backgroundColor: "black",
       activeColor: "info",
       events: [],

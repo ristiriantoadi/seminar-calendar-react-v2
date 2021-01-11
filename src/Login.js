@@ -96,11 +96,9 @@ function Login(props) {
     //   })
     // });
     var successCb = ()=>{
-      console.log("authenticated");
       history.replace("/user/seminar");
     }
     var failCb = ()=>{
-      console.log("Username atau password salah")
       swal("Oops!", "Anda Tidak Terdafar!", "error");
     }
 
@@ -303,14 +301,14 @@ function Login(props) {
                   </form> */}
                   <form onSubmit={login}>
                     <div className="form-group">
-                      <label htmlFor="username">Username</label>
+                      <label htmlFor="username">NIM</label>
                       <input
                         name="username"
                         type="text"
                         className="form-control"
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
-                        placeholder="Enter email"
+                        placeholder="Enter NIM"
                       />
                     </div>
                     <div className="form-group">
@@ -329,9 +327,6 @@ function Login(props) {
                         className="form-check-input"
                         id="exampleCheck1"
                       />
-                      <label className="form-check-label" htmlFor="exampleCheck1">
-                        Remember me
-                      </label>
                     </div>
                     <button className="btn btn-primary">Sign in</button>
                   </form>

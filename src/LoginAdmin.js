@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { withRouter } from 'react-router';
+import swal from "sweetalert";
 
 class LoginAdmin extends Component{
 
@@ -25,7 +26,7 @@ class LoginAdmin extends Component{
     }
     var failCb = ()=>{
       console.log("Username atau password salah")
-      // swal("Oops!", "Anda Tidak Terdafar!", "error");
+      swal("Oops!", "Username atau password salah!", "error");
     }
 
     this.props.fakeAuth.authenticateAdmin(successCb,failCb,username,password)
