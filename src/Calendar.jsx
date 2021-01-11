@@ -70,6 +70,7 @@ class Calendar extends React.Component {
     return (
       <div>
         <FullCalendar
+          style={{"cursor":"pointer"}}
           ref={this.calendarRef}
           defaultView="dayGridMonth"
           header={{
@@ -78,7 +79,7 @@ class Calendar extends React.Component {
             left: ""
           }}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          dateClick={this.handleClick}
+          // dateClick={this.handleClick}
           events={someEvents}
           eventClick={this.handleClick}
           // aspectRatio={2.5}

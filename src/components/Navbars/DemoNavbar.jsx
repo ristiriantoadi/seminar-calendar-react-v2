@@ -187,7 +187,7 @@ class Header extends React.Component {
                   <DropdownItem
                     tag="a"
                     onClick={() => {
-                      this.props.fakeAuth.signout(() => {
+                      this.props.auth.signout(() => {
                         this.props.history.push("/login");
                       });
                     }}

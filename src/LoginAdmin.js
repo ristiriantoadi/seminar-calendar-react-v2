@@ -29,7 +29,7 @@ class LoginAdmin extends Component{
       swal("Oops!", "Username atau password salah!", "error");
     }
 
-    this.props.fakeAuth.authenticateAdmin(successCb,failCb,username,password)
+    this.props.auth.authenticateAdmin(successCb,failCb,username,password)
 
 
   }

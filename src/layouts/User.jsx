@@ -154,7 +154,7 @@ class Dashboard extends React.Component {
         />
         <div className="main-panel" ref={this.mainPanel}>
           <DemoNavbar
-            fakeAuth={this.props.fakeAuth}
+            auth={this.props.auth}
             {...this.props}
             nama={this.state.nama}
             nim={this.state.nim}

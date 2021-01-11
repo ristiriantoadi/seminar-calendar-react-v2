@@ -162,7 +162,7 @@ class Dashboard extends React.Component {
           activeColor={this.state.activeColor}
         />
         <div className="main-panel" ref={this.mainPanel}>
-          <DemoNavbar fakeAuth={this.props.fakeAuth} {...this.props} />
+          <DemoNavbar auth={this.props.auth} {...this.props} />
           <Switch>
             {routes.map((prop, key) => {
               return (

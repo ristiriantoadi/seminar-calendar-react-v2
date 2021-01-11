@@ -102,10 +102,10 @@ function Login(props) {
       swal("Oops!", "Anda Tidak Terdafar!", "error");
     }
 
-    props.fakeAuth.authenticate(successCb,failCb,username,password)
+    props.auth.authenticate(successCb,failCb,username,password)
   }
   //   if (username === "admin" || username === "admin@gmail.com") {
-  //     props.fakeAuth.authenticate(() => {
+  //     props.auth.authenticate(() => {
   //       history.replace("/admin/seminar");
   //     });
   //     return;
@@ -137,9 +137,9 @@ function Login(props) {
   //         console.log(nim);
   //         console.log(nama);
   //         if(nim == password)
-  //           props.fakeAuth.authenticate(() => {
-  //             props.fakeAuth.nama = nama;
-  //             props.fakeAuth.nim = nim;
+  //           props.auth.authenticate(() => {
+  //             props.auth.nama = nama;
+  //             props.auth.nim = nim;
   //             history.replace("user/seminar");
   //           });
   //         else{
@@ -148,7 +148,7 @@ function Login(props) {
   //         }
   //       });
   //   }else{
-  //     props.fakeAuth.authenticate(() => {
+  //     props.auth.authenticate(() => {
   //       swal("Oops!", "Anda Tidak Terdafar!", "error");
   //     });return;
   //   }
@@ -163,17 +163,17 @@ function Login(props) {
   //   var password = data.get("password");
 
   //   // if (email === "user@gmail.com") {
-  //   //   props.fakeAuth.authenticate(() => {
+  //   //   props.auth.authenticate(() => {
   //   //     history.replace("/user/seminar");
   //   //   });
   //   if (email === "admin@gmail.com") {
-  //       props.fakeAuth.authenticate(() => {
+  //       props.auth.authenticate(() => {
   //         history.replace("/admin/seminar");
   //       });
   //       return;
   //   }
   //   else if (email.slice(0,3) !== 'F1D') {
-      // props.fakeAuth.authenticate(() => {
+      // props.auth.authenticate(() => {
       //   swal("Oops!", "Password salah!", "error");
       // });
   //     return;
@@ -189,7 +189,7 @@ function Login(props) {
 
   //                           if (user_id !== null) {
   //                               console.log(response.data);
-  //                               props.fakeAuth.authenticate(() => {
+  //                               props.auth.authenticate(() => {
   //                                 history.replace("/user/seminar");
   //                               });
 
@@ -216,7 +216,7 @@ function Login(props) {
   //                       });
 
   //   // } else if (email === "admin@gmail.com") {
-  //   //   props.fakeAuth.authenticate(() => {
+  //   //   props.auth.authenticate(() => {
   //   //     history.replace("/admin/seminar");
   //   //   });
   //   // }
@@ -356,7 +356,7 @@ function Login(props) {
 //     let location = useLocation();
 
 //     let { from } = location.state || { from: { pathname: "/" } };
-//     this.props.fakeAuth.authenticate(() => {
+//     this.props.auth.authenticate(() => {
 //       history.replace(from);
 //     });
 //   }

@@ -14,10 +14,7 @@ import {
 import AdminLayout from "layouts/Admin.jsx";
 import UserLayout from "layouts/User.jsx";
 
-const fakeAuth = {
-  nama: "",
-  nim: "",
-  isAuthenticated: false,
+const auth = {
   authenticateAdmin(successCb,failCb,username,password) {
     
     axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
@@ -27,8 +24,6 @@ const fakeAuth = {
         password
       })
       .then(res=>{
-        // console.log(res.status)
-        this.isAuthenticated=true
         localStorage.setItem("isAuthenticatedAdmin", true);
         successCb()
       })
@@ -42,18 +37,12 @@ const fakeAuth = {
     axios.get('http://localhost:8000/sanctum/csrf-cookie')
     .then(response => {
       // Login...
-      const options={
-        headers:{'Accept': 'application/json'}
-      }
       return axios.post('http://localhost:8000/login',{
         nim:username,
         password
       })
     })
     .then(res=>{
-      this.nama = res.data.name
-      this.nim = res.data.nim
-      this.isAuthenticated=true
       localStorage.setItem("isAuthenticatedUser", true);
       localStorage.setItem("nama", res.data.name);
       localStorage.setItem("nim",res.data.nim);
@@ -68,27 +57,26 @@ const fakeAuth = {
     .then(function (response) {
         // handle success
         console.log(response);
-        fakeAuth.isAuthenticated = false;
+        localStorage.removeItem("isAuthenticatedUser");
+        localStorage.removeItem("isAuthenticatedAdmin");
         cb()
     })
     .catch(function (error) {
         // handle error
         console.log(error);
     })
-    // fakeAuth.isAuthenticated = false;
-    // setTimeout(cb, 100);
   }
 };
 
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
 function PrivateRoute({ children, ...rest }) {
-  // return fakeAuth.isAuthenticated ? children : <Redirect to="/login" />;
+  // return auth.isAuthenticated ? children : <Redirect to="/login" />;
   return localStorage.getItem("isAuthenticatedUser") ? children : <Redirect to="/login" />;
 }
 
 function PrivateRouteAdmin({ children, ...rest }) {
-  // return fakeAuth.isAuthenticated ? children : <Redirect to="/login" />;
+  // return auth.isAuthenticated ? children : <Redirect to="/login" />;
   return localStorage.getItem("isAuthenticatedAdmin") ? children : <Redirect to="/admin/login" />;
 }
 
@@ -98,22 +86,22 @@ export default function App() {
     <Router>
       <Switch>
         <Route path="/login">
-          <Login fakeAuth={fakeAuth} />
+          <Login auth={auth} />
         </Route>
         <Route path="/admin/login">
-          <LoginAdmin fakeAuth={fakeAuth} />
+          <LoginAdmin auth={auth} />
         </Route>
         <PrivateRoute path="/user">
           <Route
             path="/user"
             key={window.location.href}
-            render={props => <UserLayout {...props} key={window.location.href} fakeAuth={fakeAuth} />}
+            render={props => <UserLayout {...props} key={window.location.href} auth={auth} />}
           />
         </PrivateRoute>
         <PrivateRouteAdmin path="/admin">
           <Route
             path="/admin"
-            render={props => <AdminLayout key={window.location.href} {...props} fakeAuth={fakeAuth} />}
+            render={props => <AdminLayout key={window.location.href} {...props} auth={auth} />}
           />
         </PrivateRouteAdmin>
         <Redirect to="/login"></Redirect>
